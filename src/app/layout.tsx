@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Navbar from "./components/navbar";
 import Sukhumvit from "./assets/Sukhumvit";
+import { lusitana, inter } from "@/app/ui/fonts";
 
 const sukhumvit = Sukhumvit;
 export const metadata: Metadata = {
@@ -15,7 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${sukhumvit.variable}`}>{children}</body>
+      <body
+        className={`${inter.className} antialiased`}
+        suppressHydrationWarning={true}
+      >
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
