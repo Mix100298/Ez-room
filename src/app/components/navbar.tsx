@@ -1,3 +1,5 @@
+import React from "react";
+import Button from "./button";
 import { inter } from "@/app/ui/fonts";
 
 export default function Navbar() {
@@ -18,12 +20,7 @@ export default function Navbar() {
         </div>
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
           <span className=" text-black ">About us</span>
-          <button
-            type="button"
-            className="text-white bg-blue-400 hover:bg-blue-500 rounded-md px-4 py-2"
-          >
-            Sign up
-          </button>
+          <Button>Sign up</Button>
         </div>
       </div>
     </nav>
