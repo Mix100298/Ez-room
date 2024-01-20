@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./button";
 import { inter } from "@/app/ui/fonts";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -19,7 +20,8 @@ export default function Navbar() {
           </span>
         </div>
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
-          <span className=" text-black ">About us</span>
+          <Link href="/about">
+          <span className=" text-black ">About us</span></Link>
           <Button>Sign up</Button>
         </div>
       </div>
