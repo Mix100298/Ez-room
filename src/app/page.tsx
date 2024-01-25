@@ -14,7 +14,7 @@ export default function Home() {
               <p>Design your room with Artificial Intelligence</p>
             </div>
             <div className="bg-gray-300 h-1 mt-5"></div>
-            <div className="mt-5 ">
+            <div className="mt-5 w-1/3">
               <Button>Genarate Room</Button>
             </div>
           </div>
@@ -28,7 +28,7 @@ export default function Home() {
                 className="h-60 w-60 rounded-md"
                 src="https://images.livspace-cdn.com/w:1024/h:631/plain/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/sites/4/2022/02/01073127/Cover-1.png"
               ></img>
-            </div> 
+            </div>
           </div>
         </div>
         <div className="grid gap-5 px-10 text-center">

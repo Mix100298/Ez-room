@@ -21,8 +21,11 @@ export default function Navbar() {
         </div>
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
           <Link href="/about">
-          <span className=" text-black ">About us</span></Link>
-          <Button>Sign up</Button>
+            <span className=" text-black ">About us</span>
+          </Link>
+          <Link href="/signup">
+            <Button>Sign up</Button>
+          </Link>
         </div>
       </div>
     </nav>
