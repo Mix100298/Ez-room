@@ -1,13 +1,14 @@
 import React from "react";
+import Link from "next/link";
 import Button from "@/app/components/button";
 
 export default function page() {
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700 p-10">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
         <div className="w-full bg-white rounded shadow md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="font-bold text-5xl text-center">Sign up</h1>
+            <h1 className="font-medium text-5xl text-center">Sign up</h1>
             <form className="space-y-4 md:space-y-6" action="#">
               <div>
                 <label
@@ -153,12 +154,12 @@ export default function page() {
               <Button>Sign up</Button>
               <p className="text-sm font-light text-blue-400">
                 Already a user?
-                <a
-                  href="#"
+                <Link
+                  href="/signin"
                   className="font-medium underline hover:underline text-blue-400 hover:text-blue-500 ml-1"
                 >
                   Sign in
-                </a>
+                </Link>
               </p>
             </div>
           </div>
