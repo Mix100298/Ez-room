@@ -25,8 +25,8 @@ export default function Navbar() {
           <Link href="/about">
             <span className=" text-black ">About us</span>
           </Link>
-          <Link href="/signup">
-            <Button>Sign up</Button>
+          <Link href="/signin">
+            <Button>Sign in</Button>
           </Link>
         </div>
       </div>

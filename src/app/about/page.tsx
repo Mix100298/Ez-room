@@ -4,7 +4,7 @@ export default function page() {
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid gap-10 mt-10">
-        <h1 className="font-bold text-9xl pr-10">About us.</h1>
+        <h1 className="font-bold text-9xl ">About us.</h1>
         <div className="flex flex-wrap gap-10 justify-center">
           <div>
             <img
