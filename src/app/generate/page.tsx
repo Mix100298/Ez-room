@@ -44,7 +44,7 @@ export default function page() {
             </div>
             <div className="bg-white h-[400px] w-[428px] rounded p-5">
               <h1 className="text-xl font-bold">Specify furniture</h1>
-              <div className="flex gap-10 mt-5">
+              <div className="flex gap-10 py-2.5">
                 <input
                   type="text"
                   name="search"
