@@ -62,7 +62,7 @@ export default function page() {
                   autoComplete="off"
                 ></input>
               </div>
-              <div className="grid grid-cols-3 gap-3 mt-5">
+              <div className="grid grid-cols-3 gap-3 py-5">
                 <Card />
                 <Card />
                 <Card />
