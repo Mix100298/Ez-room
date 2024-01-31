@@ -4,6 +4,7 @@ import Input from "@/app/components/input";
 import Button from "@/app/components/button";
 import Select from "@/app/components/select";
 import Card from "@/app/components/card";
+import Searchfilter from "@/app/components/searchfilter";
 
 export default function page() {
   return (
@@ -44,24 +45,7 @@ export default function page() {
             </div>
             <div className="bg-white h-[400px] w-[428px] rounded p-5">
               <h1 className="text-xl font-bold">Specify furniture</h1>
-              <div className="flex gap-10 py-2.5">
-                <input
-                  type="text"
-                  name="search"
-                  id="search"
-                  className="bg-white border border-gray-300 text-gray-700 sm:text-sm rounded w-full p-2.5"
-                  placeholder="Search"
-                  autoComplete="off"
-                ></input>
-                <input
-                  type="text"
-                  name="filter"
-                  id="filter"
-                  className="bg-white border border-gray-300 text-gray-700 sm:text-sm rounded w-full p-2.5"
-                  placeholder="Filter"
-                  autoComplete="off"
-                ></input>
-              </div>
+              <Searchfilter />
               <div className="grid grid-cols-3 gap-3 py-5">
                 <Card />
                 <Card />
