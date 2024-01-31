@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid gap-10 lg:py-10">
-        <div className="flex flex-wrap justify-between gap-10">
+        <div className="xl:flex flex-wrap justify-between gap-10">
           <div className="flex-1 min-w-[450px]">
             <h1 className="font-bold text-4xl pr-10">
               Create a dream room using AI

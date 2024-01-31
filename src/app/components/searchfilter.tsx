@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Searchfilter() {
   return (
-    <div className="flex gap-10 py-2.5">
+    <div className="flex gap-10">
       <input
         type="text"
         name="search"

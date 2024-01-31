@@ -45,7 +45,9 @@ export default function page() {
             </div>
             <div className="bg-white h-[400px] w-[428px] rounded p-5">
               <h1 className="text-xl font-bold">Specify furniture</h1>
-              <Searchfilter />
+              <div className="flex mt-5">
+                <Searchfilter />
+              </div>
               <div className="grid grid-cols-3 gap-3 py-5">
                 <Card />
                 <Card />

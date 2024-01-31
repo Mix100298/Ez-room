@@ -1,9 +1,7 @@
 import React from "react";
-import Link from "next/link";
-import Input from "@/app/components/input";
 import Button from "@/app/components/button";
-import Select from "@/app/components/select";
-import Card from "@/app/components/card";
+import Searchfilter from "@/app/components/searchfilter";
+import Communitycard from "@/app/components/communitycard";
 
 export default function page() {
   return (
@@ -11,11 +9,25 @@ export default function page() {
       <div className="grid gap-10 lg:py-10">
         <div className="grid">
           <h1 className="text-8xl font-bold">Community</h1>
-          <p className="py-5">
+          <p className="mt-5">
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamcot. 👋
           </p>
+        </div>
+        <div className="flex justify-between gap-10">
+          <Searchfilter />
+          <div className="w-60">
+            <Button children={"My posts"} />
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-10">
+          <Communitycard />
+          <Communitycard />
+          <Communitycard />
+        </div>
+        <div className="flex items-center justify-center ">
+          <Button children={"Show more"} />
         </div>
       </div>
     </div>
