@@ -18,15 +18,13 @@ const Checkbox: React.FC<CheckboxProps> = ({
       <div className="flex ">
         <input
           id={id}
-          aria-describedby={id}
-          type="checkbox"
-          className="bg-white border border-gray-300 text-gray-700"
-        ></input>
-        <div className="flex text-md ms-2">
-          <label htmlFor={id} className=" text-gray-700 ">
-            {name}
-          </label>
-        </div>
+          type="radio"
+          name="default-radio"
+          className="w-4 h-4 bg-gray-100 border-gray-300"
+        />
+        <label htmlFor={id} className="ms-2 text-sm font-medium text-gray-700">
+          {name}
+        </label>
       </div>
     </div>
   );

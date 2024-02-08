@@ -6,6 +6,22 @@ import Checkbox from "./checkbox";
 export default function Searchfilter() {
   const [filter, setFilter] = useState(false);
 
+  const styles = [
+    { id: "style-modern", name: "Modern" },
+    { id: "style-bohemain", name: "Bohemain" },
+    { id: "style-contemporary", name: "Contemporary" },
+  ];
+
+  const types = [
+    { id: "type-bedroom", name: "Bedroom" },
+    { id: "type-bathroom", name: "Bathroom" },
+  ];
+
+  const budget = [
+    { id: "budget-from", name: "From", type: "number", placeholder: "0" },
+    { id: "budget-to", name: "To", type: "number", placeholder: "100,000" },
+  ];
+
   return (
     <div className="flex gap-10">
       <div className=" fill-slate-500 text-gray-700 w-full ">
@@ -41,40 +57,36 @@ export default function Searchfilter() {
           <div className="absolute mt-12 w-60 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-gray-100">
             <div className="py-1">
               <h1 className="px-4 py-2 font-bold">Style</h1>
-              <div className=" px-4 py-2">
-                <Checkbox id="style-modern" name="Modern" />
-              </div>
-              <div className=" px-4 py-2">
-                <Checkbox id="style-bohemain" name="Bohemain" />
-              </div>
-              <div className=" px-4 py-2">
-                <Checkbox id="style-contemporary" name="Contemporary" />
-              </div>
+              {/* Styles room */}
+              {styles.map((style) => (
+                <div key={style.id} className="px-4 py-2">
+                  <Checkbox id={style.id} name={style.name} />
+                </div>
+              ))}
             </div>
             <div className="py-1">
               <h1 className="px-4 py-2 font-bold">Type</h1>
-              <div className=" px-4 py-2">
-                <Checkbox id="type-bedroom" name="Bedroom" />
-              </div>
-              <div className=" px-4 py-2">
-                <Checkbox id="type-bathroom" name="Bathroom" />
-              </div>
+              {/* Types room */}
+              {types.map((type) => (
+                <div key={type.id} className="px-4 py-2">
+                  <Checkbox id={type.id} name={type.name} />
+                </div>
+              ))}
             </div>
             <div className="py-1">
               <h1 className="px-4 py-2 font-bold">Price</h1>
               <div className="flex px-4 py-2 space-x-4">
-                <Input
-                  id={"budget-from"}
-                  name={"From"}
-                  type={"number"}
-                  placeholder={"0"}
-                />
-                <Input
-                  id={"budget-to"}
-                  name={"To"}
-                  type={"number"}
-                  placeholder={"100,000"}
-                />
+                {/* Budget from and to  */}
+                {budget.map((budget) => (
+                  <div key={budget.id}>
+                    <Input
+                      id={budget.id}
+                      name={budget.name}
+                      type={budget.type}
+                      placeholder={budget.placeholder}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
