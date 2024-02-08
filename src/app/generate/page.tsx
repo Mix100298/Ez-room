@@ -27,13 +27,11 @@ export default function page() {
                 <Select
                   id={"type-room"}
                   name={"Choose room type"}
-                  children={""}
                   options={["Bedroom", "Bathroom"]}
                 />
                 <Select
                   id={"stly-room"}
                   name={"Choose room style"}
-                  children={""}
                   options={["Modern", "Bohemain", "Contemporary"]}
                 />
                 <Input
@@ -41,7 +39,6 @@ export default function page() {
                   name={"Choose your budget"}
                   type={"number"}
                   placeholder={"50,000"}
-                  children={""}
                 />
               </div>
             </div>

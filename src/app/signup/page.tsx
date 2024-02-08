@@ -49,9 +49,9 @@ export default function page() {
                 options={["Day", "Month", "Year"]}
               />
               <div className="flex items-start w-full gap-5">
-                <Checkbox id={"term-male"} name={"Male"} children={""} />
-                <Checkbox id={"term-female"} name={"Female"} children={""} />
-                <Checkbox id={"term-other"} name={"Other"} children={""} />
+                <Checkbox id={"term-male"} name={"Male"} />
+                <Checkbox id={"term-female"} name={"Female"} />
+                <Checkbox id={"term-other"} name={"Other"} />
               </div>
             </form>
             <div className="grid text-center gap-3">

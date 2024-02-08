@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import Input from "./input";
+import Checkbox from "./checkbox";
 
 export default function Searchfilter() {
   const [filter, setFilter] = useState(false);
@@ -36,22 +38,44 @@ export default function Searchfilter() {
         </button>
         {/* Dropdown menu */}
         {filter && (
-          <div className="absolute mt-12 w-52 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-gray-100">
+          <div className="absolute mt-12 w-60 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-gray-100">
             <div className="py-1">
-              <a href="#" className="text-gray-700 block px-4 py-2 text-sm">
-                01
-              </a>
-              <a href="#" className="text-gray-700 block px-4 py-2 text-sm">
-                02
-              </a>
+              <h1 className="px-4 py-2 font-bold">Style</h1>
+              <div className=" px-4 py-2">
+                <Checkbox id="style-modern" name="Modern" />
+              </div>
+              <div className=" px-4 py-2">
+                <Checkbox id="style-bohemain" name="Bohemain" />
+              </div>
+              <div className=" px-4 py-2">
+                <Checkbox id="style-contemporary" name="Contemporary" />
+              </div>
             </div>
             <div className="py-1">
-              <a href="#" className="text-gray-700 block px-4 py-2 text-sm">
-                03
-              </a>
-              <a href="#" className="text-gray-700 block px-4 py-2 text-sm">
-                04
-              </a>
+              <h1 className="px-4 py-2 font-bold">Type</h1>
+              <div className=" px-4 py-2">
+                <Checkbox id="type-bedroom" name="Bedroom" />
+              </div>
+              <div className=" px-4 py-2">
+                <Checkbox id="type-bathroom" name="Bathroom" />
+              </div>
+            </div>
+            <div className="py-1">
+              <h1 className="px-4 py-2 font-bold">Price</h1>
+              <div className="flex px-4 py-2 space-x-4">
+                <Input
+                  id={"budget-from"}
+                  name={"From"}
+                  type={"number"}
+                  placeholder={"0"}
+                />
+                <Input
+                  id={"budget-to"}
+                  name={"To"}
+                  type={"number"}
+                  placeholder={"100,000"}
+                />
+              </div>
             </div>
           </div>
         )}
