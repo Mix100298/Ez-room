@@ -64,14 +64,12 @@ export default function page() {
                             name={"English name"}
                             type={"text"}
                             placeholder={""}
-                            children={""}
                           />
                           <Input
                             id={"name-product-thai"}
                             name={"Thai name"}
                             type={"text"}
                             placeholder={""}
-                            children={""}
                           />
                         </div>
                       </div>
@@ -80,7 +78,6 @@ export default function page() {
                         name={"Product URL"}
                         type={"text"}
                         placeholder={""}
-                        children={""}
                       />
                       <div className="flex flex-wrap gap-10">
                         <div className="flex-1 w-full space-y-5">
@@ -89,14 +86,12 @@ export default function page() {
                             name={"Seller"}
                             type={"text"}
                             placeholder={""}
-                            children={""}
                           />
                           <Input
                             id={"price-product"}
                             name={"Price"}
                             type={"text"}
                             placeholder={""}
-                            children={""}
                           />
                         </div>
                         <div className="flex-1 w-full space-y-5">
@@ -112,7 +107,6 @@ export default function page() {
                             name={"Category"}
                             type={"text"}
                             placeholder={""}
-                            children={""}
                           />
                         </div>
                       </div>

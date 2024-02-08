@@ -18,40 +18,35 @@ export default function page() {
                 id={"email"}
                 type={"email"}
                 placeholder={"name@email.com"}
-                children={""}
               />
               <Input
                 name={"Password"}
                 id={"password"}
                 type={"password"}
                 placeholder={"••••••••"}
-                children={""}
               />
               <Input
                 name={"Confirm password"}
                 id={"confirm-password"}
                 type={"password"}
                 placeholder={"••••••••"}
-                children={""}
               />
               <Input
                 name={"First Name"}
                 id={"first-name"}
                 type={"text"}
                 placeholder={"first name"}
-                children={""}
               />
               <Input
                 name={"Last Name"}
                 id={"last-name"}
                 type={"text"}
                 placeholder={"last name"}
-                children={""}
               />
               <Select
                 id={"date-of-birth"}
                 name={"Date of Birth"}
-                children={"Day / Month / Year"}
+                options={["Day", "Month", "Year"]}
               />
               <div className="flex items-start w-full gap-5">
                 <Checkbox id={"term-male"} name={"Male"} children={""} />

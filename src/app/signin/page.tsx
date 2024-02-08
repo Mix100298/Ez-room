@@ -16,14 +16,12 @@ export default function page() {
                 id={"email"}
                 type={"email"}
                 placeholder={"name@email.com"}
-                children={""}
               />
               <Input
                 name={"Password"}
                 id={"password"}
                 type={"password"}
                 placeholder={"••••••••"}
-                children={""}
               />
             </form>
             <div className="grid text-center gap-3">

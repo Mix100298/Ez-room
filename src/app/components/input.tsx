@@ -5,7 +5,7 @@ interface InputProps {
   name: string;
   type: string;
   placeholder: string;
-  children: string;
+  children?: string;
 }
 
 const Input: React.FC<InputProps> = ({

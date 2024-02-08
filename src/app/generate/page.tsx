@@ -27,12 +27,14 @@ export default function page() {
                 <Select
                   id={"type-room"}
                   name={"Choose room type"}
-                  children={"Bedroom"}
+                  children={""}
+                  options={["Bedroom", "Bathroom"]}
                 />
                 <Select
                   id={"stly-room"}
                   name={"Choose room style"}
-                  children={"Modern"}
+                  children={""}
+                  options={["Modern", "Bohemain", "Contemporary"]}
                 />
                 <Input
                   id={"budget-room"}
