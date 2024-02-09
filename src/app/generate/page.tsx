@@ -12,7 +12,7 @@ import {setPrompt} from "@/app/generate/api/generate"
 export default function Page() {
 const [roomType,setroomType] = useState<string>("");
 const [roomStyle,setroomStyle] = useState<string>("");
-const [budget,setBuget] = useState<number>(0);
+const [budget,setBudget] = useState<number>(0);
 const [isLoading,setisLoading] = useState<boolean>(false)
 
 
@@ -61,17 +61,17 @@ const formhandler = async () => {
                   name={"Choose your budget"}
                   type={"number"}
                   placeholder={"50,000"}
-                  onChange={(e) => setBuget(e.target.value)}
+                  onChange={(e) => setBudget(parseFloat(e.target.value))}
                 />
                 {console.log(budget)}
               </div>
             </div>
-            <div className="bg-white h-[400px] w-[428px] rounded p-5">
+            <div className="bg-white h-full w-[428px] rounded p-5">
               <h1 className="text-xl font-bold">Specify furniture</h1>
               <div className="mt-5">
                 <Searchfilter />
               </div>
-              <div className="grid grid-cols-3 gap-3 py-5">
+              <div className="grid grid-cols-2 gap-3 py-5">
                 <Card />
                 <Card />
                 <Card />

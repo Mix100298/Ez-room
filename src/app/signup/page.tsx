@@ -5,7 +5,7 @@ import Select from "@/app/components/select";
 import Button from "@/app/components/button";
 import Radio from "@/app/components/radio";
 
-export default function page() {
+export default function Page() {
   const InpurFrom = [
     {
       name: "Your email",
@@ -53,8 +53,9 @@ export default function page() {
             <h1 className="font-medium text-5xl text-center">Sign up</h1>
             <form className="space-y-4 md:space-y-6" action="#">
               {/* InpurFrom */}
-              {InpurFrom.map((input) => (
+              {InpurFrom.map((input,idx) => (
                 <Input
+                  key={idx}
                   name={input.name}
                   id={input.id}
                   type={input.type}
@@ -68,8 +69,8 @@ export default function page() {
               />
               <div className="flex items-start w-full gap-5">
                 {/* RadioFrom */}
-                {RadioFrom.map((radio) => (
-                  <Radio id={radio.id} name={radio.name} />
+                {RadioFrom.map((radio,idx) => (
+                  <Radio key={idx} id={radio.id} name={radio.name} />
                 ))}
               </div>
             </form>
