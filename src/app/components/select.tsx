@@ -3,10 +3,12 @@ import React from "react";
 interface SelectProps {
   id: string;
   name: string;
-  children: string;
+  children?: string;
+  options : string[];
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select: React.FC<SelectProps> = ({ id, name, children }) => {
+const Select: React.FC<SelectProps> = ({ id, name, children, options, onChange } : SelectProps) => {
   return (
     <div>
       <label
@@ -18,10 +20,11 @@ const Select: React.FC<SelectProps> = ({ id, name, children }) => {
       <select
         id={id}
         className="bg-white border border-gray-300 text-gray-700 sm:text-sm rounded p-2.5 w-full"
+        onChange={onChange}
       >
-        <option>{children}</option>
-        <option>01</option>
-        <option>02</option>
+        {options.map((option,idx) =>{
+          return <option key={idx} value={option}>{option}</option>
+        }) }
       </select>
     </div>
   );
