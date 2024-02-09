@@ -4,11 +4,17 @@ interface SelectProps {
   id: string;
   name: string;
   children?: string;
-  options : string[];
+  options: string[];
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Select: React.FC<SelectProps> = ({ id, name, children, options, onChange } : SelectProps) => {
+const Select: React.FC<SelectProps> = ({
+  id,
+  name,
+  options,
+  onChange,
+  children,
+}: SelectProps) => {
   return (
     <div>
       <label
@@ -22,9 +28,13 @@ const Select: React.FC<SelectProps> = ({ id, name, children, options, onChange }
         className="bg-white border border-gray-300 text-gray-700 sm:text-sm rounded p-2.5 w-full"
         onChange={onChange}
       >
-        {options.map((option,idx) =>{
-          return <option key={idx} value={option}>{option}</option>
-        }) }
+        {options.map((option, idx) => {
+          return (
+            <option key={idx} value={option}>
+              {option}
+            </option>
+          );
+        })}
       </select>
     </div>
   );

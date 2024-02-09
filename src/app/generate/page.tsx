@@ -45,17 +45,13 @@ const formhandler = async () => {
                 <Select
                   id={"type-room"}
                   name={"Choose room type"}
-                  children={"Bedroom"}
-                  onChange={(e) => setroomType(e.target.value)}
-                  options={["Bedroom","Bathroom"]}
+                  options={["Bedroom", "Bathroom"]}
                 />
                 {console.log(roomType)}
                 <Select
                   id={"stly-room"}
                   name={"Choose room style"}
-                  children={"Modern"}
-                  onChange={(e) => setroomStyle(e.target.value)}
-                  options={["Modern","Bohemian","Contemporary"]}
+                  options={["Modern", "Bohemain", "Contemporary"]}
                 />
                 {console.log(roomStyle)}
                 <Input
@@ -63,8 +59,6 @@ const formhandler = async () => {
                   name={"Choose your budget"}
                   type={"number"}
                   placeholder={"50,000"}
-                  children={""}
-                  onChange={(e) => setBuget(parseInt(e.target.value))}
                 />
                 {console.log(budget)}
               </div>

@@ -1,4 +1,3 @@
-import { on } from "events";
 import React from "react";
 
 interface InputProps {
@@ -6,8 +5,8 @@ interface InputProps {
   name: string;
   type: string;
   placeholder: string;
-  children: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  children?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,9 +15,8 @@ const Input: React.FC<InputProps> = ({
   type,
   placeholder,
   children,
-  onChange
-} : 
-InputProps) => {
+  onChange,
+}) => {
   return (
     <div>
       <label
