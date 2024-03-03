@@ -4,8 +4,8 @@ import Input from "../components/input";
 import Button from "../components/button";
 import Searchfilter from "@/app/components/searchfilter";
 
-export default function page() {
-  const [select, setSelect] = useState(true);
+export default function Page() {
+  const [Select, setSelect] = useState(true);
 
   const product = [
     {
@@ -45,7 +45,7 @@ export default function page() {
           <div className="w-[200px]">
             <button
               className={`${
-                select
+                Select
                   ? "bg-blue-400 hover:bg-blue-500 text-white rounded-md font-bold h-[100px] w-full"
                   : "bg-white hover:bg-blue-500 text-black hover:text-white rounded-md font-bold h-[100px] w-full"
               }`}
@@ -55,7 +55,7 @@ export default function page() {
             </button>
             <button
               className={`${
-                select
+                Select
                   ? "bg-white hover:bg-blue-500 text-black hover:text-white rounded-md font-bold h-[100px] w-full mt-10"
                   : "bg-blue-400 hover:bg-blue-500 text-white rounded-md font-bold h-[100px] w-full mt-10"
               }`}
@@ -64,7 +64,7 @@ export default function page() {
               Add product
             </button>
           </div>
-          {select ? (
+          {Select ? (
             /* Select Dshboard */
             <div className="grid flex-1 gap-10">
               <div className="bg-white w-full h-[300px] truncate"></div>

@@ -1,5 +1,5 @@
-'use client';
-import React,{useState,useEffect} from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Input from "@/app/components/input";
 import Button from "@/app/components/button";
@@ -7,23 +7,22 @@ import Select from "@/app/components/select";
 import Card from "@/app/components/card";
 import Searchfilter from "@/app/components/searchfilter";
 import Image from "@/app/components/image";
-import {setPrompt} from "@/app/generate/api/generate"
+import Share from "../components/share";
+import { setPrompt } from "@/app/generate/api/generate";
 
 export default function Page() {
-const [roomType,setroomType] = useState<string>("");
-const [roomStyle,setroomStyle] = useState<string>("");
-const [budget,setBudget] = useState<number>(0);
-const [isLoading,setisLoading] = useState<boolean>(false)
+  const [roomType, setroomType] = useState<string>("");
+  const [roomStyle, setroomStyle] = useState<string>("");
+  const [budget, setBudget] = useState<number>(0);
+  const [isLoading, setisLoading] = useState<boolean>(false);
 
-
-const formhandler = async () => {
-    console.log(roomType,roomStyle,budget)
-    setisLoading(true)
-    const res = await setPrompt(roomType+roomStyle+budget)
-    setisLoading(false)
-    alert(res.data)
-}
-
+  const formhandler = async () => {
+    console.log(roomType, roomStyle, budget);
+    setisLoading(true);
+    const res = await setPrompt(roomType + roomStyle + budget);
+    setisLoading(false);
+    alert(res.data);
+  };
 
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -40,7 +39,7 @@ const formhandler = async () => {
         </div>
         <div className="flex flex-wrap justify-center gap-10">
           <div className="grid gap-10">
-            <div className="bg-white h-64 w-[428px] rounded p-5">
+            <div className="bg-white h-64 w-[428px] rounded p-5 shadow-md">
               <div className="grid w-full gap-2">
                 <Select
                   id={"type-room"}
@@ -66,19 +65,21 @@ const formhandler = async () => {
                 {console.log(budget)}
               </div>
             </div>
-            <div className="bg-white h-full w-[428px] rounded p-5">
+            <div className="bg-white h-full w-[428px] rounded shadow-md p-5">
               <h1 className="text-xl font-bold">Specify furniture</h1>
               <div className="mt-5">
                 <Searchfilter />
               </div>
-              <div className="grid grid-cols-2 gap-3 py-5">
+              <div className="grid grid-cols-2 gap-10 py-5">
                 <Card />
                 <Card />
                 <Card />
                 <Card />
                 <Card />
               </div>
-            </div>
+            </div>{" "}
+            {/* Share component */}
+            <Share />
           </div>
           <div>
             <div className="bg-white h-[512px] w-[512px] rounded">
@@ -90,10 +91,9 @@ const formhandler = async () => {
               />
             </div>
             <div className="mt-10">
-              <Button
-              onClick={formhandler}
-              isLoading = {isLoading}
-              >Generate Room Design</Button>
+              <Button onClick={formhandler} isLoading={isLoading}>
+                Generate Room Design
+              </Button>
             </div>
           </div>
         </div>

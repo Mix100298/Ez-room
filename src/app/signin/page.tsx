@@ -3,7 +3,7 @@ import Link from "next/link";
 import Input from "@/app/components/input";
 import Button from "@/app/components/button";
 
-export default function page() {
+export default function Page() {
   const InpurFrom = [
     {
       name: "Email",
