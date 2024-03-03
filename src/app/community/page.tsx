@@ -1,9 +1,28 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Button from "@/app/components/button";
 import Searchfilter from "@/app/components/searchfilter";
 import Communitycard from "@/app/components/communitycard";
 
 export default function Page() {
+  const [isLoading, setisLoading] = useState<boolean>(false);
+
+  const [cards, setCards] = useState<React.ReactNode[]>([
+    <Communitycard />,
+    <Communitycard />,
+    <Communitycard />,
+  ]);
+
+  const addMoreCards = () => {
+    setisLoading(true);
+    const newCards: React.ReactNode[] = [
+      ...cards,
+      ...Array(3).fill(<Communitycard />),
+    ];
+    setCards(newCards);
+    setisLoading(false);
+  };
+
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid gap-10 lg:py-10">
@@ -21,15 +40,22 @@ export default function Page() {
             <Button children={"My posts"} />
           </div>
         </div>
-        <div className="flex flex-wrap gap-10">
-          <Communitycard />
-          <Communitycard />
-          <Communitycard />
+        <div className="flex flex-wrap items-center justify-center gap-10">
+          {cards.map((card, index) => (
+            <div key={index}>{card}</div>
+          ))}
         </div>
         <div className="flex items-center justify-center ">
-          <Button children={"Show more"} />
+          <Button
+            children={"Show more"}
+            onClick={addMoreCards}
+            /*isLoading={isLoading}*/
+          />
         </div>
       </div>
     </div>
   );
+}
+function repeat(arg0: number) {
+  throw new Error("Function not implemented.");
 }
