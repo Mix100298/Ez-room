@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import Input from "../components/input";
 import Button from "../components/button";
 import Searchfilter from "@/app/components/searchfilter";
+import Pagination from "../components/pagination";
+
+const productsPerPage = 5;
 
 export default function Page() {
-  const [Select, setSelect] = useState(true);
-
-  const product = [
+  const [currentPage, setCurrentPage] = useState(1);
+  const products = [
     {
       id: 1,
       productName: "Bathtub model B02-A",
@@ -35,7 +37,273 @@ export default function Page() {
       url: "http:ss//www.03.net.com/",
       price: 5000,
     },
+    {
+      id: 4,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 5,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 6,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 7,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 8,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 9,
+      productName: "Bathtub model B02-A",
+      brand: "Ikea",
+      type: "Bathroom",
+      category: "Bathtub",
+      url: "http:ss//www.01.net.com/",
+      price: 5000,
+    },
+    {
+      id: 10,
+      productName: "Cabinet with lavatory",
+      brand: "Ikea",
+      type: "Bathroom",
+      category: "Lavatory",
+      url: "http:ss//www.02.net.com/",
+      price: 5000,
+    },
+    {
+      id: 11,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 12,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 13,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 14,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 15,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 16,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 17,
+      productName: "Bathtub model B02-A",
+      brand: "Ikea",
+      type: "Bathroom",
+      category: "Bathtub",
+      url: "http:ss//www.01.net.com/",
+      price: 5000,
+    },
+    {
+      id: 18,
+      productName: "Cabinet with lavatory",
+      brand: "Ikea",
+      type: "Bathroom",
+      category: "Lavatory",
+      url: "http:ss//www.02.net.com/",
+      price: 5000,
+    },
+    {
+      id: 19,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 20,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 21,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 22,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 23,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 24,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 25,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 26,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 27,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 28,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 29,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 30,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
+    {
+      id: 31,
+      productName: "Lincoln full base",
+      brand: "Ikea",
+      type: "Bedroom",
+      category: "Sofa",
+      url: "http:ss//www.03.net.com/",
+      price: 5000,
+    },
   ];
+  const totalPages = Math.ceil(products.length / productsPerPage); // TotalPages = 2 (number of products / productsPerPage = 31/5 = 7) Math.ceil is rounding up
+  const indexOfLastProduct = currentPage * productsPerPage; // indexOfLastProduct = 1 * 5 = 5
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage; // indexOfFirstProduct = 5 - 5 = 0
+
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  ); // currentProducts = products.slice(0, 5) = [1,2,3,4,5]
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const [Select, setSelect] = useState(true);
 
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -110,22 +378,22 @@ export default function Page() {
                       </tr>
                     </thead>
                     <tbody>
-                      {product.map((item, index) => (
+                      {currentProducts.map((product) => (
                         <tr
-                          key={index}
+                          key={product.id}
                           className="bg-white border-b hover:bg-gray-100"
                         >
                           <th className="p-3 text-gray-700 text-center">
-                            {item.id}
+                            {product.id}
                           </th>
-                          <td className="p-3">{item.productName}</td>
-                          <td className="p-3">{item.brand}</td>
-                          <td className="p-3">{item.type}</td>
-                          <td className="p-3">{item.category}</td>
+                          <td className="p-3">{product.productName}</td>
+                          <td className="p-3">{product.brand}</td>
+                          <td className="p-3">{product.type}</td>
+                          <td className="p-3">{product.category}</td>
                           <td className="p-3 truncate max-w-[200px]">
-                            {item.url}
+                            {product.url}
                           </td>
-                          <td className="p-3">{item.price}</td>
+                          <td className="p-3">{product.price}</td>
                           <td className="p-3 text-center">
                             <a
                               href="#"
@@ -142,53 +410,17 @@ export default function Page() {
                 <div className="flex items-center flex-wrap justify-between pt-4">
                   <span className="text-sm font-bold text-gray-700 mb-4 inline w-auto space-x-1">
                     Showing
-                    <span className=" text-blue-400 mr-1 ml-1">1-10</span>
+                    <span className=" text-blue-400 mr-1 ml-1">
+                      1-{currentProducts.length}
+                    </span>
                     of
-                    <span className=" text-blue-400">20</span>
+                    <span className=" text-blue-400">{products.length}</span>
                   </span>
-                  <ul className="inline-flex rtl:space-x-reverse text-sm h-8">
-                    <li>
-                      <a
-                        href="#"
-                        aria-current="page"
-                        className="flex items-center justify-center px-3 h-8 rounded-s-md text-white bg-gray-700 hover:bg-gray-900"
-                      >
-                        Previous
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 text-white bg-gray-700 hover:bg-gray-900"
-                      >
-                        1
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 text-white bg-gray-700 hover:bg-gray-900"
-                      >
-                        2
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 text-white bg-gray-700 hover:bg-gray-900"
-                      >
-                        3
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="flex items-center justify-center px-3 h-8 rounded-e-lg text-white bg-gray-700 hover:bg-gray-900"
-                      >
-                        Next
-                      </a>
-                    </li>
-                  </ul>
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
                 </div>
                 <h1 className="font-bold text-4xl">Add Product</h1>
                 <div className="bg-white w-full h-full p-5 shadow-md rounded-md">
