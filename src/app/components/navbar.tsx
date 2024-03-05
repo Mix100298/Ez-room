@@ -3,6 +3,7 @@ import Button from "./button";
 import { inter } from "@/app/ui/fonts";
 import Link from "next/link";
 
+
 export default function Navbar() {
   return (
     <nav className="bg-white border-gray-200 font-bold sticky top-0">
@@ -12,9 +13,9 @@ export default function Navbar() {
         <Link href="../">
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-8"
-              alt="Flowbite Logo"
+              src="EZ-room-logo.png"
+              alt="EZ-room logo"
+              className="h-10 w-10"
             />
             <span className="self-center text-2xl font-bold whitespace-nowrap">
               Easy Room

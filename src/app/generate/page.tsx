@@ -10,6 +10,8 @@ import Image from "@/app/components/image";
 import Share from "../components/share";
 import { setPrompt } from "@/app/generate/api/generate";
 
+
+
 export default function Page() {
   const [roomType, setroomType] = useState<string>("");
   const [roomStyle, setroomStyle] = useState<string>("");
@@ -47,14 +49,14 @@ export default function Page() {
                   options={["Bedroom", "Bathroom"]}
                   onChange={(e) => setroomType(e.target.value)}
                 />
-                {console.log(roomType)}
+                
                 <Select
                   id={"stly-room"}
                   name={"Choose room style"}
                   options={["Modern", "Bohemain", "Contemporary"]}
                   onChange={(e) => setroomStyle(e.target.value)}
                 />
-                {console.log(roomStyle)}
+         
                 <Input
                   id={"budget-room"}
                   name={"Choose your budget"}
@@ -62,7 +64,7 @@ export default function Page() {
                   placeholder={"50,000"}
                   onChange={(e) => setBudget(parseFloat(e.target.value))}
                 />
-                {console.log(budget)}
+              
               </div>
             </div>
             <div className="bg-white h-full w-[428px] rounded shadow-md p-5">
