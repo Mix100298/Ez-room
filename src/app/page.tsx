@@ -1,10 +1,11 @@
 import React from "react";
+import Link from "next/link";
 import Button from "./components/button";
 
 export default function Home() {
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
-      <div className="grid gap-10 mt-10">
+      <div className="grid gap-10 lg:py-10">
         <div className="flex flex-wrap justify-between gap-10">
           <div className="flex-1 min-w-[450px]">
             <h1 className="font-bold text-4xl pr-10">
@@ -14,9 +15,11 @@ export default function Home() {
               <p>Design your room with Artificial Intelligence</p>
             </div>
             <div className="bg-gray-300 h-1 mt-5"></div>
-            <div className="mt-5 ">
-              <Button>Genarate Room</Button>
-            </div>
+            <Link href="/generate">
+              <div className="mt-5 w-1/3">
+                <Button>Generate Room</Button>
+              </div>
+            </Link>
           </div>
           <div className="flex-1 min-w-[480px]">
             <div className="flex flex-wrap justify-center">
