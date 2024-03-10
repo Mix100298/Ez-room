@@ -12,7 +12,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   name,
   children,
   onChange,
-}) => {
+}: CheckboxProps) => {
   return (
     <div>
       <div className="flex ">

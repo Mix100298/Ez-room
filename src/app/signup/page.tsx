@@ -53,7 +53,7 @@ export default function Page() {
             <h1 className="font-medium text-5xl text-center">Sign up</h1>
             <form className="space-y-4 md:space-y-6" action="#">
               {/* InpurFrom */}
-              {InpurFrom.map((input,idx) => (
+              {InpurFrom.map((input, idx) => (
                 <Input
                   key={idx}
                   name={input.name}
@@ -69,13 +69,13 @@ export default function Page() {
               />
               <div className="flex items-start w-full gap-5">
                 {/* RadioFrom */}
-                {RadioFrom.map((radio,idx) => (
+                {RadioFrom.map((radio, idx) => (
                   <Radio key={idx} id={radio.id} name={radio.name} />
                 ))}
               </div>
             </form>
             <div className="grid text-center gap-3">
-              <Button>Sign up</Button>
+              <Button children={"Sign up"}></Button>
               <p className="text-sm font-light text-blue-400">
                 Already a user?
                 <Link

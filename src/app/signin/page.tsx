@@ -35,7 +35,7 @@ export default function Page() {
               ))}
             </form>
             <div className="grid text-center gap-3">
-              <Button>Sign in</Button>
+              <Button children={"Sign in"}></Button>
               <p className="text-sm font-light text-blue-400">
                 Not Register?
                 <Link

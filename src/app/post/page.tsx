@@ -7,12 +7,14 @@ export default function Page() {
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid gap-10 lg:py-10">
         <div className="flex justify-between items-end">
-          <h1 className="font-bold text-8xl">Post</h1>
+          <Link href="/community">
+            <h1 className="font-bold text-6xl">Post</h1>
+          </Link>
           <svg
             className="fill-slate-500 mb-1"
             xmlns="http://www.w3.org/2000/svg"
-            width="40"
-            height="40"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
           >
             <path d="m16.5 11.995c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25zm-6.75 0c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25zm-6.75 0c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25z" />

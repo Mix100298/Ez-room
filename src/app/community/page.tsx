@@ -27,7 +27,7 @@ export default function Page() {
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid gap-10 lg:py-10">
         <div className="grid">
-          <h1 className="text-8xl font-bold">Community</h1>
+          <h1 className="text-7xl font-bold">Community</h1>
           <p className="mt-5">
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -41,15 +41,15 @@ export default function Page() {
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-10">
-          {cards.map((card, index) => (
-            <div key={index}>{card}</div>
+          {cards.map((card, idx) => (
+            <div key={idx}>{card}</div>
           ))}
         </div>
         <div className="flex items-center justify-center ">
           <Button
             children={"Show more"}
             onClick={addMoreCards}
-            /*isLoading={isLoading}*/
+            isLoading={isLoading}
           />
         </div>
       </div>
