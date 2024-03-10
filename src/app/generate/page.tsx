@@ -45,7 +45,6 @@ export default function Page() {
     const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(nextIndex);
   };
-  
 
   const prevSlide = () => {
     const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
@@ -105,9 +104,9 @@ export default function Page() {
                     transform: `translateX(-${currentIndex * 214}px)`,
                   }}
                 >
-                  {slides.map((index) => (
-                    <div className="w-[174px]">
-                      <Card image={index} />
+                  {slides.map((image, index) => (
+                    <div key={index} className="w-[174px]">
+                      <Card image={image} />
                     </div>
                   ))}
                 </div>
