@@ -4,6 +4,7 @@ import Input from "../components/input";
 import Button from "../components/button";
 import Searchfilter from "@/app/components/searchfilter";
 import Pagination from "../components/pagination";
+import Edit from "../components/edit";
 
 const productsPerPage = 5;
 
@@ -394,13 +395,8 @@ export default function Page() {
                             {product.url}
                           </td>
                           <td className="p-3">{product.price}</td>
-                          <td className="p-3 text-center">
-                            <a
-                              href="#"
-                              className="font-medium text-blue-400 hover:underline"
-                            >
-                              Edit
-                            </a>
+                          <td className="flex items-center justify-center p-6">
+                            <Edit />
                           </td>
                         </tr>
                       ))}

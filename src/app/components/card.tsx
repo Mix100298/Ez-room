@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({ image }: CardProps) => {
       </div>
       <div className="grid p-2">
         <h1 className="text-lg font-bold">Lincoln full base</h1>
-        <label className="text-sm text-gray-700">5000 Bath</label>
+        <p className="text-sm text-gray-700">5000 Bath</p>
       </div>
     </div>
   );
