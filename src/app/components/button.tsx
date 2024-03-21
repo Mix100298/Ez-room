@@ -1,9 +1,6 @@
 import React from "react";
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
-
-interface Props {
+interface ButtonProps {
   children: string;
   onClick?: () => void;
   isLoading?: boolean;
@@ -12,7 +9,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   isLoading,
-}: Props) => {
+}: ButtonProps) => {
   return (
     <div>
       <button

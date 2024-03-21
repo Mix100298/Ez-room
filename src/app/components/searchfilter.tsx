@@ -54,7 +54,7 @@ export default function Searchfilter() {
         </button>
         {/* Dropdown menu */}
         {filter && (
-          <div className="absolute mt-12 w-60 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-gray-100">
+          <div className="absolute mt-12 w-60 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-gray-100 z-40">
             <div className="py-1">
               <h1 className="px-4 py-2 font-bold">Style</h1>
               {/* Styles room */}

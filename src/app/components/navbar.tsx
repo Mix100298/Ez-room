@@ -3,10 +3,9 @@ import Button from "./button";
 import { inter } from "@/app/ui/fonts";
 import Link from "next/link";
 
-
 export default function Navbar() {
   return (
-    <nav className="bg-white border-gray-200 font-bold sticky top-0">
+    <nav className="bg-white border-gray-200 font-bold sticky top-0 z-50">
       <div
         className={`${inter.className} antialiased flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-[150px] py-3`}
       >

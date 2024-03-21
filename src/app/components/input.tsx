@@ -6,7 +6,7 @@ interface InputProps {
   type: string;
   placeholder: string;
   children?: string;
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: () => void;
 }
 
 const Input: React.FC<InputProps> = ({

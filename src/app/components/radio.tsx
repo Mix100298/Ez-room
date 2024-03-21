@@ -1,18 +1,18 @@
 import React from "react";
 
-interface CheckboxProps {
+interface RadioProps {
   id: string;
   name: string;
   children?: string;
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: () => void;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({
+const Checkbox: React.FC<RadioProps> = ({
   id,
   name,
   children,
   onChange,
-}) => {
+}: RadioProps) => {
   return (
     <div>
       <div className="flex ">
