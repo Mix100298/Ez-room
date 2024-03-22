@@ -1,12 +1,14 @@
-import React from "react";
+import React from "react"
 
 interface InputProps {
-  id: string;
-  name: string;
-  type: string;
-  placeholder: string;
-  children?: string;
-  onChange?: () => void;
+  id: string
+  name: string
+  type: string
+  placeholder: string
+  children?: string
+  onChange?: () => void
+  required?: boolean
+  value?: string
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,6 +18,8 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   children,
   onChange,
+  required = false,
+  value,
 }) => {
   return (
     <div>
@@ -33,9 +37,11 @@ const Input: React.FC<InputProps> = ({
         placeholder={placeholder}
         autoComplete="off"
         onChange={onChange}
+        required={required}
+        value={value}
       ></input>
     </div>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

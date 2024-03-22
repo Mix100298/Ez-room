@@ -1,19 +1,21 @@
-import React from "react";
+import React from "react"
 
 interface ButtonProps {
-  children: string;
-  onClick?: () => void;
-  isLoading?: boolean;
+  children: string
+  onClick?: () => void
+  isLoading?: boolean
+  type?: "button" | "submit" | "reset"
 }
 const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   isLoading,
+  type,
 }: ButtonProps) => {
   return (
     <div>
       <button
-        type="button"
+        type={type ?? "button"}
         className="text-white bg-blue-400 hover:bg-blue-500 rounded-md font-bold px-4 py-2 w-full"
         onClick={onClick}
       >
@@ -38,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
         {children}
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button
