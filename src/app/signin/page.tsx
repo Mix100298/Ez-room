@@ -1,7 +1,13 @@
-import React from "react";
-import Link from "next/link";
-import Input from "@/app/components/input";
-import Button from "@/app/components/button";
+import React from "react"
+import Link from "next/link"
+import Input from "@/app/components/input"
+import Button from "@/app/components/button"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Sign in",
+  description: "Sign in page",
+}
 
 export default function Page() {
   const InpurFrom = [
@@ -17,7 +23,7 @@ export default function Page() {
       type: "password",
       placeholder: "••••••••",
     },
-  ];
+  ]
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700 p-10">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
@@ -50,5 +56,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  );
+  )
 }

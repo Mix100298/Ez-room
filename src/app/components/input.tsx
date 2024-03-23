@@ -6,7 +6,7 @@ interface InputProps {
   type: string
   placeholder: string
   children?: string
-  onChange?: () => void
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   required?: boolean
   value?: string
 }

@@ -1,30 +1,36 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Input from "@/app/components/input";
-import Button from "@/app/components/button";
-import Select from "@/app/components/select";
-import Card from "@/app/components/card";
-import Searchfilter from "@/app/components/searchfilter";
-import Image from "@/app/components/image";
-import Share from "../components/share";
-import { setPrompt } from "@/app/generate/api/generate";
+"use client"
+import React, { useState, useEffect } from "react"
+import Link from "next/link"
+import Input from "@/app/components/input"
+import Button from "@/app/components/button"
+import Select from "@/app/components/select"
+import Card from "@/app/components/card"
+import Searchfilter from "@/app/components/searchfilter"
+import Image from "@/app/components/image"
+import Share from "../components/share"
+import { setPrompt } from "@/app/generate/api/generate"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Generate",
+  description: "Generate page",
+}
 
 export default function Page() {
-  const [roomType, setroomType] = useState<string>("");
-  const [roomStyle, setroomStyle] = useState<string>("");
-  const [budget, setBudget] = useState<number>(0);
-  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [roomType, setroomType] = useState<string>("")
+  const [roomStyle, setroomStyle] = useState<string>("")
+  const [budget, setBudget] = useState<number>(0)
+  const [isLoading, setisLoading] = useState<boolean>(false)
 
   const formhandler = async () => {
-    console.log(roomType, roomStyle, budget);
-    setisLoading(true);
-    const res = await setPrompt(roomType + roomStyle + budget);
-    setisLoading(false);
-    alert(res.data);
-  };
+    console.log(roomType, roomStyle, budget)
+    setisLoading(true)
+    const res = await setPrompt(roomType + roomStyle + budget)
+    setisLoading(false)
+    // alert(res.data)
+  }
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0)
   const slides = [
     "https://www.aandmedu.in/wp-content/uploads/2021/11/1-1-Aspect-Ratio-1024x1024.jpg",
     "https://images.unsplash.com/photo-1594476664296-8c552053aef3?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -37,19 +43,19 @@ export default function Page() {
     "https://img.freepik.com/free-vector/golden-number-collection_23-2147801738.jpg?t=st=1709810420~exp=1709814020~hmac=8b0140353ea3a71e486c7be199d96cb342458e4c21a4eb26f22bd2b574e295a8&w=740",
     "https://img.freepik.com/free-vector/black-friday-sale-banner-with-discount-offer-details_1017-41262.jpg?t=st=1709810457~exp=1709814057~hmac=1e14b652c240ca0604cbb9944b66fdacd4f7f8527635cb1e31b1b9bcd90d5ecf&w=740",
     "https://img.freepik.com/free-vector/hand-drawn-fast-food-poster_23-2150970591.jpg?t=st=1709811563~exp=1709815163~hmac=e823a1d159ce51e1c664d2253f0e49947523655534114825d998eee44009fa01&w=740",
-  ];
+  ]
 
-  const totalSlides = Math.floor(slides.length / 2);
+  const totalSlides = Math.floor(slides.length / 2)
 
   const nextSlide = () => {
-    const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(nextIndex);
-  };
+    const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1
+    setCurrentIndex(nextIndex)
+  }
 
   const prevSlide = () => {
-    const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
-    setCurrentIndex(prevIndex);
-  };
+    const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1
+    setCurrentIndex(prevIndex)
+  }
 
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -141,5 +147,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  );
+  )
 }

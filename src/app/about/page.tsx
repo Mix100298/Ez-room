@@ -1,4 +1,10 @@
-import React from "react";
+import React from "react"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "About Us page",
+}
 
 export default function page() {
   return (
@@ -97,5 +103,5 @@ export default function page() {
         </div>
       </div>
     </div>
-  );
+  )
 }

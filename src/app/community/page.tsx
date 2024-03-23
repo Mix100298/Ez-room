@@ -1,27 +1,33 @@
-"use client";
-import React, { useState } from "react";
-import Button from "@/app/components/button";
-import Searchfilter from "@/app/components/searchfilter";
-import Communitycard from "@/app/components/communitycard";
+"use client"
+import React, { useState } from "react"
+import Button from "@/app/components/button"
+import Searchfilter from "@/app/components/searchfilter"
+import Communitycard from "@/app/components/communitycard"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Community",
+  description: "Community page",
+}
 
 export default function Page() {
-  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [isLoading, setisLoading] = useState<boolean>(false)
 
   const [cards, setCards] = useState<React.ReactNode[]>([
     <Communitycard />,
     <Communitycard />,
     <Communitycard />,
-  ]);
+  ])
 
   const addMoreCards = () => {
-    setisLoading(true);
+    setisLoading(true)
     const newCards: React.ReactNode[] = [
       ...cards,
       ...Array(3).fill(<Communitycard />),
-    ];
-    setCards(newCards);
-    setisLoading(false);
-  };
+    ]
+    setCards(newCards)
+    setisLoading(false)
+  }
 
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -54,8 +60,8 @@ export default function Page() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 function repeat(arg0: number) {
-  throw new Error("Function not implemented.");
+  throw new Error("Function not implemented.")
 }

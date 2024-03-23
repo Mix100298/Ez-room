@@ -6,10 +6,17 @@ import Select from "@/app/components/select"
 import Button from "@/app/components/button"
 import Radio from "@/app/components/radio"
 import { useRouter } from "next/navigation"
+import type { Metadata } from "next"
+import axios from "axios"
+
+export const metadata: Metadata = {
+  title: "Sign up",
+  description: "Sign up page",
+}
 
 export default function Page() {
   const router = useRouter()
-  const InpurFrom = [
+  const InputFrom = [
     {
       name: "Your email",
       id: "email",
@@ -58,34 +65,43 @@ export default function Page() {
     const lastname = e.target[4].value
     const dateOfBirth = e.target[5].value
     const sex = e.target[6].value
+    const avatar = e.target[7].files[0]
 
-    console.log(sex)
+    let data = {
+      email,
+      password,
+      firstname,
+      lastname,
+      dateOfBirth,
+      sex,
+    }
+
     if (password !== confirmPassword) {
       alert("Password and Confirm Password must be the same")
       return
     }
-    fetch("http://localhost:5000/api/users/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-        firstname,
-        lastname,
-        dateOfBirth,
-        sex,
-      }),
-    }).then((res) => {
-      console.log(res)
-      if (res.ok) {
-        alert("Sign up success")
-        router.push("/signin")
-        return
-      }
-      alert("Sign up failed")
-    })
 
-    //alert([email, password, firstName, lastName, dateOfBirth, sex])
+    axios
+      .post(
+        "http://localhost:5000/api/users/register",
+        {
+          data: data,
+          file: avatar,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          alert("Sign up success")
+          router.push("/signin")
+          return
+        }
+        alert("Sign up failed")
+      })
   }
 
   return (
@@ -94,16 +110,20 @@ export default function Page() {
         <div className="w-full bg-white rounded shadow md:mt-0 max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 xl:p-8">
             <h1 className="font-medium text-5xl text-center">Sign up</h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={formHandle}>
+            <form
+              className="space-y-4 md:space-y-6"
+              onSubmit={formHandle}
+              encType="multipart/form-data"
+            >
               {/* InpurFrom */}
-              {InpurFrom.map((input, idx) => (
+              {InputFrom.map((input, idx) => (
                 <Input
                   key={idx}
                   name={input.name}
                   id={input.id}
                   type={input.type}
                   placeholder={input.placeholder}
-                  required={true}
+                  //required={true}
                 />
               ))}
               <Input
@@ -112,20 +132,31 @@ export default function Page() {
                 type={"date"}
                 placeholder="Date of Birth"
               />
-              <div className="flex items-start w-full gap-5">
+              <div className="flex flex-col items-start w-full">
                 {/* RadioFrom */}
-                {RadioFrom.map((radio, idx) => (
-                  <Radio
-                    key={idx}
-                    id={radio.id}
-                    name={radio.name}
-                    value={radio.name}
-                  />
-                ))}
+                <label
+                  htmlFor="sex"
+                  className="block mb-2 text-sm font-medium text-gray-700 w-full"
+                >
+                  Sex
+                </label>
+                <select name="Sex" className="w-full border p-2" id="sex">
+                  {RadioFrom.map((radio, idx) => (
+                    <option key={idx} value={radio.name} id={radio.id}>
+                      {radio.name}
+                    </option>
+                  ))}
+                </select>
               </div>
+              <Input
+                id={"upload-file"}
+                name={"Avatar Image"}
+                type={"file"}
+                placeholder="upload your avatar"
+              />
+
               <div className="grid text-center gap-3">
                 <Button type="submit" children={"Sign up"}></Button>
-                <Button type="reset" children={"reset"}></Button>
                 <p className="text-sm font-light text-blue-400">
                   Already a user?
                   <Link
