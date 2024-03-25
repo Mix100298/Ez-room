@@ -42,9 +42,7 @@ export default function Page() {
   });
   const router = useRouter();
 
-  const formHandle: SubmitHandler<IFormInput> = async (data) => {
-   console.log(data)
-
+  const formHandle: SubmitHandler<IFormInput> = async (formdata) => {
     // const email = e.target[0].value;
     // const password = e.target[1].value;
     // const confirmPassword = e.target[2].value;
@@ -54,44 +52,44 @@ export default function Page() {
     // const sex = e.target[6].value;
     // const avatar = e.target[7].files[0];
 
-    // let data = {
-    //   email,
-    //   password,
-    //   firstname,
-    //   lastname,
-    //   dateOfBirth,
-    //   sex,
-    // };
+    let data = {
+      email: formdata.email,
+      password: formdata.password,
+      firstname: formdata.firstname,
+      lastname: formdata.lastname,
+      dateOfBirth: formdata.dateOfBirth,
+      sex: formdata,
+    };
+    const { avatar } = formdata;
 
-    // if (password !== confirmPassword) {
-    //   alert("Password and Confirm Password must be the same");
-    //   return;
-    // }
+    if (formdata.password !== formdata.confirmPassword) {
+      alert("Password and Confirm Password must be the same");
+      return;
+    }
 
-    alert("Sign up success");
-
-    // axios
-    //   .post(
-    //     "http://localhost:5000/api/users/register",
-    //     {
-    //       data: data,
-    //       file: avatar,
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     if (res.status === 201) {
-    //       alert("Sign up success")
-    //       router.push("/signin")
-    //       return
-    //     }
-    //     alert("Sign up failed")
-    //   })
+    axios
+      .post(
+        "http://localhost:5000/api/users/register",
+        {
+          data: data,
+          file: avatar,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          alert("Sign up success");
+          router.push("/signin");
+          return;
+        }
+        alert("Sign up failed");
+      });
   };
+  
   const RadioFrom = [
     { id: "term-male", name: "Male" },
     { id: "term-female", name: "Female" },
