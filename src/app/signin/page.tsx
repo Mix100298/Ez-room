@@ -1,19 +1,20 @@
-'use client';
-import React from "react";
-import Link from "next/link";
-import Input from "@/app/components/input";
-import Button from "@/app/components/button";
-import type { Metadata } from "next";
-import { useForm, SubmitHandler } from "react-hook-form";
-
+"use client"
+import React from "react"
+import Link from "next/link"
+import Input from "@/app/components/input"
+import Button from "@/app/components/button"
+import type { Metadata } from "next"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 export const metadata: Metadata = {
   title: "Sign in",
   description: "Sign in page",
-};
+}
 
 interface InputForm {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export default function Page() {
@@ -27,11 +28,32 @@ export default function Page() {
       email: "",
       password: "",
     },
-  });
-
+  })
+  const router = useRouter()
   const formHandle: SubmitHandler<InputForm> = async (data) => {
-    console.log(data);
-  };
+    const { email, password } = data
+    axios
+      .post(
+        "http://localhost:5000/api/users/login",
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((result) => {
+        alert("login success.")
+        router.push("/generate")
+      })
+      .catch((err) => {
+        alert(JSON.stringify(err.message))
+      })
+  }
 
   return (
     <main className="min-h-screen">
@@ -44,8 +66,7 @@ export default function Page() {
                 className="space-y-4 md:space-y-6"
                 onSubmit={handleSubmit(formHandle)}
               >
-
-<div>
+                <div>
                   <label
                     htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-700"
@@ -86,7 +107,7 @@ export default function Page() {
                       required: {
                         value: true,
                         message: "This field is required.",
-                      }
+                      },
                     })}
                     type="password"
                     id="password"
@@ -121,7 +142,7 @@ export default function Page() {
         </div>
       </div>
     </main>
-  );
+  )
 }
 
 // const InpurFrom = [
