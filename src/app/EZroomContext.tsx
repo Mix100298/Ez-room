@@ -1,7 +1,10 @@
 "use client";
 import { useState, useEffect, createContext, useContext } from "react";
+import axios from "axios";
 
 const EZroomProvider = createContext({} as any);
+
+
 
 export function EZroomContext({ children }: any) {
   const [info, setInfo] = useState({});
@@ -9,9 +12,25 @@ export function EZroomContext({ children }: any) {
   const [error, setError] = useState(null);
   const [isLogged, setIsLogged] = useState(false);
 
+  const persistLogin = async () => {
+
+    // check expired token
+    try {
+      const response = await axios.get("/api/auth",{
+        withCredentials : true
+      });
+      if (response.status === 200) {
+        setIsLogged(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     const info = window.localStorage.getItem("info")
-    setInfo({info})
+    console.log()
+    setInfo(JSON.parse(info || "{}"));
   }, []);
 
   return (

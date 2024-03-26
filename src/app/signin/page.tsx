@@ -1,20 +1,20 @@
-"use client"
-import React from "react"
-import Link from "next/link"
-import Input from "@/app/components/input"
-import Button from "@/app/components/button"
-import type { Metadata } from "next"
-import { useForm, SubmitHandler } from "react-hook-form"
-import { useRouter } from "next/navigation"
-import axios from "axios"
+"use client";
+import React from "react";
+import Link from "next/link";
+import Input from "@/app/components/input";
+import Button from "@/app/components/button";
+import type { Metadata } from "next";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 export const metadata: Metadata = {
   title: "Sign in",
   description: "Sign in page",
-}
+};
 
 interface InputForm {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 export default function Page() {
@@ -28,10 +28,10 @@ export default function Page() {
       email: "",
       password: "",
     },
-  })
-  const router = useRouter()
-  const formHandle: SubmitHandler<InputForm> = async (data) => {
-    const { email, password } = data
+  });
+  const router = useRouter();
+  const formHandle: SubmitHandler<InputForm> = (data) => {
+    const { email, password } = data;
     axios
       .post(
         "http://localhost:5000/api/users/login",
@@ -47,13 +47,13 @@ export default function Page() {
         }
       )
       .then((result) => {
-        alert("login success.")
-        router.push("/generate")
+        window.localStorage.setItem("info", JSON.stringify(result.data));
+        router.push("/generate");
       })
       .catch((err) => {
-        alert(JSON.stringify(err.message))
-      })
-  }
+        alert(JSON.stringify(err.message));
+      });
+  };
 
   return (
     <main className="min-h-screen">
@@ -142,7 +142,7 @@ export default function Page() {
         </div>
       </div>
     </main>
-  )
+  );
 }
 
 // const InpurFrom = [
