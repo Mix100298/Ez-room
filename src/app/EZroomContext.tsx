@@ -10,8 +10,9 @@ export function EZroomContext({ children }: any) {
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
-    console.log("info", info);
-  }, [info]);
+    const info = window.localStorage.getItem("info")
+    setInfo({info})
+  }, []);
 
   return (
     <EZroomProvider.Provider

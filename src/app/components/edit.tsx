@@ -20,7 +20,8 @@ const Edit: React.FC<EditProps> = ({ onEdit }: EditProps) => {
   return (
     <div className="gird">
       <button onClick={() => setEdit(!edit)}>
-        <svg
+      <i className="fi fi-rr-shopping-cart-add text-red-500 text-base"></i>
+        {/* <svg
           className="fill-slate-500"
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -28,7 +29,7 @@ const Edit: React.FC<EditProps> = ({ onEdit }: EditProps) => {
           viewBox="0 0 24 24"
         >
           <path d="m16.5 11.995c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25zm-6.75 0c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25zm-6.75 0c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25z" />
-        </svg>
+        </svg> */}
       </button>
       {/* Dropdown edit */}
       {edit && (
