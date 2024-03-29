@@ -1,13 +1,20 @@
-"use client";
-import React from "react";
-import Button from "./button";
-import { inter } from "@/app/ui/fonts";
-import Link from "next/link";
-import { useEZroom } from "@/app/EZroomContext";
+"use client"
+import React from "react"
+import Button from "./button"
+import { inter } from "@/app/ui/fonts"
+import Link from "next/link"
+import { useEZroom } from "@/app/EZroomContext"
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
-function getMenuItem(isLogin = false, role = "user", avatar = "") {
+function getMenuItem(
+  isLogin = false,
+  role = "User",
+  avatar = "",
+  signout = () => {}
+) {
   if (isLogin) {
-    if (role === "admin") {
+    if (role === "Admin") {
       return (
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
           <Link href="/">
@@ -28,19 +35,15 @@ function getMenuItem(isLogin = false, role = "user", avatar = "") {
           <img
             alt="avatar"
             src={avatar}
-            className="rounded-full w-9 h-9 ring-2 ring-blue-500"
-            width={40}
-            height={40}
+            className="rounded-full w-9 h-9 ring-2 ring-blue-500 object-cover"
           />
-          
-            <Button  onClick={()=>{
-              localStorage.removeItem("info");
-              window.location.reload();
-            }}>Sign out</Button>
-         
+
+          <Button type="button" onClick={signout}>
+            Sign out
+          </Button>
         </div>
-      );
-    } else if (role === "user") {
+      )
+    } else if (role === "User") {
       return (
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
           <Link href="/">
@@ -58,18 +61,13 @@ function getMenuItem(isLogin = false, role = "user", avatar = "") {
           <img
             alt="avatar"
             src={avatar}
-            className="rounded-full w-9 h-9 ring-2 ring-blue-500"
-            width={40}
-            height={40}
+            className="rounded-full w-9 h-9 ring-2 ring-blue-500 object-cover"
           />
-          
-            <Button onClick={()=>{
-              localStorage.removeItem("info");
-              window.location.reload();
-            }}>Sign out</Button>
-          
+          <Button type="button" onClick={signout}>
+            Sign out
+          </Button>
         </div>
-      );
+      )
     }
   } else {
     return (
@@ -81,13 +79,24 @@ function getMenuItem(isLogin = false, role = "user", avatar = "") {
           <Button>Sign in</Button>
         </Link>
       </div>
-    );
+    )
   }
 }
 
 export default function Navbar() {
-  const { info } = useEZroom();
-  
+  const { info } = useEZroom()
+  const router = useRouter()
+
+  const signout = () => {
+    axios
+      .delete("http://localhost:5000/api/users/logout", {
+        withCredentials: true,
+      })
+      .then(() => {
+        window.localStorage.removeItem("info")
+        window.location.reload()
+      })
+  }
 
   return (
     <nav className="bg-white border-gray-200 font-bold sticky top-0 z-50">
@@ -106,8 +115,8 @@ export default function Navbar() {
             </span>
           </div>
         </Link>
-        {getMenuItem(info.isLogin,info.role, info.avatar)}
+        {getMenuItem(info.isLogin, info.role, info.avatar, signout)}
       </div>
     </nav>
-  );
+  )
 }
