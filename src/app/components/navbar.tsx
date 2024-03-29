@@ -32,9 +32,12 @@ function getMenuItem(isLogin = false, role = "user", avatar = "") {
             width={40}
             height={40}
           />
-          <Link href="/signout">
-            <Button>Sign out</Button>
-          </Link>
+          
+            <Button  onClick={()=>{
+              localStorage.removeItem("info");
+              window.location.reload();
+            }}>Sign out</Button>
+         
         </div>
       );
     } else if (role === "user") {
@@ -59,9 +62,12 @@ function getMenuItem(isLogin = false, role = "user", avatar = "") {
             width={40}
             height={40}
           />
-          <Link href="/signout">
-            <Button>Sign out</Button>
-          </Link>
+          
+            <Button onClick={()=>{
+              localStorage.removeItem("info");
+              window.location.reload();
+            }}>Sign out</Button>
+          
         </div>
       );
     }
@@ -81,7 +87,7 @@ function getMenuItem(isLogin = false, role = "user", avatar = "") {
 
 export default function Navbar() {
   const { info } = useEZroom();
-  const { isLogin, role, avatar } = info;
+  
 
   return (
     <nav className="bg-white border-gray-200 font-bold sticky top-0 z-50">
@@ -100,7 +106,7 @@ export default function Navbar() {
             </span>
           </div>
         </Link>
-        {getMenuItem(isLogin, role, avatar)}
+        {getMenuItem(info.isLogin,info.role, info.avatar)}
       </div>
     </nav>
   );
