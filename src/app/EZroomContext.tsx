@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect, createContext, useContext } from "react"
 import axios from "axios"
+import { getCookie } from "cookies-next"
 
 const EZroomProvider = createContext({} as any)
 
@@ -9,15 +10,20 @@ export function EZroomContext({ children }: any) {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const [isLogged, setIsLogged] = useState(false)
+  const [image, setImage] = useState({})
 
   const persistLogin = async () => {
-    // check expired token
+    // persist login
     try {
-      const response = await axios.get("/api/auth", {
+      const response = await axios.get("http://localhost:5000/api/users/autologin", {
         withCredentials: true,
       })
       if (response.status === 200) {
-        setIsLogged(true)
+        const info = getCookie("info")
+        setInfo(info) 
+      }else if(response.status === 401){
+        setIsLogged(false)
+        throw new Error("Unauthorized")
       }
     } catch (error) {
       console.error(error)
@@ -25,9 +31,12 @@ export function EZroomContext({ children }: any) {
   }
 
   useEffect(() => {
-    const info = window.localStorage.getItem("info")
-    console.log(info)
-    setInfo(JSON.parse(info || "{}"))
+   const info = getCookie("info")
+   if (info) {
+    setInfo(JSON.parse(info))
+    setIsLogged(true)
+  }
+    
   }, [])
 
   return (
@@ -41,6 +50,8 @@ export function EZroomContext({ children }: any) {
         setError,
         isLogged,
         setIsLogged,
+        image,
+        setImage,
       }}
     >
       {children}

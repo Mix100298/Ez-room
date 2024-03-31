@@ -1,8 +1,8 @@
 "use client"
 import React, { useState } from "react"
-import Button from "@/app/components/button"
-import Searchfilter from "@/app/components/searchfilter"
-import Communitycard from "@/app/components/communitycard"
+import Button from "@/components/button"
+import Searchfilter from "@/components/searchfilter"
+import Communitycard from "@/components/communitycard"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
+    <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid gap-10 lg:py-10">
         <div className="grid">
           <h1 className="text-7xl font-bold">Community</h1>
@@ -59,7 +59,7 @@ export default function Page() {
           />
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 function repeat(arg0: number) {

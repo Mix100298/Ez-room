@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import Card from "@/app/components/card";
-import Edit from "../components/edit";
-import Share from "../components/share";
+import Card from "@/components/card";
+import Edit from "../../components/edit";
+import Share from "../../components/share";
 
 export default function Page() {
   const [editPost, setEditPost] = useState(false);

@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import Link from "next/link"
-import Button from "@/app/components/button"
+import Button from "@/components/button"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import type { Metadata } from "next"
