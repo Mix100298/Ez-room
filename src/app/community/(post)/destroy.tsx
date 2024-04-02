@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { inter } from "../ui/fonts";
+
 
 interface LayoutProps {
   image : React.ReactNode;

@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Card from "@/components/card";
-import Edit from "../../../components/edit";
-import Share from "../../../components/share";
+import Edit from "@/components/edit";
+import Share from "@/components/share";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const [name, id] = params["slug"]
-  console.log(name, id);
+export default function Page({ params }: { params: { id: string } }) {
+  const id= params["id"]
+  console.log(id);
   const [editPost, setEditPost] = useState(false);
 
   const handleEditChange = (isEditing: boolean) => {
@@ -23,7 +23,6 @@ export default function Page({ params }: { params: { slug: string } }) {
           <Link href="/community">
             <h1 className="font-bold text-6xl">Post </h1>
           </Link>
-          <h3 className="font-bold text-2xl text-indigo-500">Author :{name}</h3>
           <h3 className="font-bold text-2xl text-indigo-500">Id :{id}</h3>
           <Edit onEdit={() => handleEditChange(true)} />
         </div>
@@ -42,6 +41,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           ) : (
             <div className="bg-white h-[512px] w-[428px] rounded p-5">
               <div className="grid gap-5">
+                {console.log("destroy")}
                 <h1 className="font-bold text-2xl">My dream bathroom</h1>
                 <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
                   <img

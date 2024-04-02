@@ -2,12 +2,13 @@
 import Searchfilter from "@/components/searchfilter";
 import Pagination from "@components/pagination";
 import Edit from "@components/edit";
-import { useState,useEffect } from "react";
+import { useState,useEffect } from "react"
 
 const productsPerPage = 5;
 
 export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
+  
   const products = [
     {
       id: 1,
@@ -315,6 +316,7 @@ export default function Page() {
   }, []);
 
   return (
+   
     <div className="grid gap-10 min-w-[500px] ">
       <div className="flex flex-wrap justify-between gap-10">
         <h1 className="font-bold text-4xl">Product table</h1>
@@ -366,7 +368,7 @@ export default function Page() {
                   <td className="p-3 truncate max-w-[200px]">{product.url}</td>
                   <td className="p-3">{product.price}</td>
                   <td className="flex items-center justify-center p-6">
-                    <Edit />
+                    <Edit  />
                   </td>
                 </tr>
               ))

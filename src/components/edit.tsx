@@ -20,7 +20,7 @@ const Edit: React.FC<EditProps> = ({ onEdit, onDelete }: EditProps) => {
   return (
     <div className="gird">
       <button onClick={() => setEdit(!edit)}>
-        <i className="fi fi-rr-menu-dots-vertical text-red-500 text-base"></i>
+        <i className="fi fi-rr-menu-dots-vertical text-base"></i>
       </button>
 
       {edit && (

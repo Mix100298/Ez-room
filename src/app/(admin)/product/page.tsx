@@ -10,6 +10,7 @@ const productsPerPage = 5;
 
 export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentProduct, setCurrentProduct] = useState({});
   
   const totalPages = Math.ceil(products.length / productsPerPage); // TotalPages = 2 (number of products / productsPerPage = 31/5 = 7) Math.ceil is rounding up
   const indexOfLastProduct = currentPage * productsPerPage; // indexOfLastProduct = 1 * 5 = 5
@@ -24,8 +25,8 @@ export default function Page() {
     setCurrentPage(page);
   };
 
-  const mockFetch = (data) => new Promise((resolve) => setTimeout(() => resolve(data), 2000));
-
+  
+  {console.log(currentProduct)}
   return (
     <div className="grid flex-1 gap-10">
       <div className="grid gap-10 min-w-[500px] ">
@@ -64,9 +65,9 @@ export default function Page() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody> 
               
-              {mockFetch(currentProducts).then((products)=> products.map((product) => (
+              {currentProducts.map((product) => (
                 <tr
                   key={product.id}
                   className="bg-white border-b hover:bg-gray-100"
@@ -76,15 +77,15 @@ export default function Page() {
                   </th>
                   <td className="p-3">{product.productName}</td>
                   <td className="p-3">{product.brand}</td>
-                  <td className="p-3">{product.type}</td>
+                  <td className="p-3">{product.type}</td>   
                   <td className="p-3">{product.category}</td>
                   <td className="p-3 truncate max-w-[200px]">{product.url}</td>
                   <td className="p-3">{product.price}</td>
                   <td className="flex items-center justify-center p-6">
-                    <Edit />
+                    <Edit onEdit={()=> setCurrentProduct(product)} />
                   </td>
                 </tr>
-              )))}
+              ))}
             </tbody>
           </table>
           
