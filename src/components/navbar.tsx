@@ -10,7 +10,8 @@ import Avatar from "./avatar";
 import { useEffect } from "react";
 import Image from "next/image";
 
-const avatar = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ageres.jpg/1024px-Ageres.jpg'
+const avatar =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ageres.jpg/1024px-Ageres.jpg";
 
 function getMenuItem(
   isLogin: boolean,
@@ -39,7 +40,7 @@ function getMenuItem(
             <span className=" text-black ">About us</span>
           </Link>
           <Avatar src={avatar} alt="avatar" name={name} />
-          <Button type="button" onClick={signout}>
+          <Button type="button" onClick={signout} isLogin={true}>
             Sign out
           </Button>
         </div>

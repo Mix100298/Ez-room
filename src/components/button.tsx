@@ -1,23 +1,31 @@
-import React from "react"
+import React from "react";
 
 interface ButtonProps {
-  children: string
-  onClick?: () => void
-  isLoading?: boolean
-  type?: "button" | "submit" | "reset"
+  children: string;
+  onClick?: () => void;
+  isLoading?: boolean;
+  type?: "button" | "submit" | "reset";
+  isLogin?: boolean;
 }
 const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
   isLoading,
   type,
+  isLogin,
 }: ButtonProps) => {
+  const buttonClasses = `text-white disabled:bg-slate-300 ${
+    isLogin === true
+      ? "bg-red-500 hover:bg-red-700"
+      : "bg-blue-400 hover:bg-blue-500"
+  } rounded-md font-bold px-4 py-2 w-full flex items-center justify-center transition-colors duration-300 ease-in-out dark:bg-gray-800 dark:text-gray-200 gap-3`;
+
   return (
     <div>
       <button
-      disabled={isLoading}
+        disabled={isLoading}
         type={type ?? "button"}
-        className="text-white disabled:bg-slate-300 bg-blue-400 hover:bg-blue-500 rounded-md font-bold px-4 py-2 w-full flex items-center justify-center transition-colors duration-300 ease-in-out dark:bg-gray-800 dark:text-gray-200 gap-3" 
+        className={buttonClasses}
         onClick={onClick}
       >
         {isLoading && (
@@ -41,7 +49,7 @@ const Button: React.FC<ButtonProps> = ({
         {isLoading ? "Loading..." : children}
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

@@ -20,7 +20,7 @@ const Edit: React.FC<EditProps> = ({ onEdit }: EditProps) => {
   return (
     <div className="gird">
       <button onClick={() => setEdit(!edit)}>
-      <i className="fi fi-rr-shopping-cart-add text-red-500 text-base"></i>
+        <i className="fi fi-rr-shopping-cart-add text-red-500 text-base"></i>
         {/* <svg
           className="fill-slate-500"
           xmlns="http://www.w3.org/2000/svg"
@@ -34,35 +34,25 @@ const Edit: React.FC<EditProps> = ({ onEdit }: EditProps) => {
       {/* Dropdown edit */}
       {edit && (
         <div className="absolute w-40 rounded-md bg-white shadow-lg z-40">
-          <div className="py-1">
+          <div className="py-0">
             <button
+              className="w-full hover:bg-gray-200 border-b"
               onClick={() => {
                 handleEditClick();
                 setEdit(!edit);
               }}
             >
-              <div className="flex px-4 py-2 space-x-2 font-bold hover:text-blue-500 hover:fill-blue-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="m4.988 19.012 5.41-5.41m2.366-6.424 4.058 4.058-2.03 5.41L5.3 20 4 18.701l3.355-9.494 5.41-2.029Zm4.626 4.625L12.197 6.61 14.807 4 20 9.194l-2.61 2.61Z" />
-                </svg>
-                <h1 className="">Edit</h1>
+              <div className="flex px-4 py-2 space-x-2 font-bold text-blue-500">
+                <i className="fi fi-rr-pen-nib  text-base"></i>
+                <h1>Edit</h1>
               </div>
             </button>
-            <button onClick={() => setEdit(!edit)}>
-              <div className="flex px-4 py-2  space-x-2 font-bold hover:text-red-500 hover:fill-red-500">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
-                </svg>
+            <button
+              className="w-full hover:bg-gray-200"
+              onClick={() => setEdit(!edit)}
+            >
+              <div className="flex px-4 py-2 space-x-2 font-bold text-red-500">
+                <i className="fi fi-rr-trash  text-base"></i>
                 <h1>Delete</h1>
               </div>
             </button>
