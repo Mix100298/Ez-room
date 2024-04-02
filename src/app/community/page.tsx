@@ -4,6 +4,7 @@ import Button from "@/components/button"
 import Searchfilter from "@/components/searchfilter"
 import Communitycard from "@/components/communitycard"
 import type { Metadata } from "next"
+import {useSearchParams} from 'next/navigation'
 
 export const metadata: Metadata = {
   title: "Community",
@@ -12,6 +13,10 @@ export const metadata: Metadata = {
 
 export default function Page() {
   const [isLoading, setisLoading] = useState<boolean>(false)
+  const searchParams = useSearchParams()
+  const author = searchParams.get('author')
+  const id = searchParams.get('id')
+  
 
   const [cards, setCards] = useState<React.ReactNode[]>([
     <Communitycard />,
@@ -28,6 +33,7 @@ export default function Page() {
     setCards(newCards)
     setisLoading(false)
   }
+  console.log(author, id)
 
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">

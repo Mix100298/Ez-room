@@ -7,8 +7,6 @@ import Pagination from "../../components/pagination";
 import Edit from "../../components/edit";
 
 
-// not used forever
-
 export default function Page() {
  
 

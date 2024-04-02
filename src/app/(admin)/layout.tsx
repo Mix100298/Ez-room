@@ -19,7 +19,7 @@ export default function Layout({
           <div className="col-span-3">
           <AdminNavbar />
           </div>
-          <section className="col-span-9 row-auto ">{children}</section>
+          <section className="col-span-9 ">{children}</section>
         </div>
       </main>
       <Footer />

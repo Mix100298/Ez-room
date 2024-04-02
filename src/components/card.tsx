@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({ image ,name , price, form}: CardProps) => {
       <input {...form} className="absolute w-full h-4/5 -top-1.5 opacity-10 " type="checkbox" value={name} checked={checked} onChange={()=> setChecked(!checked) } />
       <div className="grid">
         {image ? (
-          <img className="rounded-t" src={image} />
+          <img className="rounded-t object-cover aspect-square w-full" src={image} />
         ) : (
           <img
             className="rounded-t"
@@ -28,7 +28,7 @@ const Card: React.FC<CardProps> = ({ image ,name , price, form}: CardProps) => {
         )}
       </div>
       <div className="grid p-2">
-        <a href="https://www.google.com" target="_blank" className="text-lg font-bold">{name}</a>
+        <a href="https://www.google.com" target="_blank" className="text-lg font-bold truncate">{name}</a>
         <p className="text-sm text-gray-700">{price} Baht</p>
       </div>
     </div>

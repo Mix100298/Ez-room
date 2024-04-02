@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Card from "@/components/card";
-import Edit from "../../components/edit";
-import Share from "../../components/share";
+import Edit from "../../../components/edit";
+import Share from "../../../components/share";
 
-export default function Page() {
+export default function Page({ params }: { params: { slug: string } }) {
+  const [name, id] = params["slug"]
+  console.log(name, id);
   const [editPost, setEditPost] = useState(false);
 
   const handleEditChange = (isEditing: boolean) => {
@@ -19,8 +21,10 @@ export default function Page() {
       <div className="grid gap-10 lg:py-10">
         <div className="flex justify-between items-end">
           <Link href="/community">
-            <h1 className="font-bold text-6xl">Post</h1>
+            <h1 className="font-bold text-6xl">Post </h1>
           </Link>
+          <h3 className="font-bold text-2xl text-indigo-500">Author :{name}</h3>
+          <h3 className="font-bold text-2xl text-indigo-500">Id :{id}</h3>
           <Edit onEdit={() => handleEditChange(true)} />
         </div>
         <div className="flex flex-wrap justify-center gap-10">

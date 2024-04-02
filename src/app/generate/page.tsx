@@ -10,8 +10,10 @@ import Share from "@/components/share";
 import { useForm, SubmitHandler, set } from "react-hook-form";
 //import { setPrompt } from "@/app/generate/api/generate"
 import type { Metadata } from "next";
-import { useEZroom } from "../EZroomContext";
-import { resolve } from "path";
+import axios from "axios";
+import Image from "next/image";
+import useFetch from "@/hooks/useFetch";
+
 
 export const metadata: Metadata = {
   title: "Generate",
@@ -26,7 +28,7 @@ interface generateProps {
   type: "Random" | "Bedroom" | "Bathroom";
   style: "Random" | "Modern" | "Bohemain" | "Contemporary";
   budget: number;
-  furniture: [];
+  furnitures: [];
 }
 
 export default function Page() {
@@ -40,11 +42,13 @@ export default function Page() {
       type: "Random",
       style: "Random",
       budget: 50000,
-      furniture: [],
+      furnitures: [],
     },
   });
   const [isLoading, setisLoading] = useState<boolean>(false);
   const [result, setResult] = useState<string>("");
+  const { data, isLoading: isDataLoading, error } = useFetch("https://fakestoreapi.com/products");
+
 
   const fakePost = (status: boolean,data : any) => {
     return new Promise((resolve, reject) => {
@@ -61,15 +65,15 @@ export default function Page() {
   const formhandler: SubmitHandler<generateProps> = async (data) => {
     setResult("");
     setisLoading(true);
-    fakePost(true,data)
-      .then((res) => {
-        setResult(res);
-        setisLoading(false);
-      })
-      .catch((err) => {
-        alert(err);
-        setisLoading(false);
-      });
+    try {
+      const result = await axios.post("http://localhost:5000/api/generate/create", data);
+      console.log(result.data);
+      setResult(result.data);
+      setisLoading(false);
+    } catch (error) {
+      console.log(data);
+      setisLoading(false);
+    }
     return;
   };
   //   console.log(roomType, roomStyle, budget)
@@ -78,8 +82,12 @@ export default function Page() {
   //   setisLoading(false)
   //   // alert(res.data)
   // }
+  
+  const mockFetch = (data : string[]) => new Promise((resolve) => setTimeout(() => resolve(data), 2000));
 
+  
   const [currentIndex, setCurrentIndex] = useState(0);
+  let datatest : string[] = []
   const slides = [
     "https://www.aandmedu.in/wp-content/uploads/2021/11/1-1-Aspect-Ratio-1024x1024.jpg",
     "https://images.unsplash.com/photo-1594476664296-8c552053aef3?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -94,6 +102,7 @@ export default function Page() {
     "https://img.freepik.com/free-vector/hand-drawn-fast-food-poster_23-2150970591.jpg?t=st=1709811563~exp=1709815163~hmac=e823a1d159ce51e1c664d2253f0e49947523655534114825d998eee44009fa01&w=740",
   ];
 
+
   const totalSlides = Math.floor(slides.length / 2);
 
   const nextSlide = () => {
@@ -105,9 +114,9 @@ export default function Page() {
     const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
   };
-
+  
   return (
-    <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
+    <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700"     >
       <form onSubmit={handleSubmit(formhandler)}>
         <div className="grid gap-10 lg:py-10">
           <div className="grid">
@@ -135,7 +144,7 @@ export default function Page() {
                   <Select
                     id={register("style").name}
                     name={"Choose room style"}
-                    options={["Random", "Modern", "Bohemain", "Contemporary"]}
+                    options={["Random", "Modern", "Bohemian", "Contemporary"]}
                     form={register("style")}
                   />
 
@@ -165,8 +174,8 @@ export default function Page() {
                 <h1 className="text-xl font-bold">Specify furniture</h1>
                 <div className="py-5">
                   {/* <Searchfilter /> */}
-                  {errors.furniture && (
-                    <p className="text-red-500">{errors.furniture.message}</p>
+                  {errors.furnitures && (
+                    <p className="text-red-500">{errors.furnitures.message}</p>
                   )}
                 </div>
                 <div className="overflow-hidden">
@@ -176,22 +185,24 @@ export default function Page() {
                       transform: `translateX(-${currentIndex * 214}px)`,
                     }}
                   >
-                    {slides.map((image, index) => (
-                      <div key={index} className="w-[174px]">
-                        <Card
-                          image={image}
-                          name={index.toString()}
-                          price={5000}
-                          form={register(`furniture`, {
-                            validate: {
-                              limit: (value) =>
-                                value.length <= 2 ||
-                                "You can only select 2 items",
-                            },
-                          })}
-                        />
-                      </div>
-                    ))}
+                    
+                    {!isDataLoading ? data.map((furniture, index) =>(
+                    <div key={index} className="w-[174px]">
+                      <Card
+                        image={furniture.image}
+                        name={furniture.title}
+                        price={furniture.price}
+                        form={register(`furnitures`, {
+                          validate: {
+                            limit: (value) =>
+                              value.length <= 2 ||
+                              "You can only select 2 items",
+                          },
+                        })}
+                      />
+                    </div>
+                  )) : <p>Loading...</p>}
+                    
                   </div>
                 </div>
                 <div className="flex justify-between w-full mt-5">
@@ -208,24 +219,9 @@ export default function Page() {
               <div className="bg-white h-[512px] w-[512px] rounded flex justify-center items-center">
                 {(!isLoading && !result) && <p>Click the button to generate room design</p>}
                 {isLoading && (
-                  <svg
-                    aria-hidden="true"
-                    className="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
+                  <Image src="/armchair.gif" alt="loading" width={100} height={100} />
                 )}
-                {result && <p>{result}</p>}
+                {result && <img src={result.room} alt="room design" />}
               </div>
               <div className="mt-10">
                 <Button type="submit" isLoading={isLoading}>

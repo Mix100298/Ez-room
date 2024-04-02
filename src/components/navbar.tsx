@@ -10,6 +10,8 @@ import Avatar from "./avatar";
 import { useEffect } from "react";
 import Image from "next/image";
 
+const avatar = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ageres.jpg/1024px-Ageres.jpg'
+
 function getMenuItem(
   isLogin: boolean,
   role: string,
@@ -119,7 +121,7 @@ export default function Navbar() {
             </span>
           </div>
         </Link>
-        {getMenuItem(true, "Admin", null, "Admin", signout)}
+        {getMenuItem(true, "Admin", avatar, "Admin", signout)}
 
         {/* {getMenuItem(info.isLogin, info.role, info.avatar,info.name ?? "Mock", signout)} */}
       </div>
