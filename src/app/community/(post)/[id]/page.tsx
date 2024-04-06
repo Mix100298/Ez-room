@@ -6,7 +6,7 @@ import Edit from "@/components/edit";
 import Share from "@/components/share";
 
 export default function Page({ params }: { params: { id: string } }) {
-  const id= params["id"]
+  const id = params["id"];
   console.log(id);
   const [editPost, setEditPost] = useState(false);
 
@@ -15,6 +15,13 @@ export default function Page({ params }: { params: { id: string } }) {
   };
 
   console.log(editPost);
+
+  // Data from the post
+  const dataPost = {
+    title: "My Mix dream bathroom",
+    description: "Lorem ipsum",
+    postType: "Private",
+  };
 
   return (
     <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -36,12 +43,15 @@ export default function Page({ params }: { params: { id: string } }) {
           {/* Override post */}
           {editPost ? (
             <div className="bg-white h-[512px] w-[428px] rounded">
-              <Share />
+              <Share
+                postTitle={dataPost.title}
+                postDescription={dataPost.description}
+                postStatus={dataPost.postType}
+              />
             </div>
           ) : (
             <div className="bg-white h-[512px] w-[428px] rounded p-5">
               <div className="grid gap-5">
-                {console.log("destroy")}
                 <h1 className="font-bold text-2xl">My dream bathroom</h1>
                 <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
                   <img

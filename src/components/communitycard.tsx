@@ -1,42 +1,74 @@
+"use client";
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function Communitycard() {
+interface CommunitycardProps {
+  _id?: string;
+  image?: string[];
+  status?: string;
+  owner?: string;
+  date?: string;
+  title?: string;
+  description?: string;
+}
+
+const Communitycard: React.FC<CommunitycardProps> = ({
+  _id,
+  image,
+  status,
+  owner,
+  date,
+  title,
+  description,
+}: CommunitycardProps) => {
+  const pathname = usePathname();
+
+  function formatDate(date: string) {
+    const newDate = new Date(date);
+    const day = String(new Date(date).getDate()).padStart(2, "0");
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const monthIndex = newDate.getMonth();
+
+    return `${monthNames[monthIndex].substring(0, 3)} ${day}`;
+  }
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden xl:max-w-full">
-      <Link href="/post">
+      <Link href={`${pathname}/${_id}`}>
         <div className="xl:flex">
           <div className="xl:shrink-0">
             <img
               className="min-h-[300px] w-full object-cover xl:h-full xl:w-[300px]"
-              src="https://images.livspace-cdn.com/w:1024/h:631/plain/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/sites/4/2022/02/01073127/Cover-1.png"
+              src={image ? image[0] : "https://i.pravatar.cc/150?img=37"}
               alt="Modern building architecture"
             />
           </div>
           <div className="grid p-8 gap-2.5">
             <div className="flex justify-between">
               <div className="flex items-center space-x-2 ">
-                <svg
-                  className="fill-slate-500 mb-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 10v-4c0-2.206 1.794-4 4-4 2.205 0 4 1.794 4 4v1h2v-1c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-13z" />
-                </svg>
-                <p className="text-sm text-slate-500 font-semibold">Public</p>
+                {status === "public" ? (
+                  <i className="fi fi-rr-unlock text-base"></i>
+                ) : (
+                  <i className="fi fi-rr-lock text-base"></i>
+                )}
+                <p className="text-sm text-slate-500 font-semibold">{status}</p>
               </div>
               <div>
-                <svg
-                  className="fill-slate-500 mb-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="m16.5 11.995c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25zm-6.75 0c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25zm-6.75 0c0-1.242 1.008-2.25 2.25-2.25s2.25 1.008 2.25 2.25-1.008 2.25-2.25 2.25-2.25-1.008-2.25-2.25z" />
-                </svg>
+                <i className="fi fi-rr-menu-dots text-base"></i>
               </div>
             </div>
             <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
@@ -47,28 +79,21 @@ export default function Communitycard() {
               />
               <div className="text-left space-y-2">
                 <div className="space-y-0.5">
-                  <p className="text-sm text-black font-semibold">
-                    Erin Lindford
+                  <p className="text-sm text-black font-semibold">{owner}</p>
+                  <p className="text-sm text-slate-500 font-medium">
+                    {formatDate(date as string)}
                   </p>
-                  <p className="text-sm text-slate-500 font-medium">May 03</p>
                 </div>
               </div>
             </div>
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-              Bedroom
-            </div>
-            <p className=" text-slate-500 text-sm">
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum. Excepteur sint
-              occaecat cupidatat non proident, sunt in culpa qui officia
-              deserunt mollit anim id est laborum."
-            </p>
+            {title}
+            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold"></div>
+            <p className=" text-slate-500 text-sm">{description}</p>
           </div>
         </div>
       </Link>
     </div>
   );
-}
+};
+
+export default Communitycard;

@@ -13,7 +13,7 @@ import type { Metadata } from "next";
 import axios from "axios";
 import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
-
+import Roomimages from "@/components/roomimages";
 
 export const metadata: Metadata = {
   title: "Generate",
@@ -47,10 +47,13 @@ export default function Page() {
   });
   const [isLoading, setisLoading] = useState<boolean>(false);
   const [result, setResult] = useState<string>("");
-  const { data, isLoading: isDataLoading, error } = useFetch("https://fakestoreapi.com/products");
+  const {
+    data,
+    isLoading: isDataLoading,
+    error,
+  } = useFetch("https://fakestoreapi.com/products");
 
-
-  const fakePost = (status: boolean,data : any) => {
+  const fakePost = (status: boolean, data: any) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (status) {
@@ -66,7 +69,10 @@ export default function Page() {
     setResult("");
     setisLoading(true);
     try {
-      const result = await axios.post("http://localhost:5000/api/generate/create", data);
+      const result = await axios.post(
+        "http://localhost:5000/api/generate/create",
+        data
+      );
       console.log(result.data);
       setResult(result.data);
       setisLoading(false);
@@ -82,12 +88,12 @@ export default function Page() {
   //   setisLoading(false)
   //   // alert(res.data)
   // }
-  
-  const mockFetch = (data : string[]) => new Promise((resolve) => setTimeout(() => resolve(data), 2000));
 
-  
+  const mockFetch = (data: string[]) =>
+    new Promise((resolve) => setTimeout(() => resolve(data), 2000));
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  let datatest : string[] = []
+  let datatest: string[] = [];
   const slides = [
     "https://www.aandmedu.in/wp-content/uploads/2021/11/1-1-Aspect-Ratio-1024x1024.jpg",
     "https://images.unsplash.com/photo-1594476664296-8c552053aef3?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -102,6 +108,27 @@ export default function Page() {
     "https://img.freepik.com/free-vector/hand-drawn-fast-food-poster_23-2150970591.jpg?t=st=1709811563~exp=1709815163~hmac=e823a1d159ce51e1c664d2253f0e49947523655534114825d998eee44009fa01&w=740",
   ];
 
+  // Mock image data
+  const mockdata = {
+    _id: { $oid: "66113062b6e731b247968a78" },
+    ownerid: { $oid: "65fd2f161fc71e020d7d00bd" },
+    type: "Bedroom",
+    style: "Modern",
+    budget: { $numberInt: "200000" },
+    furnitures: [
+      { $oid: "660bf7be5572f53f21f616d6" },
+      { $oid: "660bf8955572f53f21f616d8" },
+    ],
+    images: [
+      "https://cdn.pixabay.com/photo/2023/07/06/09/23/contemporary-zen-8110029_1280.jpg",
+      "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+      "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    ],
+    selectedimage: { $numberInt: "0" },
+    createdAt: { $date: { $numberLong: "1712252022065" } },
+    updatedAt: { $date: { $numberLong: "1712254437726" } },
+    __v: { $numberInt: "0" },
+  };
 
   const totalSlides = Math.floor(slides.length / 2);
 
@@ -114,9 +141,9 @@ export default function Page() {
     const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
   };
-  
+
   return (
-    <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700"     >
+    <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <form onSubmit={handleSubmit(formhandler)}>
         <div className="grid gap-10 lg:py-10">
           <div className="grid">
@@ -185,24 +212,26 @@ export default function Page() {
                       transform: `translateX(-${currentIndex * 214}px)`,
                     }}
                   >
-                    
-                    {!isDataLoading ? data.map((furniture, index) =>(
-                    <div key={index} className="w-[174px]">
-                      <Card
-                        image={furniture.image}
-                        name={furniture.title}
-                        price={furniture.price}
-                        form={register(`furnitures`, {
-                          validate: {
-                            limit: (value) =>
-                              value.length <= 2 ||
-                              "You can only select 2 items",
-                          },
-                        })}
-                      />
-                    </div>
-                  )) : <p>Loading...</p>}
-                    
+                    {!isDataLoading ? (
+                      data.map((furniture, index) => (
+                        <div key={index} className="w-[174px]">
+                          <Card
+                            image={furniture.image}
+                            name={furniture.title}
+                            price={furniture.price}
+                            form={register(`furnitures`, {
+                              validate: {
+                                limit: (value) =>
+                                  value.length <= 2 ||
+                                  "You can only select 2 items",
+                              },
+                            })}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <p>Loading...</p>
+                    )}
                   </div>
                 </div>
                 <div className="flex justify-between w-full mt-5">
@@ -217,17 +246,31 @@ export default function Page() {
             </div>
             <div>
               <div className="bg-white h-[512px] w-[512px] rounded flex justify-center items-center">
-                {(!isLoading && !result) && <p>Click the button to generate room design</p>}
+                {!isLoading && !result && (
+                  <p>Click the button to generate room design</p>
+                )}
                 {isLoading && (
-                  <Image src="/armchair.gif" alt="loading" width={100} height={100} />
+                  <Image
+                    src="/armchair.gif"
+                    alt="loading"
+                    width={100}
+                    height={100}
+                  />
                 )}
                 {result && <img src={result.room} alt="room design" />}
+              </div>
+              <div className="mt-10">
+                <Roomimages
+                  images={mockdata.images}
+                  valueimage={mockdata.selectedimage.$numberInt}
+                ></Roomimages>
               </div>
               <div className="mt-10">
                 <Button type="submit" isLoading={isLoading}>
                   {result ? "Generate Room Again" : "Generate Room Design"}
                 </Button>
               </div>
+
               <div className="mt-10">{result && <Share />}</div>
             </div>
           </div>

@@ -6,6 +6,7 @@ interface ButtonProps {
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
   isLogin?: boolean;
+  isdisabled?: boolean;
 }
 const Button: React.FC<ButtonProps> = ({
   children,
@@ -13,17 +14,20 @@ const Button: React.FC<ButtonProps> = ({
   isLoading,
   type,
   isLogin,
+  isdisabled,
 }: ButtonProps) => {
-  const buttonClasses = `text-white disabled:bg-slate-300 ${
-    isLogin === true
-      ? "bg-red-500 hover:bg-red-700"
-      : "bg-blue-400 hover:bg-blue-500"
+  const buttonClasses = `text-white${
+    isdisabled || isLoading
+      ? " bg-slate-300 cursor-not-allowed opacity-40" // Disabled styles
+      : isLogin === true
+      ? " bg-red-500 hover:bg-red-700" // Login styles
+      : " bg-blue-400 hover:bg-blue-500" // Default styles
   } rounded-md font-bold px-4 py-2 w-full flex items-center justify-center transition-colors duration-300 ease-in-out dark:bg-gray-800 dark:text-gray-200 gap-3`;
 
   return (
     <div>
       <button
-        disabled={isLoading}
+        disabled={isLoading || isdisabled}
         type={type ?? "button"}
         className={buttonClasses}
         onClick={onClick}
