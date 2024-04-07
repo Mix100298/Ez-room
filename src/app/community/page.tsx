@@ -1,39 +1,241 @@
-"use client"
-import React, { useState } from "react"
-import Button from "@/components/button"
-import Searchfilter from "@/components/searchfilter"
-import Communitycard from "@/components/communitycard"
-import type { Metadata } from "next"
-import {useSearchParams} from 'next/navigation'
+"use client";
+import React, { use, useEffect, useState } from "react";
+import Button from "@/components/button";
+import Searchfilter from "@/components/searchfilter";
+import Communitycard from "@/components/communitycard";
+import type { Metadata } from "next";
+import { useSearchParams } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Community",
   description: "Community page",
-}
+};
 
 export default function Page() {
-  const [isLoading, setisLoading] = useState<boolean>(false)
-  const searchParams = useSearchParams()
-  const author = searchParams.get('author')
-  const id = searchParams.get('id')
-  
+  // Test data
+  const testdata = [
+    {
+      _id: "660d22f394602581b9ed5963",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "public",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:35:47.440Z",
+      updatedAt: "2024-04-03T09:35:47.440Z",
+      __v: 0,
+    },
+    {
+      _id: "660d281ddfda6f693c6a18b8",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "private",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:57:49.739Z",
+      updatedAt: "2024-04-03T09:57:49.739Z",
+      __v: 0,
+    },
+    {
+      _id: "660d2821dfda6f693c6a18ba",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "private",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:57:53.690Z",
+      updatedAt: "2024-04-03T09:57:53.690Z",
+      __v: 0,
+    },
+    {
+      _id: "660d2823dfda6f693c6a18bc",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "private",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:57:55.009Z",
+      updatedAt: "2024-04-03T09:57:55.009Z",
+      __v: 0,
+    },
+    {
+      _id: "660d2834dfda6f693c6a18be",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "public",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:58:12.532Z",
+      updatedAt: "2024-04-03T09:58:12.532Z",
+      __v: 0,
+    },
+    {
+      _id: "660d2835dfda6f693c6a18c0",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "public",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:58:13.995Z",
+      updatedAt: "2024-04-03T09:58:13.995Z",
+      __v: 0,
+    },
+    {
+      _id: "660d2837dfda6f693c6a18c2",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "public",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:58:15.030Z",
+      updatedAt: "2024-04-03T09:58:15.030Z",
+      __v: 0,
+    },
+    {
+      _id: "660d2838dfda6f693c6a18c4",
+      ownerid: "65fd2f161fc71e020d7d00bd",
+      status: "public",
+      roomid: {
+        _id: "660d1e6a94602581b9ed5960",
+        type: "Bedroom",
+        style: "Bohemian",
+        budget: 200000,
+        furnitures: ["660bf7be5572f53f21f616d6", "660bf8955572f53f21f616d8"],
+        image: [
+          "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
+        ],
+        selectedimage: 0,
+        __v: 0,
+      },
+      title: "first post",
+      description: "first post in database",
+      createdAt: "2024-04-03T09:58:16.253Z",
+      updatedAt: "2024-04-03T09:58:16.253Z",
+      __v: 0,
+    },
+  ];
 
-  const [cards, setCards] = useState<React.ReactNode[]>([
-    <Communitycard />,
-    <Communitycard />,
-    <Communitycard />,
-  ])
+  const [isLoading, setisLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const author = searchParams.get("author");
+  const id = searchParams.get("id");
 
+  console.log("ID", author, id);
+
+  // All Card Community Post
+  const [cards, setCards] = useState<React.ReactNode[]>(
+    testdata
+      .slice(0, 3)
+      .map((post, idx) => (
+        <Communitycard
+          key={idx}
+          _id={post._id}
+          image={post.roomid.image}
+          status={post.status}
+          owner={post.ownerid}
+          date={post.updatedAt}
+          title={post.title}
+          description={post.description}
+        />
+      ))
+  );
+
+  // Add more cards
   const addMoreCards = () => {
-    setisLoading(true)
-    const newCards: React.ReactNode[] = [
-      ...cards,
-      ...Array(3).fill(<Communitycard />),
-    ]
-    setCards(newCards)
-    setisLoading(false)
-  }
-  console.log(author, id)
+    const currentCard = cards.length;
+    const addCards = testdata
+      .slice(currentCard, currentCard + 2) // add 2 more cards
+      .map((post, idx) => (
+        <Communitycard
+          key={currentCard + idx}
+          _id={post._id}
+          image={post.roomid.image}
+          status={post.status}
+          owner={post.ownerid}
+          date={post.updatedAt}
+          title={post.title}
+          description={post.description}
+        />
+      ));
+    setCards((prevCards) => [...prevCards, ...addCards]);
+  };
 
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -61,13 +263,13 @@ export default function Page() {
           <Button
             children={"Show more"}
             onClick={addMoreCards}
-            isLoading={isLoading}
+            isdisabled={cards.length === testdata.length}
           />
         </div>
       </div>
     </main>
-  )
+  );
 }
 function repeat(arg0: number) {
-  throw new Error("Function not implemented.")
+  throw new Error("Function not implemented.");
 }
