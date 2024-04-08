@@ -51,7 +51,7 @@ export default function Page() {
     data,
     isLoading: isDataLoading,
     error,
-  } = useFetch("https://fakestoreapi.com/products");
+  } = useFetch("http://localhost:5000/api/furnitures/get");
 
   const fakePost = (status: boolean, data: any) => {
     return new Promise((resolve, reject) => {
@@ -141,6 +141,7 @@ export default function Page() {
     const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
   };
+
 
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -232,6 +233,27 @@ export default function Page() {
                     ) : (
                       <p>Loading...</p>
                     )}
+                    {!isDataLoading ? (
+                      data.map((furniture, index) => (
+                        <div key={index} className="w-[174px]">
+                          <Card
+                            id={furniture._id}
+                            image={furniture.image}
+                            name={furniture.english_name}
+                            price={furniture.price}
+                            form={register(`furnitures`, {
+                              validate: {
+                                limit: (value) =>
+                                  value.length <= 2 ||
+                                  "You can only select 2 items",
+                              },
+                            })}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <p>Loading...</p>
+                    )}
                   </div>
                 </div>
                 <div className="flex justify-between w-full mt-5">
@@ -257,7 +279,13 @@ export default function Page() {
                     height={100}
                   />
                 )}
-                {result && <img src={result.room} alt="room design" />}
+                {result && <img src={result.images[result.selectedimage]} alt="room design" />}
+              </div>
+              <div className="mt-10">
+                <Roomimages
+                  images={mockdata.images}
+                  valueimage={mockdata.selectedimage.$numberInt}
+                ></Roomimages>
               </div>
               <div className="mt-10">
                 <Roomimages

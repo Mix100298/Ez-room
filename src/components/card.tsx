@@ -2,6 +2,7 @@
 import React from "react";
 import { useState } from "react";
 interface CardProps {
+  id?: string;
   image?: string;
   name?: string;
   price?: number;
