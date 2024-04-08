@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import Input from "@/components/input";
+
 import Button from "@/components/button";
 import type { Metadata } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { hasCookie,getCookie } from "cookies-next";
-export const metadata: Metadata = {
-  title: "Sign in",
-  description: "Sign in page",
-};
+
+// export const metadata: Metadata = {
+//   title: "Sign in",
+//   description: "Sign in page",
+// };
 
 interface InputForm {
   email: string;
@@ -48,7 +48,7 @@ export default function Page() {
         }
       )
       .then((result) => {
-        router.push("/generate");
+        router.push("/");
       })
       .catch((err) => {
         alert(JSON.stringify(err.message));

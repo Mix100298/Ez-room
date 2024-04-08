@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import type { Metadata } from "next";
 import axios from "axios";
 
-export const metadata: Metadata = {
-  title: "Sign up",
-  description: "Sign up page",
-};
+// export const metadata: Metadata = {
+//   title: "Sign up",
+//   description: "Sign up page",
+// };
 
 interface IFormInput {
   email: string;
@@ -328,6 +328,7 @@ export default function Page() {
                     className="bg-white border border-gray-300 text-gray-700 sm:text-sm rounded w-full p-2.5 "
                     id="sex"
                     {...register("sex", { required: true })}
+                    value={""}
                   >
                     <option value="" disabled selected hidden>
                       Please Choose...
