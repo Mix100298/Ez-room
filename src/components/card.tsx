@@ -9,7 +9,7 @@ interface CardProps {
   form?: any;
 }
 
-const Card: React.FC<CardProps> = ({ image, name, price, form }: CardProps) => {
+const Card: React.FC<CardProps> = ({ id,image, name, price, form }: CardProps) => {
   const [checked, setChecked] = useState<boolean>(false);
 
   return (
@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({ image, name, price, form }: CardProps) => {
           {...form}
           className="absolute w-full h-4/5 -top-1.5 opacity-0"
           type="checkbox"
-          value={name}
+          value={id}
           checked={checked}
           onChange={() => setChecked(!checked)}
         />

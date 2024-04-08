@@ -33,11 +33,11 @@ export function EZroomContext({ children }: any) {
   useEffect(() => {
    const info = getCookie("info")
    if (info) {
-    setInfo(JSON.parse(info))
+    setInfo({...JSON.parse(info)})
     setIsLogged(true)
   }
     
-  }, [])
+  },[])
 
   return (
     <EZroomProvider.Provider

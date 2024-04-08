@@ -1,17 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Button from "./button";
 import { inter } from "@/app/ui/fonts";
 import Link from "next/link";
-import { useEZroom } from "@/app/EZroomContext";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import Avatar from "./avatar";
 import { useEffect } from "react";
 import Image from "next/image";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
-const avatar =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ageres.jpg/1024px-Ageres.jpg";
+interface Info {
+  isLogin: boolean;
+  role: string;
+  avatar: string | null;
+  name: string;
+}
 
 function getMenuItem(
   isLogin: boolean,
@@ -82,7 +86,8 @@ function getMenuItem(
 }
 
 export default function Navbar() {
-  const { info } = useEZroom();
+  const router = useRouter();
+  const [isLoading, setisLoading] = useState<boolean>(false);
 
   const signout = () => {
     axios
@@ -91,17 +96,16 @@ export default function Navbar() {
       })
       .then(() => {
         window.localStorage.removeItem("info");
-        window.location.reload();
+        router.push("/");
       });
   };
 
-  useEffect(() => {
-    console.log("navbar useEffect render");
-  }, []);
+  var info: Info = JSON.parse(getCookie("info") ?? "{}");
 
   useEffect(() => {
-    console.log("info changed");
-  }, [info]);
+    setisLoading(true);
+    console.log("navbar useEffect render");
+  }, []);
 
   return (
     <nav className="bg-white border-gray-200 font-bold sticky top-0 z-50">
@@ -122,9 +126,17 @@ export default function Navbar() {
             </span>
           </div>
         </Link>
-        {getMenuItem(true, "Admin", avatar, "Admin", signout)}
-
-        {/* {getMenuItem(info.isLogin, info.role, info.avatar,info.name ?? "Mock", signout)} */}
+        {isLoading && (
+          <>
+            {getMenuItem(
+              info.isLogin,
+              info.role,
+              info.avatar,
+              info.name,
+              signout
+            )}
+          </>
+        )}
       </div>
     </nav>
   );

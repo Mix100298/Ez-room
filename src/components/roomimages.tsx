@@ -1,18 +1,21 @@
-import React from "react";
+import React, { use, useEffect } from "react";
 
 interface ImageProps {
   images: string[];
-  valueimage: string;
+  valueimage: number;
+  onChange: (value: number) => void;
 }
 
 const Roomimages: React.FC<ImageProps> = ({
   valueimage,
   images,
+  onChange,
 }: ImageProps) => {
   // Value of the checked radio image
-  const [checkedValue, setCheckedValue] = React.useState<string>(valueimage);
+  const [checkedValue, setCheckedValue] = React.useState<number>(valueimage);
   console.log("checkedValue", checkedValue);
   console.log("images", images);
+
 
   return (
     <div>
@@ -22,10 +25,10 @@ const Roomimages: React.FC<ImageProps> = ({
             type="radio"
             id="room1"
             name="room"
-            value="0"
+            value={0}
             className="hidden peer"
-            onChange={() => setCheckedValue("0")}
-            checked={checkedValue === "0"}
+            onChange={() => setCheckedValue(0)}
+            checked={checkedValue === 0}
           />
           <label
             htmlFor="room1"
@@ -48,10 +51,10 @@ const Roomimages: React.FC<ImageProps> = ({
             type="radio"
             id="room2"
             name="room"
-            value="1 "
+            value={1}
             className="cursor-pointer hidden peer"
-            onChange={() => setCheckedValue("1")}
-            checked={checkedValue === "1"}
+            onChange={(e) => setCheckedValue(1)}
+            checked={checkedValue === 1}
           />
           <label
             htmlFor="room2"
@@ -74,10 +77,10 @@ const Roomimages: React.FC<ImageProps> = ({
             type="radio"
             id="room3"
             name="room"
-            value="2"
+            value={2}
             className="cursor-pointer hidden peer"
-            onChange={() => setCheckedValue("2")}
-            checked={checkedValue === "2"}
+            onChange={() => setCheckedValue(2)}
+            checked={checkedValue === 2}
           />
           <label
             htmlFor="room3"

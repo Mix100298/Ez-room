@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Input from "@/components/input";
 import Button from "@/components/button";
@@ -13,12 +13,11 @@ import type { Metadata } from "next";
 import axios from "axios";
 import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
-import Roomimages from "@/components/roomimages";
 
-export const metadata: Metadata = {
-  title: "Generate",
-  description: "Generate page",
-};
+// export const metadata: Metadata = {
+//   title: "Generate",
+//   description: "Generate page",
+// };
 
 function range(min: number, max: number, value: number): number {
   return Math.min(Math.max(min, value), max);
@@ -30,7 +29,27 @@ interface generateProps {
   budget: number;
   furnitures: [];
 }
+interface IFurniture {
+  _id: string;
+  thai_name: string;
+  english_name: string;
+  description: string;
+  brand: string;
+  image: string;
+  url: string;
+  price: number;
+  category: string;
+}
 
+interface IResult {
+  ownerid: string;
+  type: "Bedroom" | "Bathroom";
+  style: "Modern" | "Bohemian" | "Contemporary";
+  budget: number;
+  furnitures: string[] | [];
+  images: string[];
+  selectedimage: number;
+}
 export default function Page() {
   const {
     register,
@@ -46,12 +65,12 @@ export default function Page() {
     },
   });
   const [isLoading, setisLoading] = useState<boolean>(false);
-  const [result, setResult] = useState<string>("");
+  const [result, setResult] = useState<IResult>();
   const {
-    data,
-    isLoading: isDataLoading,
-    error,
-  } = useFetch("http://localhost:5000/api/furnitures/get");
+    data: furniture,
+    isLoading: isFurnitureLoading,
+    error: furnitureError,
+  } = useFetch<IFurniture[]>("http://localhost:5000/api/furnitures/getall");
 
   const fakePost = (status: boolean, data: any) => {
     return new Promise((resolve, reject) => {
@@ -66,12 +85,15 @@ export default function Page() {
   };
 
   const formhandler: SubmitHandler<generateProps> = async (data) => {
-    setResult("");
+    setResult(undefined);
     setisLoading(true);
     try {
       const result = await axios.post(
         "http://localhost:5000/api/generate/create",
-        data
+        { ...data},
+        {
+          withCredentials: true,
+        }
       );
       console.log(result.data);
       setResult(result.data);
@@ -142,168 +164,194 @@ export default function Page() {
     setCurrentIndex(prevIndex);
   };
 
-
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
-      <form onSubmit={handleSubmit(formhandler)}>
-        <div className="grid gap-10 lg:py-10">
-          <div className="grid">
-            <h1 className="text-6xl font-bold">Generate interior</h1>
-            <p>
-              Generate your room exterior to match your desired aesthetic with
-              ease. For best results.
-            </p>
-          </div>
-          <div className="bg-gray-700 h-20 rounded flex items-center justify-center">
-            <div className="text-white text-3xl font-bold">Generate</div>
-          </div>
-          <div className="flex flex-wrap justify-center gap-10">
-            <div className="grid gap-10">
-              <div className="bg-white h-full w-[428px] rounded p-5 shadow-md">
-                <h1 className="text-xl font-bold">Specify room</h1>
-                <div className="grid w-full gap-2 mt-5">
-                  <Select
-                    id={register("type").name}
-                    name={"Choose room type"}
-                    options={["Random", "Bedroom", "Bathroom"]}
-                    form={register(`type`, { required: true })}
-                  />
-
-                  <Select
-                    id={register("style").name}
-                    name={"Choose room style"}
-                    options={["Random", "Modern", "Bohemian", "Contemporary"]}
-                    form={register("style")}
-                  />
-
-                  <Input
-                    id={register("budget").name}
-                    name={"Choose your budget"}
-                    type={"number"}
-                    placeholder={"minimum 50,000 - maximum 1,000,000"}
-                    form={register(`budget`, {
-                      valueAsNumber: true,
-                      min: {
-                        value: 50000,
-                        message: "Minimum budget is 1,000 baht",
-                      },
-                      max: {
-                        value: 1000000,
-                        message: "Maximum budget is 1,000,000 baht",
-                      },
-                    })}
-                  />
-                  {errors.budget && (
-                    <p className="text-red-500">{errors.budget.message}</p>
-                  )}
-                </div>
-              </div>
-              <div className="bg-white h-full w-[428px] rounded shadow-md p-5">
-                <h1 className="text-xl font-bold">Specify furniture</h1>
-                <div className="py-5">
-                  {/* <Searchfilter /> */}
-                  {errors.furnitures && (
-                    <p className="text-red-500">{errors.furnitures.message}</p>
-                  )}
-                </div>
-                <div className="overflow-hidden">
-                  <div
-                    className="grid grid-rows-2 grid-flow-col gap-10 py-1 duration-500"
-                    style={{
-                      transform: `translateX(-${currentIndex * 214}px)`,
-                    }}
-                  >
-                    {!isDataLoading ? (
-                      data.map((furniture, index) => (
-                        <div key={index} className="w-[174px]">
-                          <Card
-                            image={furniture.image}
-                            name={furniture.title}
-                            price={furniture.price}
-                            form={register(`furnitures`, {
-                              validate: {
-                                limit: (value) =>
-                                  value.length <= 2 ||
-                                  "You can only select 2 items",
-                              },
-                            })}
-                          />
-                        </div>
-                      ))
-                    ) : (
-                      <p>Loading...</p>
-                    )}
-                    {!isDataLoading ? (
-                      data.map((furniture, index) => (
-                        <div key={index} className="w-[174px]">
-                          <Card
-                            id={furniture._id}
-                            image={furniture.image}
-                            name={furniture.english_name}
-                            price={furniture.price}
-                            form={register(`furnitures`, {
-                              validate: {
-                                limit: (value) =>
-                                  value.length <= 2 ||
-                                  "You can only select 2 items",
-                              },
-                            })}
-                          />
-                        </div>
-                      ))
-                    ) : (
-                      <p>Loading...</p>
-                    )}
-                  </div>
-                </div>
-                <div className="flex justify-between w-full mt-5">
-                  <div className="w-[174px]">
-                    <Button onClick={prevSlide}>{"<<< Prev"}</Button>
-                  </div>
-                  <div className="w-[174px]">
-                    <Button onClick={nextSlide}>{"Next >>>"}</Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="bg-white h-[512px] w-[512px] rounded flex justify-center items-center">
-                {!isLoading && !result && (
-                  <p>Click the button to generate room design</p>
-                )}
-                {isLoading && (
-                  <Image
-                    src="/armchair.gif"
-                    alt="loading"
-                    width={100}
-                    height={100}
-                  />
-                )}
-                {result && <img src={result.images[result.selectedimage]} alt="room design" />}
-              </div>
-              <div className="mt-10">
-                <Roomimages
-                  images={mockdata.images}
-                  valueimage={mockdata.selectedimage.$numberInt}
-                ></Roomimages>
-              </div>
-              <div className="mt-10">
-                <Roomimages
-                  images={mockdata.images}
-                  valueimage={mockdata.selectedimage.$numberInt}
-                ></Roomimages>
-              </div>
-              <div className="mt-10">
-                <Button type="submit" isLoading={isLoading}>
-                  {result ? "Generate Room Again" : "Generate Room Design"}
-                </Button>
-              </div>
-
-              <div className="mt-10">{result && <Share />}</div>
-            </div>
-          </div>
+      <div className="flex flex-col gap-10 lg:py-10">
+        <div className="grid col-span-12 row-auto">
+          <h1 className="text-6xl font-bold">Generate interior</h1>
+          <p>
+            Generate your room exterior to match your desired aesthetic with
+            ease. For best results.
+          </p>
         </div>
-      </form>
+        <div className="bg-gray-700 h-20 rounded flex items-center justify-center col-span-12 ">
+          <div className="text-white text-3xl font-bold">Generate</div>
+        </div>
+        <form className="grid grid-flow-row grid-cols-12 gap-10" onSubmit={handleSubmit(formhandler)}>
+        <>
+          <div className="bg-white rounded p-5 shadow-md  col-span-5 ">
+            <h1 className="text-xl font-bold">Specify room</h1>
+            <div className="grid w-full gap-2 mt-5">
+              <Select
+                id={register("type").name}
+                name={"Choose room type"}
+                options={["Random", "Bedroom", "Bathroom"]}
+                form={register(`type`, { required: true })}
+              />
+
+              <Select
+                id={register("style").name}
+                name={"Choose room style"}
+                options={["Random", "Modern", "Bohemian", "Contemporary"]}
+                form={register("style")}
+              />
+
+              <Input
+                id={register("budget").name}
+                name={"Choose your budget"}
+                type={"number"}
+                placeholder={"minimum 50,000 - maximum 1,000,000"}
+                form={register(`budget`, {
+                  valueAsNumber: true,
+                  min: {
+                    value: 50000,
+                    message: "Minimum budget is 1,000 baht",
+                  },
+                  max: {
+                    value: 1000000,
+                    message: "Maximum budget is 1,000,000 baht",
+                  },
+                })}
+              />
+              {errors.budget && (
+                <p className="text-red-500">{errors.budget.message}</p>
+              )}
+            </div>
+          </div>
+          <div className="bg-white aspect-square rounded flex justify-center items-center col-span-7">
+            {!isLoading && !result && (
+              <p>Click the button to generate room design</p>
+            )}
+            {isLoading && (
+              <Image
+                src="/armchair.gif"
+                alt="loading"
+                width={100}
+                height={100}
+              />
+            )}
+            {result && (
+              <img
+                src={result.images[result.selectedimage]}
+                alt="room design"
+              />
+            )}
+          </div>
+          <div className="bg-white w-[428px] rounded shadow-md p-5 col-span-6 row-span-6">
+            <h1 className="text-xl font-bold">Specify furniture</h1>
+            <div className="py-5">
+              {/* <Searchfilter /> */}
+              {errors.furnitures && (
+                <p className="text-red-500">{errors.furnitures.message}</p>
+              )}
+            </div>
+            <div className="overflow-hidden">
+              <div
+                className="grid grid-rows-2 grid-flow-col gap-10 p-1 duration-500"
+                style={{
+                  transform: `translateX(-${currentIndex * 214}px)`,
+                }}
+              >
+                {!isFurnitureLoading ? (
+                  furniture.map((furniture, index) => (
+                    <div key={index} className="w-[174px]">
+                      <Card
+                        id={furniture._id}
+                        image={furniture.image}
+                        name={furniture.english_name}
+                        price={furniture.price}
+                        form={register(`furnitures`, {
+                          validate: {
+                            limit: (value) =>
+                              value.length <= 2 ||
+                              "You can only select 2 items",
+                          },
+                        })}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <p>Loading...</p>
+                )}
+                {!isFurnitureLoading ? (
+                  furniture.map((furniture, index) => (
+                    <div key={index} className="w-[174px]">
+                      <Card
+                        id={furniture._id}
+                        image={furniture.image}
+                        name={furniture.english_name}
+                        price={furniture.price}
+                        form={register(`furnitures`, {
+                          validate: {
+                            limit: (value) =>
+                              value.length <= 2 ||
+                              "You can only select 2 items",
+                          },
+                        })}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <p>Loading...</p>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-between w-full mt-5">
+              <div className="w-[174px]">
+                <Button onClick={prevSlide}>{"<<< Prev"}</Button>
+              </div>
+              <div className="w-[174px]">
+                <Button onClick={nextSlide}>{"Next >>>"}</Button>
+              </div>
+            </div>
+          </div>
+          <div className="col-span-6 row-span-1">
+            {result && (
+              <div className="flex justify-between gap-2">
+                {result.images.map((image, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="max-h-[144px] max-w-[144px] rounded"
+                    >
+                      <input
+                        type="radio"
+                        name="room"
+                        value={index}
+                        className="hidden peer"
+                        id={`room${index + 1}`}
+                        onClick={() =>
+                          setResult({ ...result, selectedimage: index })
+                        }
+                        defaultChecked={index === result.selectedimage}
+                      />
+                      <label
+                        htmlFor={`room${index + 1}`}
+                        className="block w-full h-full rounded-md cursor-pointer peer-checked:border-4 peer-checked:border-blue-500"
+                      >
+                        <img
+                          src={image}
+                          alt={`room result ${index + 1}`}
+                          className="rounded w-full aspect-square object-cover"
+                        />
+                      </label>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+          <div className="col-span-6  ">
+            <Button type="submit" isLoading={isLoading}>
+              {result ? "Generate Room Again" : "Generate Room Design"}
+            </Button>
+          </div>
+        </>
+        </form>
+        <div className="mt-10">
+          {result && <Share mode="create" data={result} postStatus="public" />}
+        </div>
+      </div>
     </main>
   );
 }

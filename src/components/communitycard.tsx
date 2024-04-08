@@ -5,9 +5,11 @@ import { usePathname } from "next/navigation";
 
 interface CommunitycardProps {
   _id?: string;
-  image?: string[];
+  image?: string;
   status?: string;
-  owner?: string;
+  firstname: string;
+  lastname: string;
+  avatar?: string;
   date?: string;
   title?: string;
   description?: string;
@@ -17,7 +19,9 @@ const Communitycard: React.FC<CommunitycardProps> = ({
   _id,
   image,
   status,
-  owner,
+  firstname,
+  lastname,
+  avatar,
   date,
   title,
   description,
@@ -47,13 +51,13 @@ const Communitycard: React.FC<CommunitycardProps> = ({
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden xl:max-w-full">
+    <div className=" mx-auto bg-white rounded-xl shadow-md overflow-hidden xl:max-w-full">
       <Link href={`${pathname}/${_id}`}>
-        <div className="xl:flex">
+        <div className="xl:flex ">
           <div className="xl:shrink-0">
             <img
               className="min-h-[300px] w-full object-cover xl:h-full xl:w-[300px]"
-              src={image ? image[0] : "https://i.pravatar.cc/150?img=37"}
+              src={image ? image : "https://i.pravatar.cc/150?img=37"}
               alt="Modern building architecture"
             />
           </div>
@@ -74,12 +78,14 @@ const Communitycard: React.FC<CommunitycardProps> = ({
             <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
               <img
                 className="block h-10 rounded-full mx-0 shrink-0"
-                src="https://i.pravatar.cc/150?img=37"
-                alt="Woman's Face"
+                src={avatar ? avatar : "https://i.pravatar.cc/150?img=37"}
+                alt="Profile image"
               />
               <div className="text-left space-y-2">
                 <div className="space-y-0.5">
-                  <p className="text-sm text-black font-semibold">{owner}</p>
+                  <p className="text-sm text-black font-semibold">
+                    {firstname + lastname}
+                  </p>
                   <p className="text-sm text-slate-500 font-medium">
                     {formatDate(date as string)}
                   </p>

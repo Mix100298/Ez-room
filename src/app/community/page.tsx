@@ -1,17 +1,47 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "@/components/button";
 import Searchfilter from "@/components/searchfilter";
 import Communitycard from "@/components/communitycard";
 import type { Metadata } from "next";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import useFetch from "@/hooks/useFetch";
+import { inter } from "../ui/fonts";
 
-export const metadata: Metadata = {
-  title: "Community",
-  description: "Community page",
-};
-
+// export const metadata: Metadata = {
+//   title: "Community",
+//   description: "Community page",
+// };
+interface Post {
+  _id: string;
+  ownerid: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    avatar_image: string;
+  }
+  status: "public" | "private";
+  roomid: {
+    _id: string;
+    type: "Bedroom" | "Bathroom";
+    style: "Bohemian" | "Contemporary" | "Modern";
+    budget: number;
+    furnitures: string[];
+    images: string[];
+    selectedimage: number;
+  };
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export default function Page() {
+  const {
+    data: posts,
+    isLoading: isPostloading,
+    error: postError,
+  } = useFetch<Post[]>("http://localhost:5000/api/posts/getall");
   // Test data
   const testdata = [
     {
@@ -201,15 +231,17 @@ export default function Page() {
 
   // All Card Community Post
   const [cards, setCards] = useState<React.ReactNode[]>(
-    testdata
+    posts
       .slice(0, 3)
       .map((post, idx) => (
         <Communitycard
           key={idx}
           _id={post._id}
-          image={post.roomid.image}
+          image={post.roomid.images[post.roomid.selectedimage]}
           status={post.status}
-          owner={post.ownerid}
+          firstname={post.ownerid.firstname}
+          lastname={post.ownerid.lastname}
+          avatar={post.ownerid.avatar_image}
           date={post.updatedAt}
           title={post.title}
           description={post.description}
@@ -220,15 +252,17 @@ export default function Page() {
   // Add more cards
   const addMoreCards = () => {
     const currentCard = cards.length;
-    const addCards = testdata
+    const addCards = posts
       .slice(currentCard, currentCard + 2) // add 2 more cards
       .map((post, idx) => (
         <Communitycard
           key={currentCard + idx}
           _id={post._id}
-          image={post.roomid.image}
+          image={post.roomid.images[post.roomid.selectedimage]}
           status={post.status}
-          owner={post.ownerid}
+          firstname={post.ownerid.firstname}
+          lastname={post.ownerid.lastname}
+          avatar={post.ownerid.avatar_image}
           date={post.updatedAt}
           title={post.title}
           description={post.description}
@@ -239,8 +273,8 @@ export default function Page() {
 
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
-      <div className="grid gap-10 lg:py-10">
-        <div className="grid">
+      <div className="grid grid-flow-row grid-cols-12 gap-10 lg:py-10">
+        <div className="grid col-span-12 row-auto">
           <h1 className="text-7xl font-bold">Community</h1>
           <p className="mt-5">
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -248,23 +282,24 @@ export default function Page() {
             ad minim veniam, quis nostrud exercitation ullamcot. 👋
           </p>
         </div>
-        <div className="flex justify-between gap-10">
+        <div className="flex justify-between gap-10 col-span-12 row-auto">
           <Searchfilter />
           <div className="w-60">
-            <Button children={"My posts"} />
+            <Button>My posts</Button>
           </div>
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-10">
+        <div className="flex flex-wrap items-center justify-center gap-10 col-span-12 row-auto">
           {cards.map((card, idx) => (
             <div key={idx}>{card}</div>
           ))}
         </div>
-        <div className="flex items-center justify-center ">
+        <div className="flex items-center justify-center col-span-12 row-auto ">
           <Button
-            children={"Show more"}
             onClick={addMoreCards}
-            isdisabled={cards.length === testdata.length}
-          />
+            isdisabled={cards.length === posts.length}
+          >
+            Show more
+          </Button>
         </div>
       </div>
     </main>
