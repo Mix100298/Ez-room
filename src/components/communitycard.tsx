@@ -72,7 +72,7 @@ const Communitycard: React.FC<CommunitycardProps> = ({
                 <p className="text-sm text-slate-500 font-semibold">{status}</p>
               </div>
               <div>
-                <i className="fi fi-rr-menu-dots text-base"></i>
+                {/* <i className="fi fi-rr-menu-dots text-base"></i> */}
               </div>
             </div>
             <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">

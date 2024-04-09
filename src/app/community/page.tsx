@@ -37,11 +37,12 @@ interface Post {
   updatedAt: string;
 }
 export default function Page() {
+  const [isMypost, setMypost] = useState<boolean>(false);
   const {
     data: posts,
     isLoading: isPostloading,
     error: postError,
-  } = useFetch<Post[]>("http://localhost:5000/api/posts/getall");
+  } = useFetch<Post[]>(isMypost ? "http://localhost:5000/api/posts/get/mypost" : "http://localhost:5000/api/posts/getall");
   // Test data
 
   const [isLoading, setisLoading] = useState<boolean>(false);
@@ -107,11 +108,13 @@ export default function Page() {
         <div className="flex justify-between gap-10 col-span-12 row-auto">
           <Searchfilter />
           <div className="w-60">
-            <Button>My posts</Button>
+            <Button onClick={()=>{
+              setMypost(!isMypost)
+            }}>{!isMypost ? "My Posts" : "All"}</Button>
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-10 col-span-12 row-auto">
-          {isLoading ? (
+          {isPostloading ? (
             <p>Loading...</p>
           ) : (
             posts &&

@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import Button from "./button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 interface PostForm {
-  postTitle?: string;
-  postDescription?: string;
+  postTitle: string;
+  postDescription: string;
   postStatus: "public" | "private";
   mode: "edit" | "create";
   data: any;
@@ -48,7 +48,7 @@ const Share: React.FC<PostForm> = ({
   }
 
   const [isLoading, setisLoading] = useState<boolean>(false);
-  
+
   // Form
   const {
     register,
@@ -62,7 +62,7 @@ const Share: React.FC<PostForm> = ({
       status: postTypeToNumber(postStatus as string),
     },
   });
- const router = useRouter();
+  const router = useRouter();
 
   const createPost: SubmitHandler<ShareProps> = async (formdata) => {
     // change data of the form
@@ -107,7 +107,9 @@ const Share: React.FC<PostForm> = ({
   };
 
   const updatePost: SubmitHandler<ShareProps> = async (formdata) => {
-    console.log("updated post", formdata);
+    const statusPost = numberToPostType(formdata.status as boolean);
+    console.log("updated post", {...formdata, status: statusPost});
+    console.log("updated post", data);
   };
 
   const Status = watch("status");
@@ -118,11 +120,13 @@ const Share: React.FC<PostForm> = ({
   // console.log("description", Status2);
   // console.log("status", Status3);
 
-  return mode === "edit" ? (
+  return (
     <div className="h-full w-full bg-white rounded shadow-md">
       <form
         className="space-y-4 md:space-y-6"
-        onSubmit={handleSubmit(updatePost)}
+        onSubmit={
+          mode === "edit" ? handleSubmit(updatePost) : handleSubmit(createPost)
+        }
       >
         <div className="grid p-5 gap-5">
           <h1 className="text-2xl font-bold">Title & Description</h1>
@@ -139,89 +143,18 @@ const Share: React.FC<PostForm> = ({
             id="title"
             placeholder="Title"
           ></input>
-          <input
+          <textarea
             {...register("description", {
               required: {
                 value: true,
                 message: "This field is required.",
               },
             })}
-            className="w-full h-20 rounded-md border border-gray-300 p-2"
-            type="text"
+            className="w-full resize-none h-[200px] rounded-md border border-gray-300 p-2"
             name="description"
             id="description"
             placeholder="Description"
-          ></input>
-          <div className="flex">
-            {/* <Roomimages images={["", "", ""]} valueimage="0" /> */}
-          </div>
-          <div className="flex w-full items-center justify-between">
-            <div className="grid gap-2">
-              <label className="inline-flex items-center cursor-pointer">
-                <input
-                  {...register("status", {
-                    required: {
-                      value: false,
-                      message: "This field is required.",
-                    },
-                  })}
-                  type="checkbox"
-                  className="sr-only peer"
-                />
-                <div className="relative w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Share this post
-                </span>
-              </label>
-              {Status === false ? (
-                <span className="text-sm ml-1">only you can see this post</span>
-              ) : (
-                <span className="text-sm ml-1">everyone can see this post</span>
-              )}
-            </div>
-            <div className="w-40">
-              <Button type="submit" isLoading={isLoading}>
-                Save
-              </Button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  ) : (
-    <div className="h-full w-full bg-white rounded shadow-md">
-      <form
-        className="space-y-4 md:space-y-6"
-        onSubmit={handleSubmit(createPost)}
-      >
-        <div className="grid p-5 gap-5">
-          <h1 className="text-2xl font-bold">Title & Description</h1>
-          <input
-            {...register("title", {
-              required: {
-                value: true,
-                message: "This field is required.",
-              },
-            })}
-            className="w-full h-10 rounded-md border border-gray-300 p-2"
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Title"
-          ></input>
-          <input
-            {...register("description", {
-              required: {
-                value: true,
-                message: "This field is required.",
-              },
-            })}
-            className="w-full h-20 rounded-md border border-gray-300 p-2"
-            type="text"
-            name="description"
-            id="description"
-            placeholder="Description"
-          ></input>
+          ></textarea>
           <div className="flex">
             {/* <Roomimages images={["", "", ""]} valueimage="0" /> */}
           </div>
@@ -259,6 +192,77 @@ const Share: React.FC<PostForm> = ({
       </form>
     </div>
   );
+  // : (
+  //   <div className="h-full w-full bg-white rounded shadow-md">
+  //     <form
+  //       className="space-y-4 md:space-y-6"
+  //       onSubmit={handleSubmit(createPost)}
+  //     >
+  //       <div className="grid p-5 gap-5">
+  //         <h1 className="text-2xl font-bold">Title & Description</h1>
+  //         <input
+  //           {...register("title", {
+  //             required: {
+  //               value: true,
+  //               message: "This field is required.",
+  //             },
+  //           })}
+  //           className="w-full h-10 rounded-md border border-gray-300 p-2"
+  //           type="text"
+  //           name="title"
+  //           id="title"
+  //           placeholder="Title"
+  //         ></input>
+  //         <input
+  //           {...register("description", {
+  //             required: {
+  //               value: true,
+  //               message: "This field is required.",
+  //             },
+  //           })}
+  //           className="w-full h-20 rounded-md border border-gray-300 p-2"
+  //           type="text"
+  //           name="description"
+  //           id="description"
+  //           placeholder="Description"
+  //         ></input>
+  //         <div className="flex">
+  //           {/* <Roomimages images={["", "", ""]} valueimage="0" /> */}
+  //         </div>
+  //         <div className="flex w-full items-center justify-between">
+  //           <div className="grid gap-2">
+  //             <label className="inline-flex items-center cursor-pointer">
+  //               <input
+  //                 {...register("status", {
+  //                   required: {
+  //                     value: false,
+  //                     message: "This field is required.",
+  //                   },
+  //                 })}
+  //                 type="checkbox"
+  //                 className="sr-only peer"
+  //               />
+  //               <div className="relative w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+  //               <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+  //                 Share this post
+  //               </span>
+  //             </label>
+  //             {Status === false ? (
+  //               <span className="text-sm ml-1">only you can see this post</span>
+  //             ) : (
+  //               <span className="text-sm ml-1">everyone can see this post</span>
+  //             )}
+  //           </div>
+  //           <div className="w-40">
+  //             <Button type="submit" isLoading={isLoading}>
+  //               Save
+  //             </Button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </form>
+  //   </div>
+  // );
 };
 
 export default Share;
