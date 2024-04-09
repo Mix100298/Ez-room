@@ -12,6 +12,7 @@ export default function useFetch<T>(url: string) {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const response = await axios.get(url,{withCredentials: true});
                 console.log(response.data);
                 setData(response.data);
