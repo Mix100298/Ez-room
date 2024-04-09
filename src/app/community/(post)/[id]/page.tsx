@@ -70,7 +70,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (isPostLoading) {
     return <div>Loading...</div>;
   }
-  console.log("from data state", data);
+
   return (
     data && (
       <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
