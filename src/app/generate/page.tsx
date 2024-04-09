@@ -273,27 +273,6 @@ export default function Page() {
                 ) : (
                   <p>Loading...</p>
                 )}
-                {!isFurnitureLoading ? (
-                  furniture.map((furniture, index) => (
-                    <div key={index} className="w-[174px]">
-                      <Card
-                        id={furniture._id}
-                        image={furniture.image}
-                        name={furniture.english_name}
-                        price={furniture.price}
-                        form={register(`furnitures`, {
-                          validate: {
-                            limit: (value) =>
-                              value.length <= 2 ||
-                              "You can only select 2 items",
-                          },
-                        })}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <p>Loading...</p>
-                )}
               </div>
             </div>
             <div className="flex justify-between w-full mt-5">

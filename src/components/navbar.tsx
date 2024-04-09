@@ -13,15 +13,15 @@ import { useRouter } from "next/navigation";
 interface Info {
   isLogin: boolean;
   role: string;
-  avatar: string | null;
-  name: string;
+  avatar: string;
+  firstname: string;
 }
 
 function getMenuItem(
   isLogin: boolean,
   role: string,
-  avatar: string | null,
-  name: string,
+  avatar: string,
+  firstname: string,
   signout: () => void
 ) {
   if (isLogin) {
@@ -43,7 +43,7 @@ function getMenuItem(
           <Link href="/about">
             <span className=" text-black ">About us</span>
           </Link>
-          <Avatar src={avatar} alt="avatar" name={name} />
+          <Avatar src={avatar} alt="avatar" firstname={firstname} />
           <Button type="button" onClick={signout} isLogin={true}>
             Sign out
           </Button>
@@ -64,7 +64,7 @@ function getMenuItem(
           <Link href="/about">
             <span className=" text-black ">About us</span>
           </Link>
-          <Avatar src={avatar} alt="avatar" name={name} />
+          <Avatar src={avatar} alt="avatar" firstname={firstname} />
           <Button type="button" onClick={signout}>
             Sign out
           </Button>
@@ -132,7 +132,7 @@ export default function Navbar() {
               info.isLogin,
               info.role,
               info.avatar,
-              info.name,
+              info.firstname,
               signout
             )}
           </>
