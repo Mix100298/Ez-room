@@ -42,7 +42,11 @@ export default function Page() {
     data: posts,
     isLoading: isPostloading,
     error: postError,
-  } = useFetch<Post[]>(isMypost ? "http://localhost:5000/api/posts/get/mypost" : "http://localhost:5000/api/posts/getall");
+  } = useFetch<Post[]>(
+    isMypost
+      ? "http://localhost:5000/api/posts/get/mypost"
+      : "http://localhost:5000/api/posts/getall"
+  );
   // Test data
 
   const [isLoading, setisLoading] = useState<boolean>(false);
@@ -51,6 +55,7 @@ export default function Page() {
   const id = searchParams.get("id");
 
   console.log("ID", author, id);
+  console.log("Posts", posts);
 
   // All Card Community Post
   // const [cards, setCards] = useState(
@@ -95,7 +100,7 @@ export default function Page() {
   // };
 
   return (
-    <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
+    <main className="min-h-screen flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid grid-flow-row grid-cols-12 gap-10 lg:py-10">
         <div className="grid col-span-12 row-auto">
           <h1 className="text-7xl font-bold">Community</h1>
@@ -108,9 +113,13 @@ export default function Page() {
         <div className="flex justify-between gap-10 col-span-12 row-auto">
           <Searchfilter />
           <div className="w-60">
-            <Button onClick={()=>{
-              setMypost(!isMypost)
-            }}>{!isMypost ? "My Posts" : "All"}</Button>
+            <Button
+              onClick={() => {
+                setMypost(!isMypost);
+              }}
+            >
+              {!isMypost ? "My Posts" : "All"}
+            </Button>
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-10 col-span-12 row-auto">
@@ -135,6 +144,7 @@ export default function Page() {
               );
             })
           )}
+          {!isPostloading && posts?.length === 0 && <p>No post found</p>}
         </div>
         <div className="flex items-center justify-center col-span-12 row-auto ">
           {/* <Button

@@ -5,7 +5,9 @@ import Card from "@/components/card";
 import Edit from "@/components/edit";
 import Share from "@/components/share";
 import useFetch from "@/hooks/useFetch";
-
+import Button from "@/components/button";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 interface Owner {
   _id: string;
   firstname: string;
@@ -46,6 +48,7 @@ interface Post {
 }
 
 export default function Page({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const id = params["id"];
   const {
     data: postResult,
@@ -56,9 +59,16 @@ export default function Page({ params }: { params: { id: string } }) {
   console.log(postResult);
   const [data, setData] = useState(postResult);
   const [editPost, setEditPost] = useState(false);
+  const [deletePost, setDeletePost] = useState(false);
 
   const handleEditChange = (isEditing: boolean) => {
+    setDeletePost(false);
     setEditPost(isEditing);
+  };
+
+  const handleDeleteChange = (isEditing: boolean) => {
+    setEditPost(false);
+    setDeletePost(isEditing);
   };
 
   console.log(editPost);
@@ -71,9 +81,13 @@ export default function Page({ params }: { params: { id: string } }) {
     return <div>Loading...</div>;
   }
 
+  if (!isPostLoading && !data && postError) {
+    return <div>Error: {postError.message}</div>;
+  }
+
   return (
     data && (
-      <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
+      <main className="min-h-screen flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
         <div className="grid gap-10 lg:py-10">
           <div className="flex justify-between items-end">
             <Link href="/community">
@@ -81,7 +95,10 @@ export default function Page({ params }: { params: { id: string } }) {
             </Link>
             <h3 className="font-bold text-2xl text-indigo-500">Id :{id}</h3>
             {data && data.isOwner ? (
-              <Edit onEdit={() => handleEditChange(true)} />
+              <Edit
+                onEdit={() => handleEditChange(true)}
+                onDelete={() => handleDeleteChange(true)}
+              />
             ) : (
               <></>
             )}
@@ -96,15 +113,46 @@ export default function Page({ params }: { params: { id: string } }) {
               )}
             </div>
 
-            {editPost ? (
+            {editPost || deletePost ? (
               <div className="bg-white h-[512px] w-[428px] rounded">
-                {data && (
+                {deletePost && (
+                  <div className="h-full w-full bg-white rounded shadow-md p-4">
+                    <h1 className="font-bold text-2xl">
+                      Are you sure you want to delete this post?
+                    </h1>
+                    <div className="flex gap-4 mt-4">
+                      <Button onClick={() => setDeletePost(false)}>
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={async () => {
+                          try {
+                            const response = await axios.delete(
+                              "http://localhost:5000/api/posts/delete/" + id,
+                              { withCredentials: true }
+                            );
+                            router.push("/community");
+                          } catch (error) {
+                            console.log(error);
+                          }
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {editPost && data && (
                   <Share
                     mode="edit"
                     data={data}
                     postStatus={data.post.status}
                     postDescription={data.post.description}
                     postTitle={data.post.title}
+                    onClosed={() => setEditPost(false)}
+                    postid={data.post._id}
+                    roomid={data.post.roomid._id}
+                    selectedimage = {data.post.roomid.selectedimage}
                   />
                 )}
               </div>
@@ -225,7 +273,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <Card />
           </div>
         </div>
-      </div>
+      </main>
     )
   );
 }

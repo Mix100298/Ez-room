@@ -10,6 +10,10 @@ interface PostForm {
   postStatus: "public" | "private";
   mode: "edit" | "create";
   data: any;
+  roomid?: string;
+  postid?: string;
+  onClosed?: () => void;
+  selectedimage?: number
 }
 
 interface ShareProps {
@@ -24,6 +28,10 @@ const Share: React.FC<PostForm> = ({
   postStatus,
   mode,
   data,
+  onClosed,
+  roomid = "",
+  postid = "",
+  selectedimage = 0,
 }: PostForm) => {
   // Change the string to a boolean
   function postTypeToNumber(type: string): boolean {
@@ -108,8 +116,32 @@ const Share: React.FC<PostForm> = ({
 
   const updatePost: SubmitHandler<ShareProps> = async (formdata) => {
     const statusPost = numberToPostType(formdata.status as boolean);
-    console.log("updated post", {...formdata, status: statusPost});
+    console.log("updated post", { ...formdata, status: statusPost });
     console.log("updated post", data);
+    setisLoading(true);
+
+    try {
+      const room = await axios.patch(
+        "http://localhost:5000/api/rooms/update/" + roomid,
+        { selectedimage: selectedimage },
+        {
+          withCredentials: true,
+        }
+      );
+      const post = await axios.patch(
+        "http://localhost:5000/api/posts/update/" + postid,
+        { ...formdata, status: statusPost },
+        { withCredentials: true }
+      );
+
+      console.log("room updated", room);
+      console.log("post updated", post);
+      
+      router.push("/community/" + postid);
+    } catch (error) {
+      console.log(error);
+      setisLoading(false);
+    }
   };
 
   const Status = watch("status");
@@ -182,7 +214,12 @@ const Share: React.FC<PostForm> = ({
                 <span className="text-sm ml-1">everyone can see this post</span>
               )}
             </div>
-            <div className="w-40">
+            <div className="w-40 flex justify-between">
+              {onClosed && (
+                <Button type="button" onClick={onClosed}>
+                  Cancel
+                </Button>
+              )}
               <Button type="submit" isLoading={isLoading}>
                 Save
               </Button>
