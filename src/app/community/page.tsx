@@ -95,7 +95,7 @@ export default function Page() {
 
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
-      <div className="grid grid-flow-row grid-cols-12 gap-10 lg:py-10">
+      <div className="grid grid-flow-row grid-cols-12 gap-10 py-10">
         <div className="grid col-span-12 row-auto">
           <h1 className="text-7xl font-bold">Community</h1>
           <p className="mt-5">

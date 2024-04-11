@@ -1,15 +1,15 @@
-import React from "react"
-import type { Metadata } from "next"
+import React from "react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us",
   description: "About Us page",
-}
+};
 
 export default function page() {
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
-      <div className="grid gap-10 lg:py-10">
+      <div className="grid gap-10 py-10">
         <h1 className="font-bold text-7xl ">About us.</h1>
         <div className="flex flex-wrap gap-10 justify-center">
           <div>
@@ -103,5 +103,5 @@ export default function page() {
         </div>
       </div>
     </main>
-  )
+  );
 }

@@ -65,7 +65,7 @@ function getMenuItem(
             <span className=" text-black ">About us</span>
           </Link>
           <Avatar src={avatar} alt="avatar" firstname={firstname} />
-          <Button type="button" onClick={signout}>
+          <Button type="button" onClick={signout} isLogin={true}>
             Sign out
           </Button>
         </div>
@@ -108,9 +108,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white border-gray-200 font-bold sticky top-0 z-50">
+    <nav className="bg-white border-gray-200 font-bold sticky top-0 z-50 min-w-min">
       <div
-        className={`${inter.className} antialiased flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-[150px] py-3`}
+        className={`${inter.className} antialiased flex flex-wrap justify-between items-center mx-auto max-w-[980px] min-w-[850px] py-3`}
       >
         <Link href="../">
           <div className="flex items-center space-x-3 rtl:space-x-reverse">

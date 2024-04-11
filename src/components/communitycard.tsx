@@ -51,17 +51,17 @@ const Communitycard: React.FC<CommunitycardProps> = ({
   }
 
   return (
-    <div className=" mx-auto bg-white rounded-xl shadow-md overflow-hidden xl:max-w-full">
+    <div className=" mx-auto bg-white rounded-xl shadow-md overflow-hidden max-w-full">
       <Link href={`${pathname}/${_id}`}>
         <div className="xl:flex ">
           <div className="xl:shrink-0">
             <img
-              className="min-h-[300px] w-full object-cover xl:h-full xl:w-[300px]"
+              className="min-h-[300px] max-w-[470px] object-cover xl:h-full xl:w-[300px]"
               src={image ? image : "https://i.pravatar.cc/150?img=37"}
               alt="Modern building architecture"
             />
           </div>
-          <div className="grid p-8 gap-2.5">
+          <div className="grid p-8 gap-2.5 xl:min-w-[680px]">
             <div className="flex justify-between">
               <div className="flex items-center space-x-2 ">
                 {status === "public" ? (
