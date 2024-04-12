@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Avatar from "./avatar";
 
 interface CommunitycardProps {
   _id?: string;
@@ -28,6 +29,7 @@ const Communitycard: React.FC<CommunitycardProps> = ({
 }: CommunitycardProps) => {
   const pathname = usePathname();
 
+  // Format date for post
   function formatDate(date: string) {
     const newDate = new Date(date);
     const day = String(new Date(date).getDate()).padStart(2, "0");
@@ -56,8 +58,12 @@ const Communitycard: React.FC<CommunitycardProps> = ({
         <div className="xl:flex ">
           <div className="xl:shrink-0">
             <img
-              className="min-h-[300px] max-w-[470px] object-cover xl:h-full xl:w-[300px]"
-              src={image ? image : "https://i.pravatar.cc/150?img=37"}
+              className="min-h-[300px] max-w-[400px] object-cover xl:h-full xl:w-[300px]"
+              src={
+                image
+                  ? image
+                  : "https://discussions.apple.com/content/attachment/660042040"
+              }
               alt="Modern building architecture"
             />
           </div>
@@ -69,18 +75,17 @@ const Communitycard: React.FC<CommunitycardProps> = ({
                 ) : (
                   <i className="fi fi-rr-lock text-base"></i>
                 )}
-                <p className="text-sm text-slate-500 font-semibold">{status}</p>
+                <p className=" text-slate-500 font-semibold text-sm">
+                  {status}
+                </p>
               </div>
-              <div>
-                <i className="fi fi-rr-menu-dots text-base"></i>
+              <div className="flex items-center justify-center space-x-2">
+                <i className="fi fi-sr-heart text-pink-500 text-xl mt-0.5"></i>
+                <p className="text-slate-500 text-sm">12</p>
               </div>
             </div>
             <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
-              <img
-                className="block h-10 rounded-full mx-0 shrink-0"
-                src={avatar ? avatar : "https://i.pravatar.cc/150?img=37"}
-                alt="Profile image"
-              />
+              <Avatar src={avatar || ""} firstname={firstname} alt="avatar" />
               <div className="text-left space-y-2">
                 <div className="space-y-0.5">
                   <p className="text-sm text-black font-semibold">

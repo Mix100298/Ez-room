@@ -42,7 +42,6 @@ interface IFurniture {
 }
 
 interface IResult {
-  ownerid: string;
   type: "Bedroom" | "Bathroom";
   style: "Modern" | "Bohemian" | "Contemporary";
   budget: number;
@@ -115,50 +114,16 @@ export default function Page() {
     new Promise((resolve) => setTimeout(() => resolve(data), 2000));
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  let datatest: string[] = [];
-  const slides = [
-    "https://www.aandmedu.in/wp-content/uploads/2021/11/1-1-Aspect-Ratio-1024x1024.jpg",
-    "https://images.unsplash.com/photo-1594476664296-8c552053aef3?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1550056486-8ded219fb769?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1604922824961-87cefb2e4b07?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://img.freepik.com/free-vector/shiny-golden-number-one-star-label-design_1017-27875.jpg?w=740&t=st=1709810231~exp=1709810831~hmac=88f9938ace0bc645e1aae1159b68018d1ec64271cf4066db30027715ac4674b5",
-    "https://images.unsplash.com/photo-1549021179-127b81585b60?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://img.freepik.com/free-vector/realistic-red-ribbon-with-number-one-label-design-vector_1017-45606.jpg?w=740&t=st=1709810277~exp=1709810877~hmac=af61715d507c0250b6b0297c6df00e6702c646c95a4100257f738acd93c80345",
-    "https://previews.123rf.com/images/progressman/progressman1802/progressman180200026/95174189-female-fingers-in-a-winning-gesture-on-a-gray-background-close-up.jpg",
-    "https://img.freepik.com/free-vector/golden-number-collection_23-2147801738.jpg?t=st=1709810420~exp=1709814020~hmac=8b0140353ea3a71e486c7be199d96cb342458e4c21a4eb26f22bd2b574e295a8&w=740",
-    "https://img.freepik.com/free-vector/black-friday-sale-banner-with-discount-offer-details_1017-41262.jpg?t=st=1709810457~exp=1709814057~hmac=1e14b652c240ca0604cbb9944b66fdacd4f7f8527635cb1e31b1b9bcd90d5ecf&w=740",
-    "https://img.freepik.com/free-vector/hand-drawn-fast-food-poster_23-2150970591.jpg?t=st=1709811563~exp=1709815163~hmac=e823a1d159ce51e1c664d2253f0e49947523655534114825d998eee44009fa01&w=740",
-  ];
 
-  // Mock image data
-  const mockdata = {
-    _id: { $oid: "66113062b6e731b247968a78" },
-    ownerid: { $oid: "65fd2f161fc71e020d7d00bd" },
-    type: "Bedroom",
-    style: "Modern",
-    budget: { $numberInt: "200000" },
-    furnitures: [
-      { $oid: "660bf7be5572f53f21f616d6" },
-      { $oid: "660bf8955572f53f21f616d8" },
-    ],
-    images: [
-      "https://cdn.pixabay.com/photo/2023/07/06/09/23/contemporary-zen-8110029_1280.jpg",
-      "https://png.pngtree.com/background/20230614/original/pngtree-bohemian-boho-bedroom-ideas-for-your-bohemian-girls-picture-image_3524522.jpg",
-      "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    ],
-    selectedimage: { $numberInt: "0" },
-    createdAt: { $date: { $numberLong: "1712252022065" } },
-    updatedAt: { $date: { $numberLong: "1712254437726" } },
-    __v: { $numberInt: "0" },
-  };
+  // the length of furniture for the slides
+  const lengthFurniture = furniture?.length || 0;
+  const totalSlides = Math.floor(lengthFurniture / 2);
 
-  const totalSlides = Math.floor(slides.length / 2);
-
+  // next and prev slide functions
   const nextSlide = () => {
     const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
     setCurrentIndex(nextIndex);
   };
-
   const prevSlide = () => {
     const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
@@ -297,6 +262,7 @@ export default function Page() {
                   }}
                 >
                   {!isFurnitureLoading ? (
+                    furniture &&
                     furniture.map((furniture, index) => (
                       <div key={index} className="w-[174px]">
                         <Card
@@ -330,8 +296,16 @@ export default function Page() {
             </div>
           </>
         </form>
-        <div className="mt-10">
-          {result && <Share mode="create" data={result} postStatus="public" />}
+        <div className="grid min-w-[428px] col-span-1">
+          {result && (
+            <Share
+              mode="create"
+              data={result}
+              postStatus="public"
+              postDescription=""
+              postTitle=""
+            />
+          )}
         </div>
       </div>
     </main>
