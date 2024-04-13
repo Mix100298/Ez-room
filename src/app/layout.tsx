@@ -1,11 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 
-
 import Sukhumvit from "./assets/Sukhumvit";
 import { lusitana, inter } from "@/app/ui/fonts";
 import { EZroomContext } from "./EZroomContext";
-
 
 const sukhumvit = Sukhumvit;
 export const metadata: Metadata = {
@@ -33,14 +31,16 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/2.2.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
         ></link>
+        <link
+          rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/2.3.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+        ></link>
       </head>
       <body
         className={`${inter.className} antialiased`}
         suppressHydrationWarning={true}
       >
-        <EZroomContext>
-         {children}
-        </EZroomContext>
+        <EZroomContext>{children}</EZroomContext>
       </body>
     </html>
   );

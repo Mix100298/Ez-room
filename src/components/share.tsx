@@ -13,7 +13,7 @@ interface PostForm {
   roomid?: string;
   postid?: string;
   onClosed?: () => void;
-  selectedimage?: number
+  selectedimage?: number;
 }
 
 interface ShareProps {
@@ -136,7 +136,7 @@ const Share: React.FC<PostForm> = ({
 
       console.log("room updated", room);
       console.log("post updated", post);
-      
+
       router.push("/community/" + postid);
     } catch (error) {
       console.log(error);
@@ -215,7 +215,7 @@ const Share: React.FC<PostForm> = ({
               )}
             </div>
             <div className="w-40 flex justify-between">
-              {onClosed && (
+              {!isLoading && onClosed && (
                 <Button type="button" onClick={onClosed}>
                   Cancel
                 </Button>

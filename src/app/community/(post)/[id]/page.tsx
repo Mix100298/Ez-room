@@ -8,6 +8,7 @@ import useFetch from "@/hooks/useFetch";
 import Button from "@/components/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Avatar from "@/components/avatar";
 interface Owner {
   _id: string;
   firstname: string;
@@ -117,14 +118,15 @@ export default function Page({ params }: { params: { id: string } }) {
               <div className="bg-white h-[512px] w-[428px] rounded">
                 {deletePost && (
                   <div className="h-full w-full bg-white rounded shadow-md p-4">
-                    <h1 className="font-bold text-2xl">
+                    <h1 className="font-bold text-2xl text-center">
                       Are you sure you want to delete this post?
                     </h1>
-                    <div className="flex gap-4 mt-4">
+                    <div className="flex mt-4 justify-evenly">
                       <Button onClick={() => setDeletePost(false)}>
                         Cancel
                       </Button>
                       <Button
+                        isLogin={true}
                         onClick={async () => {
                           try {
                             const response = await axios.delete(
@@ -152,7 +154,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     onClosed={() => setEditPost(false)}
                     postid={data.post._id}
                     roomid={data.post.roomid._id}
-                    selectedimage = {data.post.roomid.selectedimage}
+                    selectedimage={data.post.roomid.selectedimage}
                   />
                 )}
               </div>
@@ -160,26 +162,28 @@ export default function Page({ params }: { params: { id: string } }) {
               <div className="bg-white h-[512px] w-[428px] rounded p-5">
                 <div className="grid gap-5">
                   <h1 className="font-bold text-2xl">{data.post.title}</h1>
-                  <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
-                    <img
-                      className="block h-10 w-10 rounded-full mx-0 shrink-0"
-                      src={
-                        data
-                          ? data.post.ownerid.avatar_image
-                          : "https://www.aandmedu.in/wp-content/uploads/2021/11/1-1-Aspect-Ratio-1024x1024.jpg"
-                      }
-                      alt="Woman's Face"
-                    />
-                    <div className="text-left space-y-2">
-                      <div className="space-y-0.5">
-                        <p className="text-sm text-black font-semibold">
-                          {data.post.ownerid.firstname}{" "}
-                          {data.post.ownerid.lastname}
-                        </p>
-                        <p className="text-sm text-slate-500 font-medium">
-                          May 03
-                        </p>
+                  <div className="max-w-xl bg-white rounded-xl flex items-center justify-between ">
+                    <div className="flex space-y-0 space-x-6">
+                      <Avatar
+                        src={postResult?.post.ownerid.avatar_image || ""}
+                        firstname={postResult?.post.ownerid.firstname || ""}
+                        alt="avatar"
+                      />
+                      <div className="text-left space-y-2">
+                        <div className="space-y-0.5">
+                          <p className="text-sm text-black font-semibold">
+                            {data.post.ownerid.firstname}{" "}
+                            {data.post.ownerid.lastname}
+                          </p>
+                          <p className="text-sm text-slate-500 font-medium">
+                            May 03
+                          </p>
+                        </div>
                       </div>
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
+                      <i className="fi fi-sr-heart text-pink-500 text-xl mt-0.5"></i>
+                      <p className="text-slate-500 text-sm">12</p>
                     </div>
                   </div>
                   <p className=" text-slate-500 text-md">
@@ -250,27 +254,30 @@ export default function Page({ params }: { params: { id: string } }) {
             <></>
           )}
           <h1 className="font-bold text-4xl">Furniture</h1>
-          <div className="flex gap-10">
-            {data.post.roomid.furnitures.map((furniture, idx) => {
-              return (
-                <Card
-                  key={idx}
-                  id={furniture._id}
-                  name={furniture.english_name}
-                  price={furniture.price}
-                  image={furniture.image}
-                />
-              );
-            })}
+          <div className="flex justtify-center">
+            <div className="flex gap-10">
+              {data.post.roomid.furnitures.map((furniture, idx) => {
+                return (
+                  <Card
+                    key={idx}
+                    id={furniture._id}
+                    name={furniture.english_name}
+                    price={furniture.price}
+                    image={furniture.image}
+                    isDisabled={true}
+                  />
+                );
+              })}
+            </div>
           </div>
           <h2 className="font-bold text-2xl pr-10">
             More article by this author
           </h2>
           <div className="flex gap-10">
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            <Card isDisabled={true} />
+            <Card isDisabled={true} />
+            <Card isDisabled={true} />
+            <Card isDisabled={true} />
           </div>
         </div>
       </main>

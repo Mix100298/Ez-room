@@ -7,9 +7,17 @@ interface CardProps {
   name?: string;
   price?: number;
   form?: any;
+  isDisabled?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ id,image, name, price, form }: CardProps) => {
+const Card: React.FC<CardProps> = ({
+  id,
+  image,
+  name,
+  price,
+  form,
+  isDisabled,
+}: CardProps) => {
   const [checked, setChecked] = useState<boolean>(false);
 
   return (
@@ -26,6 +34,7 @@ const Card: React.FC<CardProps> = ({ id,image, name, price, form }: CardProps) =
           value={id}
           checked={checked}
           onChange={() => setChecked(!checked)}
+          disabled={isDisabled}
         />
         <div className="grid">
           {image ? (
