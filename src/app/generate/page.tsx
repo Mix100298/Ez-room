@@ -29,7 +29,8 @@ interface generateProps {
   budget: number;
   furnitures: [];
 }
-interface IFurniture {
+
+interface Furniture {
   _id: string;
   thai_name: string;
   english_name: string;
@@ -39,6 +40,11 @@ interface IFurniture {
   url: string;
   price: number;
   category: string;
+}
+
+interface IFurniture {
+  data: Furniture[];
+  total: number;
 }
 
 interface IResult {
@@ -69,7 +75,7 @@ export default function Page() {
     data: furniture,
     isLoading: isFurnitureLoading,
     error: furnitureError,
-  } = useFetch<IFurniture[]>("http://localhost:5000/api/furnitures/getall");
+  } = useFetch<IFurniture>("http://localhost:5000/api/furnitures/getall");
 
   const fakePost = (status: boolean, data: any) => {
     return new Promise((resolve, reject) => {
@@ -116,7 +122,7 @@ export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // the length of furniture for the slides
-  const lengthFurniture = furniture?.length || 0;
+  const lengthFurniture = furniture?.total || 0;
   const totalSlides = Math.floor(lengthFurniture / 2);
 
   // next and prev slide functions
@@ -263,7 +269,7 @@ export default function Page() {
                 >
                   {!isFurnitureLoading ? (
                     furniture &&
-                    furniture.map((furniture, index) => (
+                    furniture.data.map((furniture, index) => (
                       <div key={index} className="w-[174px]">
                         <Card
                           id={furniture._id}
