@@ -74,13 +74,13 @@ export default function Page() {
 
   return (
     <section className="grid flex-1 gap-10">
-      <div className="grid gap-10 min-w-[500px] ">
-        <div className="flex flex-wrap justify-between gap-10">
+      <div className="grid gap-10 min-w-[500px]">
+        <div className="flex flex-wrap justify-between gap-10 ">
           <h1 className="font-bold text-4xl">Product table</h1>
           <Searchfilter />
         </div>
-        <div className="overflow-x-scroll shadow-md rounded-md relative ">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <div className="shadow-md rounded-md">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-white uppercase bg-gray-700 ">
               <tr>
                 <th scope="col" className="p-3">
@@ -129,21 +129,21 @@ export default function Page() {
                   <th className="p-3 text-gray-700 text-center">
                     {limit * offset + idx + 1}
                   </th>
-                  <td className="p-3  truncate max-w-[200px]">{product._id}</td>
-                  <td className="p-3  truncate max-w-[200px]">
+                  <td className="p-3 truncate max-w-[100px]">{product._id}</td>
+                  <td className="p-3 truncate max-w-[100px]">
                     {product.english_name}
                   </td>
-                  <td className="p-3  truncate max-w-[200px]">
+                  <td className="p-3 truncate max-w-[100px]">
                     {product.thai_name}
                   </td>
-                  <td className="p-3  truncate max-w-[200px]">
+                  <td className="p-3 truncate max-w-[100px]">
                     {product.description}
                   </td>
-                  <td className="p-3 truncate max-w-[200px]">{product.url}</td>
+                  <td className="p-3 truncate max-w-[100px]">{product.url}</td>
                   <td className="p-3">{product.brand}</td>
                   <td className="p-3">{product.category}</td>
                   <td className="p-3">{product.price}</td>
-                  <td className="flex items-center justify-center p-6 ">
+                  <td className="flex items-center justify-center p-6">
                     <Edit
                       onEdit={() =>
                         dispatch({ type: Mode.EDIT, payload: product })

@@ -94,7 +94,6 @@ export default function Page({ params }: { params: { id: string } }) {
             <Link href="/community">
               <h1 className="font-bold text-6xl">Post </h1>
             </Link>
-            <h3 className="font-bold text-2xl text-indigo-500">Id :{id}</h3>
             {data && data.isOwner ? (
               <Edit
                 onEdit={() => handleEditChange(true)}
@@ -253,11 +252,11 @@ export default function Page({ params }: { params: { id: string } }) {
           ) : (
             <></>
           )}
-          <h1 className="font-bold text-4xl">Furniture</h1>
-          <div className="flex justtify-center">
-            <div className="flex gap-10">
-              {data.post.roomid.furnitures.map((furniture, idx) => {
-                return (
+          {data.post.roomid.furnitures.length > 0 && (
+            <div className="grid gap-10">
+              <h1 className="font-bold text-4xl">Furniture</h1>
+              <div className="flex gap-10">
+                {data.post.roomid.furnitures.map((furniture, idx) => (
                   <Card
                     key={idx}
                     id={furniture._id}
@@ -266,10 +265,13 @@ export default function Page({ params }: { params: { id: string } }) {
                     image={furniture.image}
                     isDisabled={true}
                   />
-                );
-              })}
+                ))}
+                {data.post.roomid.furnitures.length === 1 && (
+                  <div className="w-full"></div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
           <h2 className="font-bold text-2xl pr-10">
             More article by this author
           </h2>

@@ -96,6 +96,7 @@ export default function Navbar() {
       })
       .then(() => {
         window.localStorage.removeItem("info");
+        window.location.reload();
         router.push("/");
       });
   };
