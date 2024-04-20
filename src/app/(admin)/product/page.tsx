@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, ChangeEvent } from "react";
 import Input from "@components/input";
 import Button from "@components//button";
 import Searchfilter from "@/components/searchfilter";
@@ -58,6 +58,11 @@ export default function Page() {
     }&search=${search}`
   );
 
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setOffset(0);
+  };
+
   const {
     register,
     setValue,
@@ -77,7 +82,7 @@ export default function Page() {
       <div className="grid gap-10 min-w-[500px]">
         <div className="flex flex-wrap justify-between gap-10 ">
           <h1 className="font-bold text-4xl">Product table</h1>
-          <Searchfilter />
+          <Searchfilter search={search} onChange={handleSearch} />
         </div>
         <div className="shadow-md rounded-md">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
@@ -95,12 +100,12 @@ export default function Page() {
                 <th scope="col" className="p-3">
                   Thai Name
                 </th>
-                <th scope="col" className="p-3">
+                {/* <th scope="col" className="p-3">
                   Description
                 </th>
                 <th scope="col" className="p-3">
                   URL
-                </th>
+                </th> */}
                 <th scope="col" className="p-3">
                   Brand
                 </th>
@@ -129,20 +134,20 @@ export default function Page() {
                   <th className="p-3 text-gray-700 text-center">
                     {limit * offset + idx + 1}
                   </th>
-                  <td className="p-3 truncate max-w-[100px]">{product._id}</td>
-                  <td className="p-3 truncate max-w-[100px]">
+                  <td className="p-3 truncate max-w-[110px]">{product._id}</td>
+                  <td className="p-3 truncate max-w-[110px]">
                     {product.english_name}
                   </td>
-                  <td className="p-3 truncate max-w-[100px]">
+                  <td className="p-3 truncate max-w-[110px]">
                     {product.thai_name}
                   </td>
-                  <td className="p-3 truncate max-w-[100px]">
+                  {/* <td className="p-3 truncate max-w-[100px]">
                     {product.description}
-                  </td>
-                  <td className="p-3 truncate max-w-[100px]">{product.url}</td>
+                  </td> */}
+                  {/* <td className="p-3 truncate max-w-[100px]">{product.url}</td> */}
                   <td className="p-3">{product.brand}</td>
                   <td className="p-3">{product.category}</td>
-                  <td className="p-3">{product.price}</td>
+                  <td className="p-3 ">{product.price}</td>
                   <td className="flex items-center justify-center p-6">
                     <Edit
                       onEdit={() =>

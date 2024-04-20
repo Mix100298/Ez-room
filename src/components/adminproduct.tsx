@@ -598,7 +598,9 @@ export default function AdminProduct({
               <div className="flex justify-center">
                 <div className="flex justify-between gap-6">
                   {onCanceled && <Button onClick={onCanceled}>Cancel</Button>}
-                  <Button type="submit">Delete</Button>
+                  <Button isLogin={true} type="submit">
+                    Delete
+                  </Button>
                 </div>
               </div>
             </form>

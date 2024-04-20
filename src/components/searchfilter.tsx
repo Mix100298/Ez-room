@@ -3,24 +3,32 @@ import React, { useState } from "react";
 import Input from "./input";
 import Checkbox from "./checkbox";
 
-export default function Searchfilter() {
+interface SearchProps {
+  search?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const searchfilter: React.FC<SearchProps> = ({
+  search,
+  onChange,
+}: SearchProps) => {
   const [filter, setFilter] = useState(false);
 
-  const styles = [
-    { id: "style-modern", name: "Modern" },
-    { id: "style-bohemain", name: "Bohemain" },
-    { id: "style-contemporary", name: "Contemporary" },
-  ];
+  // const styles = [
+  //   { id: "style-modern", name: "Modern" },
+  //   { id: "style-bohemain", name: "Bohemain" },
+  //   { id: "style-contemporary", name: "Contemporary" },
+  // ];
 
-  const types = [
-    { id: "type-bedroom", name: "Bedroom" },
-    { id: "type-bathroom", name: "Bathroom" },
-  ];
+  // const types = [
+  //   { id: "type-bedroom", name: "Bedroom" },
+  //   { id: "type-bathroom", name: "Bathroom" },
+  // ];
 
-  const budget = [
-    { id: "budget-from", name: "From", type: "number", placeholder: "0" },
-    { id: "budget-to", name: "To", type: "number", placeholder: "100,000" },
-  ];
+  // const budget = [
+  //   { id: "budget-from", name: "From", type: "number", placeholder: "0" },
+  //   { id: "budget-to", name: "To", type: "number", placeholder: "100,000" },
+  // ];
 
   return (
     <div className="flex gap-10">
@@ -32,9 +40,11 @@ export default function Searchfilter() {
           id="search"
           placeholder="Search"
           autoComplete="off"
+          value={search}
+          onChange={onChange}
         />
       </div>
-      <div className="flex w-full">
+      {/* <div className="flex w-full">
         <button
           id="dropdown"
           className="bg-white border w-full border-gray-300 text-gray-400 sm:text-sm rounded-md px-3 text-center inline-flex items-center justify-between"
@@ -52,12 +62,11 @@ export default function Searchfilter() {
             <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z" />
           </svg>
         </button>
-        {/* Dropdown menu */}
         {filter && (
           <div className="absolute mt-12 w-60 divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-gray-100 z-40">
             <div className="py-1">
               <h1 className="px-4 py-2 font-bold">Style</h1>
-              {/* Styles room */}
+
               {styles.map((style) => (
                 <div key={style.id} className="px-4 py-2">
                   <Checkbox id={style.id} name={style.name} />
@@ -66,7 +75,6 @@ export default function Searchfilter() {
             </div>
             <div className="py-1">
               <h1 className="px-4 py-2 font-bold">Type</h1>
-              {/* Types room */}
               {types.map((type) => (
                 <div key={type.id} className="px-4 py-2">
                   <Checkbox id={type.id} name={type.name} />
@@ -76,7 +84,6 @@ export default function Searchfilter() {
             <div className="py-1">
               <h1 className="px-4 py-2 font-bold">Price</h1>
               <div className="flex px-4 py-2 space-x-4">
-                {/* Budget from and to  */}
                 {budget.map((budget) => (
                   <div key={budget.id}>
                     <Input
@@ -91,7 +98,9 @@ export default function Searchfilter() {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
-}
+};
+
+export default searchfilter;

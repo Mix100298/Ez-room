@@ -59,7 +59,7 @@ const Communitycard: React.FC<CommunitycardProps> = ({
 
   return (
     <div className=" mx-auto bg-white rounded-xl shadow-md overflow-hidden max-w-full grid grid-cols-12">
-      <Link href={`${pathname}/${_id}`} className="col-span-11">
+      <Link href={`${pathname}/${_id}`} className="col-span-12">
         <div className="xl:flex ">
           <div className="xl:shrink-0">
             <img
@@ -73,7 +73,7 @@ const Communitycard: React.FC<CommunitycardProps> = ({
             />
           </div>
           <div className="grid p-8 gap-2.5 xl:min-w-[680px]">
-            <div className="flex justify-between">
+            <div className="flex items-start justify-between">
               <div className="flex items-center space-x-2 ">
                 {status === "public" ? (
                   <i className="fi fi-rr-unlock text-base"></i>
@@ -84,6 +84,7 @@ const Communitycard: React.FC<CommunitycardProps> = ({
                   {status}
                 </p>
               </div>
+              {_id && <Like postId={_id} />}
             </div>
             <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
               <Avatar src={avatar || ""} firstname={firstname} alt="avatar" />
@@ -104,7 +105,6 @@ const Communitycard: React.FC<CommunitycardProps> = ({
           </div>
         </div>
       </Link>
-      {_id && <Like postId={_id} />}
     </div>
   );
 };
