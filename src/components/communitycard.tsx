@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Avatar from "./avatar";
+import Like from "./like";
 
 interface CommunitycardProps {
   _id?: string;
@@ -14,6 +15,8 @@ interface CommunitycardProps {
   date?: string;
   title?: string;
   description?: string;
+  totalLike?: number;
+  isLiked?: boolean;
 }
 
 const Communitycard: React.FC<CommunitycardProps> = ({
@@ -26,6 +29,8 @@ const Communitycard: React.FC<CommunitycardProps> = ({
   date,
   title,
   description,
+  totalLike,
+  isLiked,
 }: CommunitycardProps) => {
   const pathname = usePathname();
 
@@ -53,8 +58,8 @@ const Communitycard: React.FC<CommunitycardProps> = ({
   }
 
   return (
-    <div className=" mx-auto bg-white rounded-xl shadow-md overflow-hidden max-w-full">
-      <Link href={`${pathname}/${_id}`}>
+    <div className=" mx-auto bg-white rounded-xl shadow-md overflow-hidden max-w-full grid grid-cols-12">
+      <Link href={`${pathname}/${_id}`} className="col-span-11">
         <div className="xl:flex ">
           <div className="xl:shrink-0">
             <img
@@ -79,10 +84,6 @@ const Communitycard: React.FC<CommunitycardProps> = ({
                   {status}
                 </p>
               </div>
-              <div className="flex items-center justify-center space-x-2">
-                <i className="fi fi-sr-heart text-pink-500 text-xl mt-0.5"></i>
-                <p className="text-slate-500 text-sm">12</p>
-              </div>
             </div>
             <div className="max-w-xl bg-white rounded-xl flex items-center space-y-0 space-x-6">
               <Avatar src={avatar || ""} firstname={firstname} alt="avatar" />
@@ -103,6 +104,7 @@ const Communitycard: React.FC<CommunitycardProps> = ({
           </div>
         </div>
       </Link>
+      {_id && <Like postId={_id} />}
     </div>
   );
 };

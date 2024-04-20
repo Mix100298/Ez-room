@@ -9,6 +9,7 @@ import Button from "@/components/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Avatar from "@/components/avatar";
+import Like from "@/components/like";
 interface Owner {
   _id: string;
   firstname: string;
@@ -181,10 +182,7 @@ export default function Page({ params }: { params: { id: string } }) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-center space-x-2">
-                      <i className="fi fi-sr-heart text-pink-500 text-xl mt-0.5"></i>
-                      <p className="text-slate-500 text-sm">12</p>
-                    </div>
+                    {id && <Like postId={id} />}
                   </div>
                   <p className=" text-slate-500 text-md">
                     {data.post.description}
