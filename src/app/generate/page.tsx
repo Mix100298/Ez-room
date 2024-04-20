@@ -162,14 +162,12 @@ export default function Page() {
                   options={["Random", "Bedroom", "Bathroom"]}
                   form={register(`type`, { required: true })}
                 />
-
                 <Select
                   id={register("style").name}
                   name={"Choose room style"}
                   options={["Random", "Modern", "Bohemian", "Contemporary"]}
                   form={register("style")}
                 />
-
                 <Input
                   id={register("budget").name}
                   name={"Choose your budget"}

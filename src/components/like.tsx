@@ -43,7 +43,7 @@ export default function Like({ postId }: LikeProps) {
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2 col-span-1 self-start mt-10">
+    <div className="flex items-center justify-center space-x-2">
       <i
         className={`fi fi-sr-heart ${
           likeState.isLiked ? "text-pink-500" : "text-gray-500"

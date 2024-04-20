@@ -137,6 +137,7 @@ const Share: React.FC<PostForm> = ({
       console.log("room updated", room);
       console.log("post updated", post);
 
+      window.location.reload();
       router.push("/community/" + postid);
     } catch (error) {
       console.log(error);
@@ -214,7 +215,7 @@ const Share: React.FC<PostForm> = ({
                 <span className="text-sm ml-1">everyone can see this post</span>
               )}
             </div>
-            <div className="w-40 flex justify-between">
+            <div className="w-40 flex justify-center space-x-5">
               {!isLoading && onClosed && (
                 <Button type="button" onClick={onClosed}>
                   Cancel

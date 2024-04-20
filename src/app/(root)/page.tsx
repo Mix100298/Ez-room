@@ -4,19 +4,19 @@ import Button from "../../components/button";
 
 const features = [
   {
-    title: "Head 1",
+    title: "Creativity",
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    icon: "M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z",
+    icon: "fi fi-rr-galaxy-star",
   },
   {
-    title: "Head 2",
+    title: "Found",
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    icon: "M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z",
+    icon: "fi fi-sr-loveseat",
   },
   {
-    title: "Head 3",
+    title: "Ideas",
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    icon: "M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z",
+    icon: "fi fi-sr-users-medical",
   },
 ];
 
@@ -53,14 +53,30 @@ export default function Home() {
           </div>
           <div className="flex-1 min-w-[480px]">
             <div className="flex flex-wrap justify-center">
-              <img
-                className="h-60 w-60 rounded-md"
-                src="https://images.livspace-cdn.com/w:1024/h:631/plain/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/sites/4/2022/02/01073127/Cover-1.png"
-              ></img>
-              <img
-                className="h-60 w-60 rounded-md"
-                src="https://images.livspace-cdn.com/w:1024/h:631/plain/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/sites/4/2022/02/01073127/Cover-1.png"
-              ></img>
+              <div className="relative">
+                <img
+                  src="https://i.ibb.co/hM2ygcq/civit-ai-contemporary-bedroom.png"
+                  alt="Image"
+                  className="h-60 w-60 rounded-bl-md"
+                />
+                <div className="absolute top-0 w-full flex">
+                  <div className="bg-black bg-opacity-70 text-white p-2.5 rounded">
+                    <p>Imageine</p>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <img
+                  src="https://i.ibb.co/yV2qkth/00012-774986159.png"
+                  alt="Image"
+                  className="h-60 w-60 rounded-br-md"
+                />
+                <div className="absolute top-0 w-full flex">
+                  <div className="bg-black bg-opacity-70 text-white p-2.5 rounded">
+                    <p>AI Generate</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -90,17 +106,9 @@ export default function Home() {
           {/*featusres room*/}
           <div className="grid text-center gap-10 w-[700px]">
             {features.map((feature, index) => (
-              <div className="flex items-center gap-10">
+              <div key={index} className="flex items-center gap-10">
                 <div>
-                  <svg
-                    className="w-20 h-20"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 20"
-                  >
-                    <path d={feature.icon} />
-                  </svg>
+                  <i className={`text-7xl ${feature.icon}`}></i>
                 </div>
                 <div className="grid items-center">
                   <h1 className="font-bold text-2xl">{feature.title}</h1>
@@ -112,11 +120,10 @@ export default function Home() {
         </div>
         <div className="grid gap-5 px-10 text-center">
           <p>
-            Explore a myriad of types and styles as you embark on a journey of
-            creativity.
+            Explore a myriad of styles as you embark on a journey of creativity.
           </p>
           <h1 className="font-bold text-4xl">
-            “Unlock creativity through diverse types and styles.”
+            “Unlock creativity through diverse styles.”
           </h1>
         </div>
         {/*styles room*/}
@@ -128,23 +135,47 @@ export default function Home() {
             </div>
           ))}
         </div>
+        <div className="grid gap-5 px-10 text-center">
+          <h1 className="font-bold text-4xl">
+            “Enhance your room with types room diverse.”
+          </h1>
+          <p>Discover your ideal room type tailored to your imagination.</p>
+        </div>
         <div className="flex flex-wrap justify-between gap-10">
           <div className="flex-1 min-w-[450px]">
             <img
               className="rounded-md"
-              src="https://images.livspace-cdn.com/w:1024/h:631/plain/https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/sites/4/2022/02/01073127/Cover-1.png"
+              src="https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-acd415b/www.decorilla.com/online-decorating/wp-content/uploads/2023/06/Bedroom-interior-design-ideas-for-relaxation.jpg"
             ></img>
           </div>
-          <div className="grid gap-5 flex-1 min-w-[450px]">
-            <h1 className="font-bold text-4xl">
-              Simplify your search effortlessly.
-            </h1>
-            <p>Helps you easily find what you're looking for.</p>
+          <div className="grid gap-5 flex-1 min-w-[450px] text-center">
+            <h1 className="font-bold text-4xl">Bedroom</h1>
+            <p>A room situated within a residential usage for sleeping.</p>
             <p>
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua
               consectetur adipiscing elit, sed do eiusmod tempor incididunt.
             </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap justify-between gap-10">
+          <div className="grid gap-5 flex-1 min-w-[450px] text-center">
+            <h1 className="font-bold text-4xl">Bathroom</h1>
+            <p>
+              a room containing a toilet and sink and typically also a bathtub
+              or shower.
+            </p>
+            <p>
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua
+              consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+            </p>
+          </div>
+          <div className="flex-1 min-w-[450px]">
+            <img
+              className="rounded-md"
+              src="https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-acd415b/www.decorilla.com/online-decorating/wp-content/uploads/2023/05/Bathroom-trends-2023-with-organic-marble-2-2048x1148.jpeg"
+            ></img>
           </div>
         </div>
       </div>

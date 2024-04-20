@@ -327,10 +327,10 @@ export default function Page() {
                   <select
                     className="bg-white border border-gray-300 text-gray-700 sm:text-sm rounded w-full p-2.5 "
                     id="sex"
+                    defaultValue={"Default"}
                     {...register("sex", { required: true })}
-                    value={""}
                   >
-                    <option value="" disabled selected hidden>
+                    <option value="Default" disabled hidden>
                       Please Choose...
                     </option>
                     {RadioFrom.map((radio, idx) => (
