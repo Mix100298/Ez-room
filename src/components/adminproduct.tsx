@@ -1,15 +1,15 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import type { Furniture } from "@/types/furniture";
-import Button from "@components/button";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+"use client"
+import React, { useState, useEffect } from "react"
+import { useForm, SubmitHandler } from "react-hook-form"
+import type { Furniture } from "@/types/furniture"
+import Button from "@components/button"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 
 interface ProductProps {
-  mode: "add" | "edit" | "delete";
-  data: Furniture;
-  onCanceled?: () => void;
+  mode: "add" | "edit" | "delete"
+  data: Furniture
+  onCanceled?: () => void
 }
 
 export default function AdminProduct({
@@ -25,25 +25,25 @@ export default function AdminProduct({
     formState: { errors },
   } = useForm<Furniture>({
     defaultValues: { ...data },
-  });
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  })
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    setValue("english_name", data.english_name);
-    setValue("thai_name", data.thai_name);
-    setValue("url", data.url);
-    setValue("image", data.image);
-    setValue("description", data.description);
-    setValue("price", data.price);
-    setValue("brand", data.brand);
-    setValue("category", data.category);
-  }, [data]);
+    setValue("english_name", data.english_name)
+    setValue("thai_name", data.thai_name)
+    setValue("url", data.url)
+    setValue("image", data.image)
+    setValue("description", data.description)
+    setValue("price", data.price)
+    setValue("brand", data.brand)
+    setValue("category", data.category)
+  }, [data])
 
-  console.table(data);
+  console.table(data)
   const onCreated: SubmitHandler<Furniture> = async (formData: Furniture) => {
-    console.log(data);
-    setIsLoading(true);
+    console.log(data)
+    setIsLoading(true)
     try {
       const result = await axios.post(
         "http://localhost:5000/api/furnitures/create",
@@ -54,21 +54,21 @@ export default function AdminProduct({
         {
           withCredentials: true,
         }
-      );
-      router.push("/product");
-      onCanceled && onCanceled();
-      console.log(result);
+      )
+      router.push("/product")
+      onCanceled && onCanceled()
+      console.log(result)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
   const onUpdate: SubmitHandler<Furniture> = async (formData: Furniture) => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
       const result = await axios.patch(
-        "http://localhost:5000/api/furnitures/update/" + formData._id,
+        "http://localhost:5000/api/furnitures/update/" + data._id,
         {
           ...formData,
           _id: undefined,
@@ -77,36 +77,36 @@ export default function AdminProduct({
         {
           withCredentials: true,
         }
-      );
-      router.push("/product");
-      onCanceled && onCanceled();
-      console.log(result);
+      )
+      router.push("/product")
+      onCanceled && onCanceled()
+      console.log(result)
     } catch (error) {
-      console.log(error);
-      setIsLoading(false);
+      console.log(error)
+      setIsLoading(false)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
   const onDelete: SubmitHandler<Furniture> = async (formData: Furniture) => {
-    console.log(formData);
-    setIsLoading(true);
+    console.log(formData)
+    setIsLoading(true)
     try {
       const result = await axios.delete(
-        "http://localhost:5000/api/furnitures/delete/" + formData._id,
+        "http://localhost:5000/api/furnitures/delete/" + data._id,
         { withCredentials: true }
-      );
-      router.push("/product");
-      onCanceled && onCanceled();
+      )
+      router.push("/product")
+      onCanceled && onCanceled()
     } catch (error) {
-      console.log(error);
-      setIsLoading(false);
+      console.log(error)
+      setIsLoading(false)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
-  console.table({ ...watch() });
+  console.table({ ...watch() })
 
   if (mode === "add")
     return (
@@ -275,7 +275,7 @@ export default function AdminProduct({
           </div>
         </div>
       </div>
-    );
+    )
   if (mode === "edit")
     return (
       <div className="grid gap-10 min-w-[500px] ">
@@ -440,7 +440,7 @@ export default function AdminProduct({
           </div>
         </div>
       </div>
-    );
+    )
   if (mode === "delete")
     return (
       <div className="grid gap-10 min-w-[500px] ">
@@ -607,5 +607,5 @@ export default function AdminProduct({
           </div>
         </div>
       </div>
-    );
+    )
 }
