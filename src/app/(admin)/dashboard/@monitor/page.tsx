@@ -1,31 +1,50 @@
-"use client";
-import React from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { colors } from "@mui/material";
+"use client"
+import React from "react"
+import { BarChart } from "@mui/x-charts/BarChart"
+import { colors } from "@mui/material"
+import { useState, useEffect } from "react"
+import useFetch from "@/hooks/useFetch"
 
 export default function Page() {
-  const data = [1234, 2345];
-  const xLabels = ["Bedroom", "Bathroom"];
+  const {
+    data: typeReportData,
+    isLoading: isTypeReportLoading,
+    error: typeReportError,
+  } = useFetch<TypeReport>("http://localhost:5000/api/reports/type")
+  const [data, setData] = useState(typeReportData)
+  useEffect(() => {
+    setData(typeReportData)
+  }, [typeReportData])
+  // Data from the post
+  if (isTypeReportLoading) {
+    return <div>Loading...</div>
+  }
+  if (!isTypeReportLoading && !data && typeReportError)
+    return <div>Error: {typeReportError.message}</div>
+  // const data = [1234, 2345];
+  // const xLabels = ["Bedroom", "Bathroom"];
 
   return (
     <div className="rounded grid min-w-[600px] min-h-full bg-white mb-10 p-5">
       <h1 className="text-2xl font-bold text-gray-800 ">Type</h1>
       <p className="text-sm text-gray-400">most type user used.</p>
-      <BarChart
-        height={300}
-        series={[
-          {
-            data: data,
-            color: colors.cyan[500],
-            highlightScope: { highlighted: "item" },
-          },
-        ]}
-        xAxis={[{ scaleType: "band", data: xLabels }]}
-        slotProps={{
-          legend: { hidden: true },
-        }}
-        grid={{ horizontal: true }}
-      ></BarChart>
+      {typeReportData && (
+        <BarChart
+          height={300}
+          series={[
+            {
+              data: typeReportData.value,
+              color: colors.cyan[500],
+              highlightScope: { highlighted: "item" },
+            },
+          ]}
+          xAxis={[{ scaleType: "band", data: typeReportData.label }]}
+          slotProps={{
+            legend: { hidden: true },
+          }}
+          grid={{ horizontal: true }}
+        ></BarChart>
+      )}
     </div>
-  );
+  )
 }
