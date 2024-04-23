@@ -24,7 +24,8 @@ export default function Like({ postId }: LikeProps) {
     }
   }, [data]);
 
-  const handleLike = async () => {
+  const handleLike = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
     try {
       axios.post(
         "http://localhost:5000/api/likes/likepost",
@@ -43,18 +44,18 @@ export default function Like({ postId }: LikeProps) {
   };
 
   return (
-    <div className="flex items-center justify-center space-x-2">
+    <div
+      className="flex items-center justify-center space-x-2"
+      onClick={handleLike}
+    >
       <i
         className={`fi fi-sr-heart ${
           likeState.isLiked ? "text-pink-500" : "text-gray-500"
         }  text-xl mt-0.5
             hover:transition-transform hover:scale-110
         `}
-        onClick={handleLike}
       ></i>
-      {isLoading ? (
-        <p className="text-slate-500 text-sm">Loading...</p>
-      ) : (
+      {isLoading ? null : (
         <p className="text-slate-500 text-sm">{likeState.totalLike}</p>
       )}
     </div>

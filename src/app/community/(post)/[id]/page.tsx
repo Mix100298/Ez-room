@@ -80,7 +80,58 @@ export default function Page({ params }: { params: { id: string } }) {
 
   // Data from the post
   if (isPostLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="animate-pulse min-h-screen flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
+        <div className="grid gap-10 lg:py-10">
+          <div className="flex justify-between items-end">
+            <div className="flex bg-gray-300 w-1/6 h-20 rounded-full"></div>
+          </div>
+          <div className="flex flex-wrap justify-center gap-10">
+            <div className="bg-gray-300 w-[512px] h-[512px] rounded"></div>
+            <div className="bg-gray-200 w-[420px] h-[512px] rounded p-5">
+              <div className="grid gap-5">
+                <div className="flex bg-gray-300 w-40 h-10 rounded-full"></div>
+                <div className="flex space-y-0 space-x-6">
+                  <div className="flex bg-gray-300 w-12 h-12 rounded-full"></div>
+                  <div className="text-left space-y-2">
+                    <div className="space-y-2">
+                      <div className="flex bg-gray-300 w-24 h-4 rounded-full"></div>
+                      <div className="flex bg-gray-300 w-10 h-4 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex bg-gray-300 w-full h-4 rounded-full"></div>
+                <div className="flex bg-gray-300 w-11/12 h-4 rounded-full"></div>
+                <div className="flex bg-gray-300 w-full h-4 rounded-full"></div>
+                <div className="flex bg-gray-300 w-8/12 h-4 rounded-full"></div>
+                <div className="space-y-5 mt-4">
+                  <div className="flex bg-gray-300 w-1/3 h-8 rounded-full"></div>
+                  <div className="flex bg-gray-300 w-1/3 h-8 rounded-full"></div>
+                  <div className="flex bg-gray-300 w-1/3 h-8 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex bg-gray-300 w-1/3 h-20 rounded-full"></div>
+          <div className="flex space-x-10">
+            <div className="grid bg-gray-200 w-full h-full rounded">
+              <div className="flex bg-gray-300 w-full h-[470px]"></div>
+              <div className="grid p-2 space-y-2">
+                <div className="flex bg-gray-300 w-10/12 h-4 rounded-full"></div>
+                <div className="flex bg-gray-300 w-2/12 h-4 rounded-full"></div>
+              </div>
+            </div>
+            <div className="grid bg-gray-200 w-full h-full rounded">
+              <div className="flex bg-gray-300 w-full h-[470px]"></div>
+              <div className="grid p-2 space-y-2">
+                <div className="flex bg-gray-300 w-10/12 h-4 rounded-full"></div>
+                <div className="flex bg-gray-300 w-2/12 h-4 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!isPostLoading && !data && postError) {

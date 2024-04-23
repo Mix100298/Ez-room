@@ -77,6 +77,17 @@ export default function Page() {
     console.log(data);
   };
 
+  const SkeletonTables = () => {
+    const cellCount = 9;
+    const SkeletonTables = Array.from({ length: cellCount }, (_, index) => (
+      <td key={index} className="bg-white h-[72px] p-3">
+        <div className="flex bg-gray-200 w-full h-5 rounded-full"></div>
+      </td>
+    ));
+
+    return <>{SkeletonTables}</>;
+  };
+
   return (
     <section className="grid flex-1 gap-10">
       <div className="grid gap-10 min-w-[500px]">
@@ -91,21 +102,21 @@ export default function Page() {
                 <th scope="col" className="p-3">
                   No.
                 </th>
-                <th scope="col" className="p-3">
+                {/* <th scope="col" className="p-3">
                   ID
-                </th>
+                </th> */}
                 <th scope="col" className="p-3">
                   English Name
                 </th>
                 <th scope="col" className="p-3">
                   Thai Name
                 </th>
-                {/* <th scope="col" className="p-3">
+                <th scope="col" className="p-3">
                   Description
                 </th>
                 <th scope="col" className="p-3">
                   URL
-                </th> */}
+                </th>
                 <th scope="col" className="p-3">
                   Brand
                 </th>
@@ -121,45 +132,70 @@ export default function Page() {
               </tr>
             </thead>
             <tbody>
-              {isLoading && (
-                <tr>
-                  <td colSpan={10}>Loading...</td>
-                </tr>
+              {isLoading ? (
+                <>
+                  <tr className="animate-pulse border-b-2 border-gray-300">
+                    <SkeletonTables />
+                  </tr>
+                  <tr className="animate-pulse border-b-2 border-gray-300">
+                    <SkeletonTables />
+                  </tr>
+                  <tr className="animate-pulse border-b-2 border-gray-300">
+                    <SkeletonTables />
+                  </tr>
+                  <tr className="animate-pulse border-b-2 border-gray-300">
+                    <SkeletonTables />
+                  </tr>
+                  <tr className="animate-pulse border-b-2 border-gray-300">
+                    <SkeletonTables />
+                  </tr>
+                </>
+              ) : (
+                <>
+                  {furnitures?.data.map((product, idx) => (
+                    <tr
+                      key={product._id}
+                      className="bg-white border-b hover:bg-gray-100"
+                    >
+                      <th className="p-3 text-gray-700 text-center">
+                        {limit * offset + idx + 1}
+                      </th>
+                      {/* <td className="p-3 truncate max-w-[110px]">{product._id}</td> */}
+                      <td className="p-3 truncate max-w-[90px]">
+                        {product.english_name}
+                      </td>
+                      <td className="p-3 truncate max-w-[90px]">
+                        {product.thai_name}
+                      </td>
+                      <td className="p-3 truncate max-w-[60px]">
+                        {product.description}
+                      </td>
+                      <td className="p-3 truncate max-w-[80px]">
+                        {product.url}
+                      </td>
+                      <td className="p-3 truncate max-w-[80px]">
+                        {product.brand}
+                      </td>
+                      <td className="p-3 truncate max-w-[80px]">
+                        {product.category}
+                      </td>
+                      <td className="p-3 truncate max-w-[80px]">
+                        {product.price}
+                      </td>
+                      <td className="flex items-center justify-center p-6">
+                        <Edit
+                          onEdit={() =>
+                            dispatch({ type: Mode.EDIT, payload: product })
+                          }
+                          onDelete={() =>
+                            dispatch({ type: Mode.DELETE, payload: product })
+                          }
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </>
               )}
-              {furnitures?.data.map((product, idx) => (
-                <tr
-                  key={product._id}
-                  className="bg-white border-b hover:bg-gray-100"
-                >
-                  <th className="p-3 text-gray-700 text-center">
-                    {limit * offset + idx + 1}
-                  </th>
-                  <td className="p-3 truncate max-w-[110px]">{product._id}</td>
-                  <td className="p-3 truncate max-w-[110px]">
-                    {product.english_name}
-                  </td>
-                  <td className="p-3 truncate max-w-[110px]">
-                    {product.thai_name}
-                  </td>
-                  {/* <td className="p-3 truncate max-w-[100px]">
-                    {product.description}
-                  </td> */}
-                  {/* <td className="p-3 truncate max-w-[100px]">{product.url}</td> */}
-                  <td className="p-3">{product.brand}</td>
-                  <td className="p-3">{product.category}</td>
-                  <td className="p-3 ">{product.price}</td>
-                  <td className="flex items-center justify-center p-6">
-                    <Edit
-                      onEdit={() =>
-                        dispatch({ type: Mode.EDIT, payload: product })
-                      }
-                      onDelete={() =>
-                        dispatch({ type: Mode.DELETE, payload: product })
-                      }
-                    />
-                  </td>
-                </tr>
-              ))}
             </tbody>
           </table>
         </div>
