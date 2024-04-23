@@ -99,6 +99,8 @@ export default function Page() {
   //   setCards((prevCards) => [...prevCards, ...addCards]);
   // };
 
+  const SkeletonCards = [1, 2, 3, 4];
+
   return (
     <main className="min-h-screen flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid grid-flow-row grid-cols-12 gap-10 py-10">
@@ -124,7 +126,38 @@ export default function Page() {
         </div>
         <div className="flex flex-wrap items-center justify-center gap-10 col-span-12 row-auto">
           {isPostloading ? (
-            <p>Loading...</p>
+            <>
+              {SkeletonCards.map((idx) => (
+                <div
+                  key={idx}
+                  className="animate-pulse mx-auto rounded-xl shadow-md max-w-full grid gap-10 grid-cols-12"
+                >
+                  <div className="col-span-12">
+                    <div className="xl:flex bg-gray-200">
+                      <div className="xl:shrink-0">
+                        <div className="bg-gray-300 min-h-[300px] w-full xl:h-full xl:w-[300px]"></div>
+                      </div>
+                      <div className="grid p-8 gap-2.5 xl:min-w-[680px]">
+                        <div className="flex items-start justify-between">
+                          <div className="flex rounded-full items-center bg-gray-300 w-24 h-full"></div>
+                          <div className="flex rounded-full items-center bg-gray-300 w-10 h-5"></div>
+                        </div>
+                        <div className="max-w-xl rounded-xl flex items-center space-y-0 space-x-6">
+                          <div className="flex bg-gray-300 rounded-full w-10 h-10"></div>
+                          <div className="space-y-0.5">
+                            <div className="flex rounded-full bg-gray-300 w-20 h-4"></div>
+                            <div className="flex rounded-full bg-gray-300 w-12 h-4"></div>
+                          </div>
+                        </div>
+                        <div className="flex rounded-full bg-gray-300 w-60 h-4"></div>
+                        <div className="flex rounded-full bg-gray-300 w-full h-4"></div>
+                        <div className="flex rounded-full bg-gray-300 w-1/2 h-4"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
           ) : (
             posts &&
             posts.map((post, idx) => {
@@ -146,7 +179,7 @@ export default function Page() {
           )}
           {!isPostloading && posts?.length === 0 && <p>No post found</p>}
         </div>
-        <div className="flex items-center justify-center col-span-12 row-auto ">
+        <div className="flex re items-center justify-center col-span-12 row-auto ">
           {/* <Button
             onClick={addMoreCards}
             isdisabled={cards.length === posts.length}

@@ -135,6 +135,24 @@ export default function Page() {
     setCurrentIndex(prevIndex);
   };
 
+  const SkeletonCards = ({}) => {
+    const cardCount = 4;
+    const SkeletonCards = Array.from({ length: cardCount }, (_, index) => (
+      <div
+        key={index}
+        className="animate-pulse rounded w-full h-full bg-gray-200"
+      >
+        <div className="flex bg-gray-300 w-[174px] h-[174px] rounded-t"></div>
+        <div className="grid p-2 space-y-2">
+          <div className="flex bg-gray-300 w-full h-4 rounded-full"></div>
+          <div className="flex bg-gray-300 w-20 h-4 rounded-full"></div>
+        </div>
+      </div>
+    ));
+
+    return <>{SkeletonCards}</>;
+  };
+
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid grid-flow-row grid-cols-12 gap-10 py-10 min-w-min">
@@ -285,7 +303,9 @@ export default function Page() {
                       </div>
                     ))
                   ) : (
-                    <p>Loading...</p>
+                    <>
+                      <SkeletonCards />
+                    </>
                   )}
                 </div>
               </div>
