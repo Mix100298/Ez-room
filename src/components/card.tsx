@@ -6,6 +6,7 @@ interface CardProps {
   image?: string;
   name?: string;
   price?: number;
+  url?: string;
   form?: any;
   isDisabled?: boolean;
 }
@@ -15,6 +16,7 @@ const Card: React.FC<CardProps> = ({
   image,
   name,
   price,
+  url,
   form,
   isDisabled,
 }: CardProps) => {
@@ -50,11 +52,7 @@ const Card: React.FC<CardProps> = ({
           )}
         </div>
         <div className="grid p-2">
-          <a
-            href="https://www.google.com"
-            target="_blank"
-            className="text-lg font-bold truncate"
-          >
+          <a href={url} target="_blank" className="text-lg font-bold truncate">
             {name}
           </a>
           <p className="text-sm text-gray-700">{price} Baht</p>

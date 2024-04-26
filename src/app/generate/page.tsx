@@ -163,7 +163,7 @@ export default function Page() {
             ease. For best results.
           </p>
         </div>
-        <div className="bg-gray-700 h-20 rounded flex items-center justify-center col-span-12 min-w-[825px]">
+        <div className="bg-gray-700 h-20 rounded flex items-center justify-center col-span-12 min-w-[690px]">
           <div className="text-white text-3xl font-bold">Generate</div>
         </div>
         <form
@@ -208,8 +208,8 @@ export default function Page() {
                 )}
               </div>
             </div>
-            <div className="grid space-y-5 col-span-10 col-start-2 row-span-2 row-start-1 max-h-[512px]">
-              <div className="bg-white aspect-square rounded flex justify-center items-center">
+            <div className="grid space-y-5 col-span-6 col-start-2 row-span-2 row-start-1">
+              <div className="bg-white aspect-square rounded flex justify-center items-center shadow-lg">
                 {!isLoading && !result && (
                   <p>Click the button to generate room design</p>
                 )}
@@ -230,12 +230,12 @@ export default function Page() {
               </div>
               <div className="row-span-1">
                 {result && (
-                  <div className="flex justify-between gap-2">
+                  <div className="flex flex-wrap gap-5 justify-center xl:justify-between ">
                     {result.images.map((image, index) => {
                       return (
                         <div
                           key={index}
-                          className="max-h-[144px] max-w-[144px] rounded"
+                          className="xl:max-h-[144px] xl:max-w-[144px] max-h-[160px] max-w-[160px] rounded"
                         >
                           <input
                             type="radio"
@@ -291,6 +291,7 @@ export default function Page() {
                           id={furniture._id}
                           image={furniture.image}
                           name={furniture.english_name}
+                          url={furniture.url}
                           price={furniture.price}
                           form={register(`furnitures`, {
                             validate: {
