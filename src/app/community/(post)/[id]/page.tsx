@@ -135,7 +135,17 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   if (!isPostLoading && !data && postError) {
-    return <div>Error: {postError.message}</div>;
+    return (
+      <div className="min-h-screen flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
+        <div className="grid items-center justify-center mt-10">
+          <h1 className=" text-[256px] font-bold text-center">404</h1>
+          <h1 className="text-6xl font-bold text-center">PAGE NOT FOUND</h1>
+          <div className="flex justify-center mt-10">
+            <Button onClick={() => router.push("/")}>Back to Home</Button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -156,19 +166,73 @@ export default function Page({ params }: { params: { id: string } }) {
             )}
           </div>
           <div className="flex flex-wrap justify-center gap-10">
-            <div className="bg-white h-[512px] w-[512px] rounded">
-              {data && (
-                <img
-                  className="rounded-t object-cover aspect-square w-full"
-                  src={data.post.roomid.images[data.post.roomid.selectedimage]}
-                ></img>
+            <div className="grid gap-10">
+              <div className="bg-white h-[512px] w-[512px] rounded">
+                {data && (
+                  <img
+                    className="rounded-t object-cover aspect-square w-full"
+                    src={
+                      data.post.roomid.images[data.post.roomid.selectedimage]
+                    }
+                  ></img>
+                )}
+              </div>
+              {editPost ? (
+                <div className="w-[512px]">
+                  {data && (
+                    <div className="flex justify-between gap-2">
+                      {data.post.roomid.images.map((image, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="max-h-[144px] max-w-[144px] rounded"
+                          >
+                            <input
+                              type="radio"
+                              name="room"
+                              value={index}
+                              className="hidden peer"
+                              id={`room${index + 1}`}
+                              onClick={() =>
+                                setData({
+                                  ...data,
+                                  post: {
+                                    ...data.post,
+                                    roomid: {
+                                      ...data.post.roomid,
+                                      selectedimage: index,
+                                    },
+                                  },
+                                })
+                              }
+                              defaultChecked={
+                                index === data.post.roomid.selectedimage
+                              }
+                            />
+                            <label
+                              htmlFor={`room${index + 1}`}
+                              className="block w-full h-full rounded-md cursor-pointer peer-checked:border-4 peer-checked:border-blue-500"
+                            >
+                              <img
+                                src={image}
+                                alt={`room result ${index + 1}`}
+                                className="rounded w-full aspect-square object-cover"
+                              />
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <></>
               )}
             </div>
-
             {editPost || deletePost ? (
-              <div className="bg-white h-[512px] w-[428px] rounded">
+              <div className="bg-white h-[512px] w-[428px] rounded shadow-lg">
                 {deletePost && (
-                  <div className="h-full w-full bg-white rounded shadow-md p-4">
+                  <div className="h-full w-full bg-white rounded p-4">
                     <h1 className="font-bold text-2xl text-center">
                       Are you sure you want to delete this post?
                     </h1>
@@ -210,7 +274,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 )}
               </div>
             ) : (
-              <div className="bg-white h-[512px] w-[428px] rounded p-5">
+              <div className="bg-white h-[512px] w-[428px] rounded p-5 shadow-lg">
                 <div className="grid gap-5">
                   <h1 className="font-bold text-2xl">{data.post.title}</h1>
                   <div className="max-w-xl bg-white rounded-xl flex items-center justify-between ">
@@ -250,57 +314,7 @@ export default function Page({ params }: { params: { id: string } }) {
               </div>
             )}
           </div>
-          {editPost ? (
-            <div className="w-[512px]">
-              {data && (
-                <div className="flex justify-between gap-2">
-                  {data.post.roomid.images.map((image, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="max-h-[144px] max-w-[144px] rounded"
-                      >
-                        <input
-                          type="radio"
-                          name="room"
-                          value={index}
-                          className="hidden peer"
-                          id={`room${index + 1}`}
-                          onClick={() =>
-                            setData({
-                              ...data,
-                              post: {
-                                ...data.post,
-                                roomid: {
-                                  ...data.post.roomid,
-                                  selectedimage: index,
-                                },
-                              },
-                            })
-                          }
-                          defaultChecked={
-                            index === data.post.roomid.selectedimage
-                          }
-                        />
-                        <label
-                          htmlFor={`room${index + 1}`}
-                          className="block w-full h-full rounded-md cursor-pointer peer-checked:border-4 peer-checked:border-blue-500"
-                        >
-                          <img
-                            src={image}
-                            alt={`room result ${index + 1}`}
-                            className="rounded w-full aspect-square object-cover"
-                          />
-                        </label>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          ) : (
-            <></>
-          )}
+
           {data.post.roomid.furnitures.length > 0 && (
             <div className="grid gap-10">
               <h1 className="font-bold text-4xl">Furniture</h1>
@@ -310,6 +324,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     key={idx}
                     id={furniture._id}
                     name={furniture.english_name}
+                    url={furniture.url}
                     price={furniture.price}
                     image={furniture.image}
                     isDisabled={true}

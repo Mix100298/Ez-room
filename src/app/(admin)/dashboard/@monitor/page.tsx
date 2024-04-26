@@ -18,7 +18,7 @@ export default function Page() {
   // Data from the post
   if (isTypeReportLoading) {
     return (
-      <div className="animate-pulse rounded min-w-[600px] h-[400px] bg-gray-200 p-5 space-y-5 mb-10">
+      <div className="animate-pulse rounded min-w-[550px] h-[400px] bg-gray-200 p-5 space-y-5 mb-10 shadow-lg">
         <div className="flex bg-gray-300 w-20 h-8 rounded-full"></div>
         <div className="flex bg-gray-300 w-40 h-5 rounded-full"></div>
         <div className="flex bg-gray-300 w-full h-[275px] rounded"></div>
@@ -31,16 +31,17 @@ export default function Page() {
   // const xLabels = ["Bedroom", "Bathroom"];
 
   return (
-    <div className="rounded grid min-w-[600px] min-h-full bg-white mb-10 p-5">
+    <div className="rounded grid min-w-[550px] min-h-full bg-white mb-10 p-5 shadow-lg">
       <h1 className="text-2xl font-bold text-gray-800 ">Type</h1>
-      <p className="text-sm text-gray-400">most type user used.</p>
+      <p className="text-sm text-gray-400">Most type user used.</p>
       {typeReportData && (
         <BarChart
           height={300}
           series={[
             {
               data: typeReportData.value,
-              color: colors.cyan[500],
+              color: colors.cyan[300],
+              label: "Post",
               highlightScope: { highlighted: "item" },
             },
           ]}

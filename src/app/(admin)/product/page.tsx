@@ -99,34 +99,37 @@ export default function Page() {
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead className="text-xs text-white uppercase bg-gray-700 ">
               <tr>
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3 w-[20px]">
                   No.
                 </th>
                 {/* <th scope="col" className="p-3">
                   ID
                 </th> */}
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3 max-w-[60px]">
                   English Name
                 </th>
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3 max-w-[60px]">
                   Thai Name
                 </th>
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3 max-w-[100px]">
                   Description
                 </th>
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3  max-w-[80px]">
                   URL
                 </th>
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3  max-w-[60px]">
                   Brand
                 </th>
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3 max-w-[80px]">
                   Category
                 </th>
-                <th scope="col" className="p-3">
+                <th scope="col" className="p-3 max-w-[60px]">
                   Price (THB)
                 </th>
-                <th scope="col" className="p-3">
+                <th
+                  scope="col"
+                  className="p-3 truncate max-w-full text-center "
+                >
                   Action
                 </th>
               </tr>
@@ -157,32 +160,32 @@ export default function Page() {
                       key={product._id}
                       className="bg-white border-b hover:bg-gray-100"
                     >
-                      <th className="p-3 text-gray-700 text-center">
+                      <th className="p-3 text-gray-700 text-center w-[20px]">
                         {limit * offset + idx + 1}
                       </th>
                       {/* <td className="p-3 truncate max-w-[110px]">{product._id}</td> */}
-                      <td className="p-3 truncate max-w-[90px]">
+                      <td className="p-3 truncate max-w-[60px]">
                         {product.english_name}
                       </td>
-                      <td className="p-3 truncate max-w-[90px]">
+                      <td className="p-3 truncate max-w-[60px]">
                         {product.thai_name}
                       </td>
-                      <td className="p-3 truncate max-w-[60px]">
+                      <td className="p-3 truncate max-w-[100px]">
                         {product.description}
                       </td>
                       <td className="p-3 truncate max-w-[80px]">
                         {product.url}
                       </td>
-                      <td className="p-3 truncate max-w-[80px]">
+                      <td className="p-3 truncate max-w-[60px]">
                         {product.brand}
                       </td>
                       <td className="p-3 truncate max-w-[80px]">
                         {product.category}
                       </td>
-                      <td className="p-3 truncate max-w-[80px]">
+                      <td className="p-3 truncate max-w-[60px]">
                         {product.price}
                       </td>
-                      <td className="flex items-center justify-center p-6">
+                      <td className="flex items-center justify-center p-6 max-w-full">
                         <Edit
                           onEdit={() =>
                             dispatch({ type: Mode.EDIT, payload: product })
