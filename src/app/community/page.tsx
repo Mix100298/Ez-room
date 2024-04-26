@@ -57,47 +57,11 @@ export default function Page() {
   console.log("ID", author, id);
   console.log("Posts", posts);
 
-  // All Card Community Post
-  // const [cards, setCards] = useState(
-  //   posts
-  //     .slice(0, 3)
-  //     .map((post, idx) => (
-  //       <Communitycard
-  //         key={idx}
-  //         _id={post._id}
-  //         image={post.roomid.images[post.roomid.selectedimage]}
-  //         status={post.status}
-  //         firstname={post.ownerid.firstname}
-  //         lastname={post.ownerid.lastname}
-  //         avatar={post.ownerid.avatar_image}
-  //         date={post.updatedAt}
-  //         title={post.title}
-  //         description={post.description}
-  //       />
-  //     ))
-  // );
-
   // Add more cards
-  // const addMoreCards = () => {
-  //   const currentCard = cards.length;
-  //   const addCards = posts
-  //     .slice(currentCard, currentCard + 2) // add 2 more cards
-  //     .map((post, idx) => (
-  //       <Communitycard
-  //         key={currentCard + idx}
-  //         _id={post._id}
-  //         image={post.roomid.images[post.roomid.selectedimage]}
-  //         status={post.status}
-  //         firstname={post.ownerid.firstname}
-  //         lastname={post.ownerid.lastname}
-  //         avatar={post.ownerid.avatar_image}
-  //         date={post.updatedAt}
-  //         title={post.title}
-  //         description={post.description}
-  //       />
-  //     ));
-  //   setCards((prevCards) => [...prevCards, ...addCards]);
-  // };
+  const [numCards, setNumCards] = useState(5);
+  const loadMoreCards = () => {
+    setNumCards((prevCards) => prevCards + 3);
+  };
 
   const SkeletonCards = [1, 2, 3, 4];
 
@@ -160,7 +124,7 @@ export default function Page() {
             </>
           ) : (
             posts &&
-            posts.map((post, idx) => {
+            (posts.slice(0, numCards) || []).map((post, idx) => {
               return (
                 <Communitycard
                   key={idx}
@@ -180,12 +144,12 @@ export default function Page() {
           {!isPostloading && posts?.length === 0 && <p>No post found</p>}
         </div>
         <div className="flex re items-center justify-center col-span-12 row-auto ">
-          {/* <Button
-            onClick={addMoreCards}
-            isdisabled={cards.length === posts.length}
+          <Button
+            onClick={loadMoreCards}
+            isdisabled={numCards >= (posts?.length ?? 0)}
           >
             Show more
-          </Button> */}
+          </Button>
         </div>
       </div>
     </main>
