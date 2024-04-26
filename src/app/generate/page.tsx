@@ -1,18 +1,18 @@
-"use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import Input from "@/components/input";
-import Button from "@/components/button";
-import Select from "@/components/select";
-import Card from "@/components/card";
-import Searchfilter from "@/components/searchfilter";
-import Share from "@/components/share";
-import { useForm, SubmitHandler, set } from "react-hook-form";
+"use client"
+import React, { useState } from "react"
+import Link from "next/link"
+import Input from "@/components/input"
+import Button from "@/components/button"
+import Select from "@/components/select"
+import Card from "@/components/card"
+import Searchfilter from "@/components/searchfilter"
+import Share from "@/components/share"
+import { useForm, SubmitHandler, set } from "react-hook-form"
 //import { setPrompt } from "@/app/generate/api/generate"
-import type { Metadata } from "next";
-import axios from "axios";
-import Image from "next/image";
-import useFetch from "@/hooks/useFetch";
+import type { Metadata } from "next"
+import axios from "axios"
+import Image from "next/image"
+import useFetch from "@/hooks/useFetch"
 
 // export const metadata: Metadata = {
 //   title: "Generate",
@@ -20,40 +20,42 @@ import useFetch from "@/hooks/useFetch";
 // };
 
 function range(min: number, max: number, value: number): number {
-  return Math.min(Math.max(min, value), max);
+  return Math.min(Math.max(min, value), max)
 }
 
 interface generateProps {
-  type: "Random" | "Bedroom" | "Bathroom";
-  style: "Random" | "Modern" | "Bohemain" | "Contemporary";
-  budget: number;
-  furnitures: [];
+  type: "Random" | "Bedroom" | "Bathroom"
+  style: "Random" | "Modern" | "Bohemain" | "Contemporary"
+  budget: number
+  furnitures: []
 }
 
 interface Furniture {
-  _id: string;
-  thai_name: string;
-  english_name: string;
-  description: string;
-  brand: string;
-  image: string;
-  url: string;
-  price: number;
-  category: string;
+  _id: string
+  thai_name: string
+  english_name: string
+  description: string
+  brand: string
+  image: string
+  url: string
+  price: number
+  category: string
+  room: string[]
+  style: string[]
 }
 
 interface IFurniture {
-  data: Furniture[];
-  total: number;
+  data: Furniture[]
+  total: number
 }
 
 interface IResult {
-  type: "Bedroom" | "Bathroom";
-  style: "Modern" | "Bohemian" | "Contemporary";
-  budget: number;
-  furnitures: string[] | [];
-  images: string[];
-  selectedimage: number;
+  type: "Bedroom" | "Bathroom"
+  style: "Modern" | "Bohemian" | "Contemporary"
+  budget: number
+  furnitures: string[] | []
+  images: string[]
+  selectedimage: number
 }
 export default function Page() {
   const {
@@ -68,30 +70,30 @@ export default function Page() {
       budget: 50000,
       furnitures: [],
     },
-  });
-  const [isLoading, setisLoading] = useState<boolean>(false);
-  const [result, setResult] = useState<IResult>();
+  })
+  const [isLoading, setisLoading] = useState<boolean>(false)
+  const [result, setResult] = useState<IResult>()
   const {
     data: furniture,
     isLoading: isFurnitureLoading,
     error: furnitureError,
-  } = useFetch<IFurniture>("http://localhost:5000/api/furnitures/getall");
+  } = useFetch<IFurniture>("http://localhost:5000/api/furnitures/getall")
 
   const fakePost = (status: boolean, data: any) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (status) {
-          resolve(JSON.stringify(data));
+          resolve(JSON.stringify(data))
         } else {
-          reject("Room design failed to generate");
+          reject("Room design failed to generate")
         }
-      }, 3000);
-    });
-  };
+      }, 3000)
+    })
+  }
 
   const formhandler: SubmitHandler<generateProps> = async (data) => {
-    setResult(undefined);
-    setisLoading(true);
+    setResult(undefined)
+    setisLoading(true)
     try {
       const result = await axios.post(
         "http://localhost:5000/api/generate/create",
@@ -99,16 +101,16 @@ export default function Page() {
         {
           withCredentials: true,
         }
-      );
-      console.log(result.data);
-      setResult(result.data);
-      setisLoading(false);
+      )
+      console.log(result.data)
+      setResult(result.data)
+      setisLoading(false)
     } catch (error) {
-      console.log(data);
-      setisLoading(false);
+      console.log(data)
+      setisLoading(false)
     }
-    return;
-  };
+    return
+  }
   //   console.log(roomType, roomStyle, budget)
   //   setisLoading(true)
   //   const res = await setPrompt(roomType + roomStyle + budget)
@@ -117,26 +119,26 @@ export default function Page() {
   // }
 
   const mockFetch = (data: string[]) =>
-    new Promise((resolve) => setTimeout(() => resolve(data), 2000));
+    new Promise((resolve) => setTimeout(() => resolve(data), 2000))
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   // the length of furniture for the slides
-  const lengthFurniture = furniture?.total || 0;
-  const totalSlides = Math.floor(lengthFurniture / 2);
+  const lengthFurniture = furniture?.total || 0
+  const totalSlides = Math.floor(lengthFurniture / 2)
 
   // next and prev slide functions
   const nextSlide = () => {
-    const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(nextIndex);
-  };
+    const nextIndex = currentIndex === totalSlides - 1 ? 0 : currentIndex + 1
+    setCurrentIndex(nextIndex)
+  }
   const prevSlide = () => {
-    const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
-    setCurrentIndex(prevIndex);
-  };
+    const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1
+    setCurrentIndex(prevIndex)
+  }
 
   const SkeletonCards = ({}) => {
-    const cardCount = 4;
+    const cardCount = 4
     const SkeletonCards = Array.from({ length: cardCount }, (_, index) => (
       <div
         key={index}
@@ -148,10 +150,10 @@ export default function Page() {
           <div className="flex bg-gray-300 w-20 h-4 rounded-full"></div>
         </div>
       </div>
-    ));
+    ))
 
-    return <>{SkeletonCards}</>;
-  };
+    return <>{SkeletonCards}</>
+  }
 
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -259,7 +261,7 @@ export default function Page() {
                             />
                           </label>
                         </div>
-                      );
+                      )
                     })}
                   </div>
                 )}
@@ -333,5 +335,5 @@ export default function Page() {
         </div>
       </div>
     </main>
-  );
+  )
 }
