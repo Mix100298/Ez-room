@@ -99,9 +99,8 @@ const Communitycard: React.FC<CommunitycardProps> = ({
                 </div>
               </div>
             </div>
-            {title}
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold"></div>
-            <p className=" text-slate-500 text-sm">{description}</p>
+            <div className=" text-lg text-gray-700  font-bold">{title}</div>
+            <p className="truncate text-slate-500 text-sm">{description}</p>
           </div>
         </div>
       </Link>
