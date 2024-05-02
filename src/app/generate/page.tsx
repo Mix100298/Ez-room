@@ -210,7 +210,7 @@ export default function Page() {
                 )}
               </div>
             </div>
-            <div className="grid space-y-5 col-span-6 col-start-2 row-span-2 row-start-1">
+            <div className="grid space-y-10 col-span-6 col-start-2 row-span-2 row-start-1">
               <div className="bg-white aspect-square rounded flex justify-center items-center shadow-lg">
                 {!isLoading && !result && (
                   <p>Click the button to generate room design</p>
@@ -232,12 +232,12 @@ export default function Page() {
               </div>
               <div className="row-span-1">
                 {result && (
-                  <div className="flex flex-wrap gap-5 justify-center xl:justify-between ">
+                  <div className="flex flex-wrap gap-5 justify-center xl:justify-between mb-10">
                     {result.images.map((image, index) => {
                       return (
                         <div
                           key={index}
-                          className="xl:max-h-[144px] xl:max-w-[144px] max-h-[160px] max-w-[160px] rounded"
+                          className="xl:max-h-[144px] xl:max-w-[144px] max-h-[160px] max-w-[160px] rounded "
                         >
                           <input
                             type="radio"
@@ -265,10 +265,10 @@ export default function Page() {
                     })}
                   </div>
                 )}
+                <Button type="submit" isLoading={isLoading}>
+                  {result ? "Generate Room Again" : "Generate Room Design"}
+                </Button>
               </div>
-              <Button type="submit" isLoading={isLoading}>
-                {result ? "Generate Room Again" : "Generate Room Design"}
-              </Button>
             </div>
             <div className="grid bg-white rounded shadow-md p-4 col-span-1 row-start-2 row-span-3 w-[428px]">
               <h1 className="text-xl font-bold">Specify furniture</h1>
@@ -321,6 +321,37 @@ export default function Page() {
                 </div>
               </div>
             </div>
+            {/* Result Generate room*/}
+            {result && (
+              <div className="grid bg-white rounded p-4 shadow-md col-span-6 col-start-2 row-span-2">
+                <h1 className="text-xl font-bold text-blue-500">
+                  Result Generate Room
+                </h1>
+                <div className="grid gap-2 mt-5">
+                  <Input
+                    id="type"
+                    name="Room type"
+                    type="type-room"
+                    placeholder={result.type}
+                    isdisabled={true}
+                  />
+                  <Input
+                    id="style"
+                    name="Style room"
+                    type="style-room"
+                    placeholder={result.style}
+                    isdisabled={true}
+                  />
+                  <Input
+                    id="budget"
+                    name="Budget"
+                    type="budget-room"
+                    placeholder={result.budget.toString()}
+                    isdisabled={true}
+                  />
+                </div>
+              </div>
+            )}
           </>
         </form>
         <div className="grid min-w-[428px] col-span-1">

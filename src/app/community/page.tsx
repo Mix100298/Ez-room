@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Button from "@/components/button";
 import Searchfilter from "@/components/searchfilter";
 import Communitycard from "@/components/communitycard";
@@ -38,16 +38,43 @@ interface Post {
 }
 export default function Page() {
   const [isMypost, setMypost] = useState<boolean>(false);
+  const [search, setSearch] = useState("");
+
+  // Add more cards
+  const [numCards, setNumCards] = useState(7);
+  const loadMoreCards = () => {
+    setNumCards((prevCards) => prevCards + 5);
+  };
+
   const {
     data: posts,
     isLoading: isPostloading,
     error: postError,
   } = useFetch<Post[]>(
     isMypost
-      ? "http://localhost:5000/api/posts/get/mypost"
-      : "http://localhost:5000/api/posts/getall"
+      ? `http://localhost:5000/api/posts/get/mypost`
+      : `http://localhost:5000/api/posts/getall`
   );
-  // Test data
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  // Filter posts by title
+  const postsAndfilter =
+    posts &&
+    posts
+      .filter(
+        (post) =>
+          post.title.toLowerCase().includes(search.toLowerCase()) ||
+          (
+            post.ownerid.firstname.toLowerCase() +
+            post.ownerid.lastname.toLowerCase()
+          ).includes(search.toLowerCase())
+      )
+      .slice(0, numCards);
+
+  const totalfilterPosts = postsAndfilter?.length;
 
   const [isLoading, setisLoading] = useState<boolean>(false);
   const searchParams = useSearchParams();
@@ -57,13 +84,10 @@ export default function Page() {
   console.log("ID", author, id);
   console.log("Posts", posts);
 
-  // Add more cards
-  const [numCards, setNumCards] = useState(5);
-  const loadMoreCards = () => {
-    setNumCards((prevCards) => prevCards + 3);
-  };
-
   const SkeletonCards = [1, 2, 3, 4];
+
+  console.log("numCards", numCards);
+  console.log("totalfilterPosts", totalfilterPosts);
 
   return (
     <main className="min-h-screen flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -71,13 +95,14 @@ export default function Page() {
         <div className="grid col-span-12 row-auto">
           <h1 className="text-7xl font-bold">Community</h1>
           <p className="mt-5">
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamcot. 👋
+            Come be a part of our community and dive into a new concept. Share
+            your thoughts and creations with us. Our diverse gallery of
+            AI-generated images has something for everyone to explore and enjoy.
+            👋
           </p>
         </div>
         <div className="flex justify-between gap-10 col-span-12 row-auto">
-          <Searchfilter />
+          <Searchfilter search={search} onChange={handleSearch} />
           <div className="w-60">
             <Button
               onClick={() => {
@@ -123,30 +148,39 @@ export default function Page() {
               ))}
             </>
           ) : (
-            posts &&
-            (posts.slice(0, numCards) || []).map((post, idx) => {
-              return (
-                <Communitycard
-                  key={idx}
-                  _id={post._id}
-                  image={post.roomid.images[post.roomid.selectedimage]}
-                  status={post.status}
-                  firstname={post.ownerid.firstname}
-                  lastname={post.ownerid.lastname}
-                  avatar={post.ownerid.avatar_image}
-                  date={post.updatedAt}
-                  title={post.title}
-                  description={post.description}
-                />
-              );
-            })
+            <>
+              {postsAndfilter &&
+                postsAndfilter.map((post, idx) => (
+                  <Communitycard
+                    key={idx}
+                    _id={post._id}
+                    image={post.roomid.images[post.roomid.selectedimage]}
+                    status={post.status}
+                    firstname={post.ownerid.firstname}
+                    lastname={post.ownerid.lastname}
+                    avatar={post.ownerid.avatar_image}
+                    date={post.updatedAt}
+                    title={post.title}
+                    description={post.description}
+                  />
+                ))}
+            </>
           )}
-          {!isPostloading && posts?.length === 0 && <p>No post found</p>}
+          {!isPostloading && totalfilterPosts === 0 && (
+            <div className="grid items-center col-span-12 text-center text-gray-400">
+              <i className="fi fi-rr-blog-text text-[200px]"></i>
+              <h1 className="text-5xl font-bold mb-10">Posts Not Found</h1>
+            </div>
+          )}
         </div>
-        <div className="flex re items-center justify-center col-span-12 row-auto ">
+        <div className="flex items-center justify-center col-span-12 row-auto ">
           <Button
             onClick={loadMoreCards}
-            isdisabled={numCards >= (posts?.length ?? 0)}
+            isvisible={totalfilterPosts === 0}
+            isdisabled={
+              numCards >= (posts?.length ?? 0) ||
+              (totalfilterPosts ?? 0) < numCards
+            }
           >
             Show more
           </Button>

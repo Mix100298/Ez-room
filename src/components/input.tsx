@@ -1,15 +1,16 @@
-import React from "react"
+import React from "react";
 
 interface InputProps {
-  id: string
-  name: string
-  type: string
-  placeholder: string
-  children?: string
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-  required?: boolean
-  value?: string | number | boolean 
-  form? : any
+  id: string;
+  name: string;
+  type: string;
+  placeholder: string;
+  children?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+  value?: string | number | boolean;
+  form?: any;
+  isdisabled?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -21,7 +22,8 @@ const Input: React.FC<InputProps> = ({
   onChange,
   required = false,
   value,
-  form 
+  form,
+  isdisabled,
 }) => {
   return (
     <div>
@@ -42,9 +44,10 @@ const Input: React.FC<InputProps> = ({
         onChange={onChange}
         required={required}
         value={value}
+        disabled={isdisabled}
       ></input>
     </div>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;
