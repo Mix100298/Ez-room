@@ -25,7 +25,7 @@ const Button: React.FC<ButtonProps> = ({
       ? " bg-red-500 hover:bg-red-700" // Login styles
       : " bg-blue-400 hover:bg-blue-500" // Default styles
   } rounded-md font-bold px-4 py-2 w-full flex items-center justify-center transition-colors duration-300 ease-in-out dark:bg-gray-800 dark:text-gray-200 gap-3 ${
-    isvisible ? "hidden" : " "
+    isvisible ? "hidden" : " " // Hidden styles
   }`;
 
   return (

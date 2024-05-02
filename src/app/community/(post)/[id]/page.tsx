@@ -232,11 +232,19 @@ export default function Page({ params }: { params: { id: string } }) {
             {editPost || deletePost ? (
               <div className="bg-white h-[512px] w-[428px] rounded shadow-lg">
                 {deletePost && (
-                  <div className="h-full w-full bg-white rounded p-4">
-                    <h1 className="font-bold text-2xl text-center">
-                      Are you sure you want to delete this post?
-                    </h1>
-                    <div className="flex mt-4 justify-evenly">
+                  <div className="h-full w-full bg-white rounded p-10">
+                    <div className="divide-y-2 divide-gray-100">
+                      <h1 className="font-bold text-3xl text-center">
+                        Are you sure you want to delete this post?
+                      </h1>
+                      <div className="flex justify-center mt-5">
+                        <p className="text-center text-lg mt-5">
+                          This will delete this popst permanently. You cannot
+                          undo this action.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex mt-10 justify-evenly">
                       <Button onClick={() => setDeletePost(false)}>
                         Cancel
                       </Button>
@@ -276,7 +284,9 @@ export default function Page({ params }: { params: { id: string } }) {
             ) : (
               <div className="bg-white h-[512px] w-[428px] rounded p-5 shadow-lg">
                 <div className="grid gap-5">
-                  <h1 className="font-bold text-2xl">{data.post.title}</h1>
+                  <h1 className="font-bold text-2xl truncate">
+                    {data.post.title}
+                  </h1>
                   <div className="max-w-xl bg-white rounded-xl flex items-center justify-between ">
                     <div className="flex space-y-0 space-x-6">
                       <Avatar
@@ -298,7 +308,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     </div>
                     {id && <Like postId={id} />}
                   </div>
-                  <p className=" text-slate-500 text-md">
+                  <p className=" text-slate-500 text-md line-clamp-6">
                     {data.post.description}
                   </p>
                   <h1 className="font-bold text-xl text-indigo-500">
@@ -314,7 +324,6 @@ export default function Page({ params }: { params: { id: string } }) {
               </div>
             )}
           </div>
-
           {data.post.roomid.furnitures.length > 0 && (
             <div className="grid gap-10">
               <h1 className="font-bold text-4xl">Furniture</h1>
