@@ -66,9 +66,11 @@ export default function Page() {
     posts
       .filter(
         (post) =>
-          post.title &&
-          post.ownerid.firstname &&
-          post.ownerid.lastname.toLowerCase().includes(search.toLowerCase())
+          post.title.toLowerCase().includes(search.toLowerCase()) ||
+          (
+            post.ownerid.firstname.toLowerCase() +
+            post.ownerid.lastname.toLowerCase()
+          ).includes(search.toLowerCase())
       )
       .slice(0, numCards);
 
@@ -93,9 +95,10 @@ export default function Page() {
         <div className="grid col-span-12 row-auto">
           <h1 className="text-7xl font-bold">Community</h1>
           <p className="mt-5">
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamcot. 👋
+            Come be a part of our community and dive into a new concept. Share
+            your thoughts and creations with us. Our diverse gallery of
+            AI-generated images has something for everyone to explore and enjoy.
+            👋
           </p>
         </div>
         <div className="flex justify-between gap-10 col-span-12 row-auto">

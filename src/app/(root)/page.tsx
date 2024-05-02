@@ -5,17 +5,17 @@ import Button from "../../components/button";
 const features = [
   {
     title: "Creativity",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    text: "Release your unique imagination and creativity with AI that generates and expresses your unique ideas.",
     icon: "fi fi-rr-galaxy-star",
   },
   {
-    title: "Found",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "Explore",
+    text: "Explore and design ideas using a generative AI by selecting from various options for room type and 44 distinct furniture items.",
     icon: "fi fi-sr-loveseat",
   },
   {
     title: "Ideas",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    text: "Discover thousands of ideas from the community where users can share ideas from the images they create.",
     icon: "fi fi-sr-users-medical",
   },
 ];
@@ -55,9 +55,9 @@ export default function Home() {
             <div className="flex flex-wrap justify-center">
               <div className="relative">
                 <img
-                  src="https://i.ibb.co/hM2ygcq/civit-ai-contemporary-bedroom.png"
+                  src="https://i.ibb.co/TmC1QBk/01.png"
                   alt="Image"
-                  className="h-60 w-60 rounded-bl-md"
+                  className="xl:h-60 w-60 rounded-bl-md"
                 />
                 <div className="absolute top-0 w-full flex">
                   <div className="bg-black bg-opacity-70 text-white p-2.5 rounded">
@@ -94,12 +94,12 @@ export default function Home() {
           <div className="flex-1 gap-10 min-w-[240px]">
             <div className="grid gap-10 items-center justify-center">
               <img
-                className="min-h-[240px] rounded-md"
-                src="https://i.ibb.co/TmC1QBk/01.png"
+                className="min-h-[240px] rounded-md object-cover"
+                src="https://blog.canadianloghomes.com/wp-content/uploads/2022/02/modern-farmhouse-bedroom-ideas-3.jpg"
               ></img>
               <img
-                className="min-h-[240px] rounded-md"
-                src="https://i.ibb.co/yV2qkth/00012-774986159.png"
+                className="min-h-[240px] rounded-md object-cover"
+                src="https://www.luxinteriors.com.au/wp-content/uploads/2022/11/014-980x653.jpg"
               ></img>
             </div>
           </div>
@@ -127,10 +127,10 @@ export default function Home() {
           </h1>
         </div>
         {/*styles room*/}
-        <div className="flex flex-wrap justify-center gap-10">
+        <div className="flex 2xl:justify-center gap-10">
           {styles.map((style, index) => (
             <div key={index} className="grid gap-5 text-center">
-              <img className="w-[300px] rounded-md" src={style.image}></img>
+              <img className="rounded-md" src={style.image}></img>
               <h1 className="font-bold text-3xl">{style.name}</h1>
             </div>
           ))}
