@@ -225,7 +225,7 @@ export default function Page() {
                 )}
                 {result && (
                   <img
-                    src={result.images[result.selectedimage]}
+                    src={`data:image/png;base64,${result.images[result.selectedimage]}`}
                     alt="room design"
                   />
                 )}
@@ -255,7 +255,7 @@ export default function Page() {
                             className="block w-full h-full rounded-md cursor-pointer peer-checked:border-4 peer-checked:border-blue-500"
                           >
                             <img
-                              src={image}
+                              src={`data:image/png;base64,${image}`}
                               alt={`room result ${index + 1}`}
                               className="rounded w-full aspect-square object-cover"
                             />
