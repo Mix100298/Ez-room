@@ -1,6 +1,6 @@
-import React from "react";
-import Link from "next/link";
-import Button from "../../components/button";
+import React from "react"
+import Link from "next/link"
+import Button from "../../components/button"
 
 const features = [
   {
@@ -18,7 +18,7 @@ const features = [
     text: "Discover thousands of ideas from the community where users can share ideas from the images they create.",
     icon: "fi fi-sr-users-medical",
   },
-];
+]
 
 const styles = [
   { name: "Modern", image: "https://i.ibb.co/DCqvFSX/modern.png" },
@@ -30,7 +30,7 @@ const styles = [
     name: "Contemporary",
     image: "https://i.ibb.co/hM2ygcq/civit-ai-contemporary-bedroom.png",
   },
-];
+]
 
 export default function Home() {
   return (
@@ -61,7 +61,7 @@ export default function Home() {
                 />
                 <div className="absolute top-0 w-full flex">
                   <div className="bg-black bg-opacity-70 text-white p-2.5 rounded">
-                    <p>Imageine</p>
+                    <p>Imagine</p>
                   </div>
                 </div>
               </div>
@@ -73,7 +73,7 @@ export default function Home() {
                 />
                 <div className="absolute top-0 w-full flex">
                   <div className="bg-black bg-opacity-70 text-white p-2.5 rounded">
-                    <p>AI Generate</p>
+                    <p>AI Generated</p>
                   </div>
                 </div>
               </div>
@@ -152,9 +152,10 @@ export default function Home() {
             <h1 className="font-bold text-4xl">Bedroom</h1>
             <p>A room situated within a residential usage for sleeping.</p>
             <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+              "Create your haven of serenity with our luxurious bedroom
+              essentials. Indulge in the finest linens and plush pillows for
+              unparalleled comfort. Elevate your space with our curated
+              collection, where style meets relaxation."
             </p>
           </div>
         </div>
@@ -162,13 +163,15 @@ export default function Home() {
           <div className="grid gap-5 flex-1 min-w-[450px] text-center">
             <h1 className="font-bold text-4xl">Bathroom</h1>
             <p>
-              a room containing a toilet and sink and typically also a bathtub
+              a room containing a toilet and basin and typically also a bathtub
               or shower.
             </p>
             <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua
-              consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+              "Transform your bathroom into a spa-like retreat with our premium
+              fixtures and accessories. Immerse yourself in luxury with sleek,
+              modern designs and innovative technology that enhance your daily
+              routine. Elevate your bathing experience to new heights with our
+              curated selection, where relaxation meets sophistication."
             </p>
           </div>
           <div className="flex-1 min-w-[450px]">
@@ -180,5 +183,5 @@ export default function Home() {
         </div>
       </div>
     </main>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+"use client"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function AdminNavbar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav className="min-w-[120px]">
@@ -23,9 +23,9 @@ export default function AdminNavbar() {
             pathname === "/product" ? "bg-blue-500 text-white" : "bg-white"
           } hover:bg-blue-500 text-black hover:text-white rounded-md font-bold h-[100px] w-full mt-10`}
         >
-          Add Product
+          Manage Product
         </Link>
       </div>
     </nav>
-  );
+  )
 }

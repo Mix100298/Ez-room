@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import { colors } from "@mui/material";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { data } from "autoprefixer";
+"use client"
+import React from "react"
+import { colors } from "@mui/material"
+import { BarChart } from "@mui/x-charts/BarChart"
+import { data } from "autoprefixer"
 
 export default function Page() {
   // skeleton code
@@ -45,9 +45,9 @@ export default function Page() {
       value: 11,
       label: "postid5",
     },
-  ];
+  ]
 
-  const valueFormatter = (value: number | null) => `${value} likes`;
+  const valueFormatter = (value: number | null) => `${value} likes`
 
   return (
     <div className="rounded grid min-w-[550px] min-h-full bg-white mb-10 p-5 shadow-lg">
@@ -73,5 +73,5 @@ export default function Page() {
         layout="horizontal"
       />
     </div>
-  );
+  )
 }

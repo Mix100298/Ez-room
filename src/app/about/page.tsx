@@ -1,16 +1,16 @@
-import React from "react";
-import type { Metadata } from "next";
+import React from "react"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "About Us",
   description: "About Us page",
-};
+}
 
 export default function page() {
   return (
     <main className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
       <div className="grid gap-10 py-10">
-        <h1 className="font-bold text-7xl ">About us.</h1>
+        <h1 className="font-bold text-6xl ">About us.</h1>
         <div className="flex flex-wrap gap-10 justify-center">
           <div>
             <img
@@ -22,20 +22,27 @@ export default function page() {
           {/* App  */}
           <div className="grid flex-1 gap-10 min-w-[450px]">
             <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis
-              aute irure dolor in reprehenderit in voluptate velit esse cillum.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id ex ea commod ex ea commod ex ea
-              commod est laborum."
+              Easy-Room, an innovative web application aimed at simplifying
+              interior design and serving as a source of design ideas by using a
+              generative AI model, Stable Diffusion, fine-tuned through
+              AUTOMATIC1111 GUI and kohya_ss GUI using LoRa and Dreambooth
+              fine-tuning techniques. Easy-Room allows users to generate
+              interior designs effortlessly by selecting from various options
+              for room type (Bedroom, Bathroom, Random), room style (Bohemian,
+              Contemporary, Modern), and 42 distinct furniture items.
             </p>
             <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis
-              aute irure dolor in reprehenderit in voluptate velit esse cillum.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id ex ea commod ex ea commod ex ea
-              commod est laborum."
+              Eliminate the need for complex design processes by only selecting
+              options rather than drawing. Furthermore, the project is better
+              than the former website by being able to choose the desired
+              furniture to be included in the generated image. Additionally, the
+              platform has a community where users can share ideas from the
+              generated images. For administrators, Easy-Room provides a robust
+              dashboard for managing furniture data and monitoring usage. The
+              technological infrastructure of Easy-Room includes an Express
+              framework backend, a Next.js frontend, a Fast-API for AI services,
+              and a MongoDB database, ensuring a robust and scalable solution
+              for interior design challenges.
             </p>
           </div>
         </div>
@@ -47,8 +54,10 @@ export default function page() {
         </div>
         <div className="flex flex-wrap gap-10">
           <div className="grid flex-1 gap-5 min-w-[400px] justify-center">
-            <h1 className="font-bold text-5xl">“ Ous work does make sense ”</h1>
-            <p>Manggon rong meowza, Team leader</p>
+            <h1 className="font-bold text-3xl">
+              “Easy to get room idea only click”
+            </h1>
+            <p>The Team</p>
           </div>
           <div className="flex flex-1 justify-center">
             <img
@@ -76,23 +85,23 @@ export default function page() {
             ></img>
           </div>
           <div className="grid flex-1 gap-5 min-w-[500px]">
-            <h1 className="font-bold text-5xl">THE TEAM.</h1>
-            <p>
+            <h1 className="font-bold text-4xl">THE TEAM.</h1>
+            {/* <p>
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
               officia deserunt mollit anim id ex ea commod ex ea commod ex ea
               commod est laborum."
-            </p>
-            <p>
+            </p> */}
+            {/* <p>
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
               officia deserunt mollit anim id ex ea commod ex ea commod ex ea
               commod est laborum."
-            </p>
+            </p> */}
             <div className="flex justify-between">
-              <h2 className="font-bold text-4xl">1046</h2>
-              <h2 className="font-bold text-4xl">1057</h2>
-              <h2 className="font-bold text-4xl">1088</h2>
+              <h2 className="font-bold text-3xl">1046</h2>
+              <h2 className="font-bold text-3xl">1057</h2>
+              <h2 className="font-bold text-3xl">1088</h2>
             </div>
             <div className="flex justify-between">
               <p>Phuettipol Jitjaroenkit</p>
@@ -103,5 +112,5 @@ export default function page() {
         </div>
       </div>
     </main>
-  );
+  )
 }
