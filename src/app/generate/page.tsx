@@ -67,7 +67,7 @@ export default function Page() {
     defaultValues: {
       type: "Random",
       style: "Random",
-      budget: 50000,
+      budget: 500,
       furnitures: [],
     },
   })
@@ -160,10 +160,7 @@ export default function Page() {
       <div className="grid grid-flow-row grid-cols-12 gap-10 py-10 min-w-min">
         <div className="grid col-span-12 row-auto">
           <h1 className="text-6xl font-bold">Generate interior</h1>
-          <p>
-            Generate your room exterior to match your desired aesthetic with
-            ease. For best results.
-          </p>
+          <p>Generate interior design images to match your desire.</p>
         </div>
         <div className="bg-gray-700 h-20 rounded flex items-center justify-center col-span-12 min-w-[690px]">
           <div className="text-white text-3xl font-bold">Generate</div>
@@ -190,14 +187,14 @@ export default function Page() {
                 />
                 <Input
                   id={register("budget").name}
-                  name={"Choose your budget"}
+                  name={"Set your furnitures budget"}
                   type={"number"}
-                  placeholder={"minimum 50,000 - maximum 1,000,000"}
+                  placeholder={"minimum 500 - maximum 1,000,000"}
                   form={register(`budget`, {
                     valueAsNumber: true,
                     min: {
-                      value: 50000,
-                      message: "Minimum budget is 1,000 baht",
+                      value: 500,
+                      message: "Minimum budget is 500 baht",
                     },
                     max: {
                       value: 1000000,
