@@ -13,7 +13,7 @@ import type { Metadata } from "next"
 import axios from "axios"
 import Image from "next/image"
 import useFetch from "@/hooks/useFetch"
-
+import FurnitureList from "@/components/furniturelist"
 // export const metadata: Metadata = {
 //   title: "Generate",
 //   description: "Generate page",
@@ -268,7 +268,7 @@ export default function Page() {
               </div>
             </div>
             <div className="grid bg-white rounded shadow-md p-4 col-span-1 row-start-2 row-span-3 w-[428px]">
-              <h1 className="text-xl font-bold">Specify furniture</h1>
+              <h1 className="text-xl font-bold">Choose furniture (Up to 2)</h1>
               <div className="py-5">
                 {/* <Searchfilter /> */}
                 {errors.furnitures && (
@@ -320,7 +320,7 @@ export default function Page() {
             </div>
             {/* Result Generate room*/}
             {result && (
-              <div className="grid bg-white rounded p-4 shadow-md col-span-6 col-start-2 row-span-2">
+              <div className="grid bg-white rounded p-4 shadow-md col-span-6 row-span-5">
                 <h1 className="text-xl font-bold text-blue-500">
                   Result Generate Room
                 </h1>
@@ -341,17 +341,37 @@ export default function Page() {
                   />
                   <Input
                     id="budget"
-                    name="Budget"
+                    name="total furniture price"
                     type="budget-room"
                     placeholder={result.budget.toString()}
                     isdisabled={true}
                   />
                 </div>
+                <h1 className="text-xl font-bold text-blue-500 mt-8 mb-4">
+                    Furniture List
+                  </h1>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead>
+                    <tr>
+                      <th className="text-center" >No</th>
+                      <th className="text-center">Image</th>
+                      <th className="text-center">Name</th>
+                      <th className="text-start">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.furnitures.map((furniture, index) => {
+                      return (
+                        <FurnitureList index={index} id={furniture} />
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
             )}
           </>
         </form>
-        <div className="grid min-w-[428px] col-span-1">
+        <div className="grid min-w-[428px] col-start-7 row-span-3">
           {result && (
             <Share
               mode="create"

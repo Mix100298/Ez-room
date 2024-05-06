@@ -345,7 +345,7 @@ export default function Page({ params }: { params: { id: string } }) {
               </div>
             </div>
           )}
-          <h2 className="font-bold text-2xl pr-10">
+          {/* <h2 className="font-bold text-2xl pr-10">
             More article by this author
           </h2>
           <div className="flex gap-10">
@@ -353,7 +353,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <Card isDisabled={true} />
             <Card isDisabled={true} />
             <Card isDisabled={true} />
-          </div>
+          </div> */}
         </div>
       </main>
     )
