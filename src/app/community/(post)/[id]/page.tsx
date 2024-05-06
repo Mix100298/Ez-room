@@ -1,82 +1,82 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Card from "@/components/card";
-import Edit from "@/components/edit";
-import Share from "@/components/share";
-import useFetch from "@/hooks/useFetch";
-import Button from "@/components/button";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import Avatar from "@/components/avatar";
-import Like from "@/components/like";
+"use client"
+import React, { useState, useEffect } from "react"
+import Link from "next/link"
+import Card from "@/components/card"
+import Edit from "@/components/edit"
+import Share from "@/components/share"
+import useFetch from "@/hooks/useFetch"
+import Button from "@/components/button"
+import { useRouter } from "next/navigation"
+import axios from "axios"
+import Avatar from "@/components/avatar"
+import Like from "@/components/like"
 interface Owner {
-  _id: string;
-  firstname: string;
-  lastname: string;
-  avatar_image: string;
+  _id: string
+  firstname: string
+  lastname: string
+  avatar_image: string
 }
 interface Furniture {
-  _id: string;
-  english_name: string;
-  description: string;
-  image: string;
-  url: string;
-  price: number;
+  _id: string
+  english_name: string
+  description: string
+  image: string
+  url: string
+  price: number
 }
 
 interface Room {
-  _id: string;
-  type: "Bedroom" | "Bathroom";
-  style: "Contemporary" | "Bohemian" | "Modern";
-  budget: number;
-  furnitures: Furniture[];
-  images: string[];
-  selectedimage: number;
+  _id: string
+  type: "Bedroom" | "Bathroom"
+  style: "Contemporary" | "Bohemian" | "Modern"
+  budget: number
+  furnitures: Furniture[]
+  images: string[]
+  selectedimage: number
 }
 
 interface Post {
   post: {
-    _id: string;
-    ownerid: Owner;
-    status: "public" | "private";
-    roomid: Room;
-    title: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  isOwner: boolean;
+    _id: string
+    ownerid: Owner
+    status: "public" | "private"
+    roomid: Room
+    title: string
+    description: string
+    createdAt: string
+    updatedAt: string
+  }
+  isOwner: boolean
 }
 
 export default function Page({ params }: { params: { id: string } }) {
-  const router = useRouter();
-  const id = params["id"];
+  const router = useRouter()
+  const id = params["id"]
   const {
     data: postResult,
     isLoading: isPostLoading,
     error: postError,
-  } = useFetch<Post>("http://localhost:5000/api/posts/get/current/" + id);
-  console.log(id);
-  console.log(postResult);
-  const [data, setData] = useState(postResult);
-  const [editPost, setEditPost] = useState(false);
-  const [deletePost, setDeletePost] = useState(false);
+  } = useFetch<Post>("http://localhost:5000/api/posts/get/current/" + id)
+  console.log(id)
+  console.log(postResult)
+  const [data, setData] = useState(postResult)
+  const [editPost, setEditPost] = useState(false)
+  const [deletePost, setDeletePost] = useState(false)
 
   const handleEditChange = (isEditing: boolean) => {
-    setDeletePost(false);
-    setEditPost(isEditing);
-  };
+    setDeletePost(false)
+    setEditPost(isEditing)
+  }
 
   const handleDeleteChange = (isEditing: boolean) => {
-    setEditPost(false);
-    setDeletePost(isEditing);
-  };
+    setEditPost(false)
+    setDeletePost(isEditing)
+  }
 
-  console.log(editPost);
+  console.log(editPost)
   useEffect(() => {
-    setData(postResult);
-  }, [postResult]);
+    setData(postResult)
+  }, [postResult])
 
   // Data from the post
   if (isPostLoading) {
@@ -131,7 +131,7 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   if (!isPostLoading && !data && postError) {
@@ -145,7 +145,7 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -220,7 +220,7 @@ export default function Page({ params }: { params: { id: string } }) {
                               />
                             </label>
                           </div>
-                        );
+                        )
                       })}
                     </div>
                   )}
@@ -255,10 +255,10 @@ export default function Page({ params }: { params: { id: string } }) {
                             const response = await axios.delete(
                               "http://localhost:5000/api/posts/delete/" + id,
                               { withCredentials: true }
-                            );
-                            router.push("/community");
+                            )
+                            router.push("/community")
                           } catch (error) {
-                            console.log(error);
+                            console.log(error)
                           }
                         }}
                       >
@@ -345,7 +345,7 @@ export default function Page({ params }: { params: { id: string } }) {
               </div>
             </div>
           )}
-          <h2 className="font-bold text-2xl pr-10">
+          {/* <h2 className="font-bold text-2xl pr-10">
             More article by this author
           </h2>
           <div className="flex gap-10">
@@ -353,9 +353,9 @@ export default function Page({ params }: { params: { id: string } }) {
             <Card isDisabled={true} />
             <Card isDisabled={true} />
             <Card isDisabled={true} />
-          </div>
+          </div> */}
         </div>
       </main>
     )
-  );
+  )
 }

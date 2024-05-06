@@ -222,7 +222,9 @@ export default function Page() {
                 )}
                 {result && (
                   <img
-                    src={`data:image/png;base64,${result.images[result.selectedimage]}`}
+                    src={`data:image/png;base64,${
+                      result.images[result.selectedimage]
+                    }`}
                     alt="room design"
                   />
                 )}
@@ -268,7 +270,7 @@ export default function Page() {
               </div>
             </div>
             <div className="grid bg-white rounded shadow-md p-4 col-span-1 row-start-2 row-span-3 w-[428px]">
-              <h1 className="text-xl font-bold">Specify furniture</h1>
+              <h1 className="text-xl font-bold">Choose furniture (Up to 2)</h1>
               <div className="py-5">
                 {/* <Searchfilter /> */}
                 {errors.furnitures && (
@@ -346,6 +348,7 @@ export default function Page() {
                     placeholder={result.budget.toString()}
                     isdisabled={true}
                   />
+                  <h1 className="text-xl font-bold"></h1>
                 </div>
               </div>
             )}
