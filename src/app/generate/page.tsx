@@ -222,7 +222,9 @@ export default function Page() {
                 )}
                 {result && (
                   <img
-                    src={`data:image/png;base64,${result.images[result.selectedimage]}`}
+                    src={`data:image/png;base64,${
+                      result.images[result.selectedimage]
+                    }`}
                     alt="room design"
                   />
                 )}
@@ -346,6 +348,7 @@ export default function Page() {
                     placeholder={result.budget.toString()}
                     isdisabled={true}
                   />
+                  <h1 className="text-xl font-bold"></h1>
                 </div>
                 <h1 className="text-xl font-bold text-blue-500 mt-8 mb-4">
                     Furniture List
