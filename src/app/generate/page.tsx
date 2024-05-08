@@ -77,7 +77,7 @@ export default function Page() {
     data: furniture,
     isLoading: isFurnitureLoading,
     error: furnitureError,
-  } = useFetch<IFurniture>("http://localhost:5000/api/furnitures/getall")
+  } = useFetch<IFurniture>(process.env.backendUrl + "/api/furnitures/getall")
 
   const fakePost = (status: boolean, data: any) => {
     return new Promise((resolve, reject) => {
@@ -96,7 +96,7 @@ export default function Page() {
     setisLoading(true)
     try {
       const result = await axios.post(
-        "http://localhost:5000/api/generate/create",
+        process.env.backendUrl + "/api/generate/create",
         { ...data },
         {
           withCredentials: true,
@@ -351,12 +351,12 @@ export default function Page() {
                   <h1 className="text-xl font-bold"></h1>
                 </div>
                 <h1 className="text-xl font-bold text-blue-500 mt-8 mb-4">
-                    Furniture List
-                  </h1>
+                  Furniture List
+                </h1>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead>
                     <tr>
-                      <th className="text-center" >No</th>
+                      <th className="text-center">No</th>
                       <th className="text-center">Image</th>
                       <th className="text-center">Name</th>
                       <th className="text-start">Price</th>
@@ -364,9 +364,7 @@ export default function Page() {
                   </thead>
                   <tbody>
                     {result.furnitures.map((furniture, index) => {
-                      return (
-                        <FurnitureList index={index} id={furniture} />
-                      )
+                      return <FurnitureList index={index} id={furniture} />
                     })}
                   </tbody>
                 </table>

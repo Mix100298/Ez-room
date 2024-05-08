@@ -56,7 +56,7 @@ export default function Page({ params }: { params: { id: string } }) {
     data: postResult,
     isLoading: isPostLoading,
     error: postError,
-  } = useFetch<Post>("http://localhost:5000/api/posts/get/current/" + id)
+  } = useFetch<Post>(process.env.backendUrl + "/api/posts/get/current/" + id)
   console.log(id)
   console.log(postResult)
   const [data, setData] = useState(postResult)
@@ -253,7 +253,9 @@ export default function Page({ params }: { params: { id: string } }) {
                         onClick={async () => {
                           try {
                             const response = await axios.delete(
-                              "http://localhost:5000/api/posts/delete/" + id,
+                              process.env.backendUrl +
+                                "/api/posts/delete/" +
+                                id,
                               { withCredentials: true }
                             )
                             router.push("/community")

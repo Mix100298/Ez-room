@@ -1,25 +1,25 @@
-"use client";
-import React, { useState } from "react";
-import Button from "./button";
-import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+"use client"
+import React, { useState } from "react"
+import Button from "./button"
+import { useForm, SubmitHandler } from "react-hook-form"
+import axios from "axios"
+import { useRouter } from "next/navigation"
 interface PostForm {
-  postTitle: string;
-  postDescription: string;
-  postStatus: "public" | "private";
-  mode: "edit" | "create";
-  data: any;
-  roomid?: string;
-  postid?: string;
-  onClosed?: () => void;
-  selectedimage?: number;
+  postTitle: string
+  postDescription: string
+  postStatus: "public" | "private"
+  mode: "edit" | "create"
+  data: any
+  roomid?: string
+  postid?: string
+  onClosed?: () => void
+  selectedimage?: number
 }
 
 interface ShareProps {
-  title?: string;
-  description?: string;
-  status?: boolean;
+  title?: string
+  description?: string
+  status?: boolean
 }
 
 const Share: React.FC<PostForm> = ({
@@ -37,11 +37,11 @@ const Share: React.FC<PostForm> = ({
   function postTypeToNumber(type: string): boolean {
     switch (type) {
       case "public":
-        return true;
+        return true
       case "private":
-        return false;
+        return false
       default:
-        return false;
+        return false
     }
   }
 
@@ -49,13 +49,13 @@ const Share: React.FC<PostForm> = ({
   function numberToPostType(type: boolean): string {
     switch (type) {
       case true:
-        return "public";
+        return "public"
       case false:
-        return "private";
+        return "private"
     }
   }
 
-  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [isLoading, setisLoading] = useState<boolean>(false)
 
   // Form
   const {
@@ -69,12 +69,12 @@ const Share: React.FC<PostForm> = ({
       description: postDescription,
       status: postTypeToNumber(postStatus as string),
     },
-  });
-  const router = useRouter();
+  })
+  const router = useRouter()
 
   const createPost: SubmitHandler<ShareProps> = async (formdata) => {
     // change data of the form
-    const statusPost = numberToPostType(formdata.status as boolean);
+    const statusPost = numberToPostType(formdata.status as boolean)
     // Data to send
     // const data = {
     //   title: formdata.title,
@@ -82,21 +82,21 @@ const Share: React.FC<PostForm> = ({
     //   postType: statusPost,
     // };
 
-    setisLoading(true);
+    setisLoading(true)
     try {
       // Send data to the server
-      //const result = await axios.post("http://localhost:5000/", data);
-      console.log("room presave:", data);
+      //const result = await axios.post(process.env.backendUrl+"/", data);
+      console.log("room presave:", data)
       const room = await axios.post(
-        "http://localhost:5000/api/rooms/create",
+        process.env.backendUrl + "/api/rooms/create",
         {
           ...data,
         },
         { withCredentials: true }
-      );
-      console.log("room created", room);
+      )
+      console.log("room created", room)
       const post = await axios.post(
-        "http://localhost:5000/api/posts/create",
+        process.env.backendUrl + "/api/posts/create",
         {
           roomid: room.data._id,
           title: formdata.title,
@@ -104,48 +104,48 @@ const Share: React.FC<PostForm> = ({
           status: statusPost,
         },
         { withCredentials: true }
-      );
-      console.log("post created", post);
-      setisLoading(false);
-      router.push(`/community/${post.data.id}`);
+      )
+      console.log("post created", post)
+      setisLoading(false)
+      router.push(`/community/${post.data.id}`)
     } catch (error) {
-      console.log(error);
-      setisLoading(false);
+      console.log(error)
+      setisLoading(false)
     }
-  };
+  }
 
   const updatePost: SubmitHandler<ShareProps> = async (formdata) => {
-    const statusPost = numberToPostType(formdata.status as boolean);
-    console.log("updated post", { ...formdata, status: statusPost });
-    console.log("updated post", data);
-    setisLoading(true);
+    const statusPost = numberToPostType(formdata.status as boolean)
+    console.log("updated post", { ...formdata, status: statusPost })
+    console.log("updated post", data)
+    setisLoading(true)
 
     try {
       const room = await axios.patch(
-        "http://localhost:5000/api/rooms/update/" + roomid,
+        process.env.backendUrl + "/api/rooms/update/" + roomid,
         { selectedimage: selectedimage },
         {
           withCredentials: true,
         }
-      );
+      )
       const post = await axios.patch(
-        "http://localhost:5000/api/posts/update/" + postid,
+        process.env.backendUrl + "/api/posts/update/" + postid,
         { ...formdata, status: statusPost },
         { withCredentials: true }
-      );
+      )
 
-      console.log("room updated", room);
-      console.log("post updated", post);
+      console.log("room updated", room)
+      console.log("post updated", post)
 
-      window.location.reload();
-      router.push("/community/" + postid);
+      window.location.reload()
+      router.push("/community/" + postid)
     } catch (error) {
-      console.log(error);
-      setisLoading(false);
+      console.log(error)
+      setisLoading(false)
     }
-  };
+  }
 
-  const Status = watch("status");
+  const Status = watch("status")
   // const Status1 = watch("title");
   // const Status2 = watch("description");
 
@@ -229,7 +229,7 @@ const Share: React.FC<PostForm> = ({
         </div>
       </form>
     </div>
-  );
+  )
   // : (
   //   <div className="h-full w-full bg-white rounded shadow-md">
   //     <form
@@ -301,9 +301,9 @@ const Share: React.FC<PostForm> = ({
   //     </form>
   //   </div>
   // );
-};
+}
 
-export default Share;
+export default Share
 
 /*
 <label class="inline-flex items-center cursor-pointer">

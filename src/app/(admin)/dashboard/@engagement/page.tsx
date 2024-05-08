@@ -14,14 +14,10 @@ export default function Page() {
     isLoading: isEngagementReportLoading,
     error: engagementReportError,
   } = useFetch<IEngagementReport[]>(
-    "http://localhost:5000/api/reports/engagement"
+    process.env.backendUrl + "/api/reports/engagement"
   )
   const [data, setData] = useState(engagementReportData)
   const [dataset, setDataset] = useState<Array<any>>([])
-  const handleBarClick = (link: string) => {
-    // Navigate to the provided link
-    router.push(link)
-  }
   useEffect(() => {
     if (engagementReportData) {
       const transformedData = engagementReportData.map((item) => ({
@@ -59,8 +55,8 @@ export default function Page() {
 
   return (
     <div className="rounded grid min-w-[550px] min-h-full bg-white mb-10 p-5 shadow-lg">
-      <h1 className="text-2xl font-bold text-gray-800 ">Top posts</h1>
-      <p className="text-sm text-gray-400">Most post user like.</p>
+      <h1 className="text-2xl font-bold text-gray-800 ">Engagement</h1>
+      <p className="text-sm text-gray-400">Most liked post.</p>
       {dataset.length > 0 && (
         <BarChart
           onAxisClick={clickHandler}

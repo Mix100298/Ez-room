@@ -1,20 +1,20 @@
-"use client";
-import React, { useState } from "react";
-import Button from "./button";
-import { inter } from "@/app/ui/fonts";
-import Link from "next/link";
-import axios from "axios";
-import Avatar from "./avatar";
-import { useEffect } from "react";
-import Image from "next/image";
-import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+"use client"
+import React, { useState } from "react"
+import Button from "./button"
+import { inter } from "@/app/ui/fonts"
+import Link from "next/link"
+import axios from "axios"
+import Avatar from "./avatar"
+import { useEffect } from "react"
+import Image from "next/image"
+import { getCookie } from "cookies-next"
+import { useRouter } from "next/navigation"
 
 interface Info {
-  isLogin: boolean;
-  role: string;
-  avatar: string;
-  firstname: string;
+  isLogin: boolean
+  role: string
+  avatar: string
+  firstname: string
 }
 
 function getMenuItem(
@@ -48,7 +48,7 @@ function getMenuItem(
             Sign out
           </Button>
         </div>
-      );
+      )
     } else if (role === "User") {
       return (
         <div className="flex items-center space-x-6 rtl:space-x-reverse">
@@ -69,7 +69,7 @@ function getMenuItem(
             Sign out
           </Button>
         </div>
-      );
+      )
     }
   } else {
     return (
@@ -81,32 +81,32 @@ function getMenuItem(
           <Button>Sign in</Button>
         </Link>
       </div>
-    );
+    )
   }
 }
 
 export default function Navbar() {
-  const router = useRouter();
-  const [isLoading, setisLoading] = useState<boolean>(false);
+  const router = useRouter()
+  const [isLoading, setisLoading] = useState<boolean>(false)
 
   const signout = () => {
     axios
-      .delete("http://localhost:5000/api/users/logout", {
+      .delete(process.env.backendUrl + "/api/users/logout", {
         withCredentials: true,
       })
       .then(() => {
-        window.localStorage.removeItem("info");
-        window.location.reload();
-        router.push("/");
-      });
-  };
+        window.localStorage.removeItem("info")
+        window.location.reload()
+        router.push("/")
+      })
+  }
 
-  var info: Info = JSON.parse(getCookie("info") ?? "{}");
+  var info: Info = JSON.parse(getCookie("info") ?? "{}")
 
   useEffect(() => {
-    setisLoading(true);
-    console.log("navbar useEffect render");
-  }, []);
+    setisLoading(true)
+    console.log("navbar useEffect render")
+  }, [])
 
   return (
     <nav className="bg-white border-gray-200 font-bold sticky top-0 z-50 min-w-min">
@@ -140,5 +140,5 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-  );
+  )
 }

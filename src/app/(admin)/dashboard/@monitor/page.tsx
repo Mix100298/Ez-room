@@ -1,20 +1,20 @@
-"use client";
-import React from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { colors } from "@mui/material";
-import { useState, useEffect } from "react";
-import useFetch from "@/hooks/useFetch";
+"use client"
+import React from "react"
+import { BarChart } from "@mui/x-charts/BarChart"
+import { colors } from "@mui/material"
+import { useState, useEffect } from "react"
+import useFetch from "@/hooks/useFetch"
 
 export default function Page() {
   const {
     data: typeReportData,
     isLoading: isTypeReportLoading,
     error: typeReportError,
-  } = useFetch<TypeReport>("http://localhost:5000/api/reports/type");
-  const [data, setData] = useState(typeReportData);
+  } = useFetch<TypeReport>(process.env.backendUrl + "/api/reports/type")
+  const [data, setData] = useState(typeReportData)
   useEffect(() => {
-    setData(typeReportData);
-  }, [typeReportData]);
+    setData(typeReportData)
+  }, [typeReportData])
   // Data from the post
   if (isTypeReportLoading) {
     return (
@@ -23,17 +23,17 @@ export default function Page() {
         <div className="flex bg-gray-300 w-40 h-5 rounded-full"></div>
         <div className="flex bg-gray-300 w-full h-[275px] rounded"></div>
       </div>
-    );
+    )
   }
   if (!isTypeReportLoading && !data && typeReportError)
-    return <div>Error: {typeReportError.message}</div>;
+    return <div>Error: {typeReportError.message}</div>
   // const data = [1234, 2345];
   // const xLabels = ["Bedroom", "Bathroom"];
 
   return (
     <div className="rounded grid min-w-[550px] min-h-full bg-white mb-10 p-5 shadow-lg">
       <h1 className="text-2xl font-bold text-gray-800 ">Type</h1>
-      <p className="text-sm text-gray-400">Most type user used.</p>
+      <p className="text-sm text-gray-400">Most generated type.</p>
       {typeReportData && (
         <BarChart
           height={300}
@@ -53,5 +53,5 @@ export default function Page() {
         ></BarChart>
       )}
     </div>
-  );
+  )
 }

@@ -15,13 +15,16 @@ export function EZroomContext({ children }: any) {
   const persistLogin = async () => {
     // persist login
     try {
-      const response = await axios.get("http://localhost:5000/api/users/autologin", {
-        withCredentials: true,
-      })
+      const response = await axios.get(
+        process.env.backendUrl + "/api/users/autologin",
+        {
+          withCredentials: true,
+        }
+      )
       if (response.status === 200) {
         const info = getCookie("info")
-        setInfo(info) 
-      }else if(response.status === 401){
+        setInfo(info)
+      } else if (response.status === 401) {
         setIsLogged(false)
         throw new Error("Unauthorized")
       }
@@ -31,13 +34,12 @@ export function EZroomContext({ children }: any) {
   }
 
   useEffect(() => {
-   const info = getCookie("info")
-   if (info) {
-    setInfo({...JSON.parse(info)})
-    setIsLogged(true)
-  }
-    
-  },[])
+    const info = getCookie("info")
+    if (info) {
+      setInfo({ ...JSON.parse(info) })
+      setIsLogged(true)
+    }
+  }, [])
 
   return (
     <EZroomProvider.Provider

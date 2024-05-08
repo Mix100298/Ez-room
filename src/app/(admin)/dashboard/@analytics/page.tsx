@@ -1,18 +1,18 @@
-"use client";
-import React from "react";
-import { useState, useEffect } from "react";
-import useFetch from "@/hooks/useFetch";
-import { PieChart } from "@mui/x-charts/PieChart";
+"use client"
+import React from "react"
+import { useState, useEffect } from "react"
+import useFetch from "@/hooks/useFetch"
+import { PieChart } from "@mui/x-charts/PieChart"
 export default function Page() {
   const {
     data: styleReportData,
     isLoading: isstyleReportDataLoading,
     error: styleReportDataError,
-  } = useFetch<StyleReport[]>("http://localhost:5000/api/reports/style");
-  const [data, setData] = useState(styleReportData);
+  } = useFetch<StyleReport[]>(process.env.backendUrl + "/api/reports/style")
+  const [data, setData] = useState(styleReportData)
   useEffect(() => {
-    setData(styleReportData);
-  }, [styleReportData]);
+    setData(styleReportData)
+  }, [styleReportData])
 
   if (isstyleReportDataLoading) {
     return (
@@ -21,10 +21,10 @@ export default function Page() {
         <div className="flex bg-gray-300 w-40 h-5 rounded-full"></div>
         <div className="flex bg-gray-300 w-full h-[275px] rounded"></div>
       </div>
-    );
+    )
   }
   if (!isstyleReportDataLoading && !data && styleReportDataError)
-    return <div>Error: {styleReportDataError.message}</div>;
+    return <div>Error: {styleReportDataError.message}</div>
   // const data = [
   //   { id: 0, value: 2473, label: "Modern" },
   //   { id: 1, value: 3067, label: "Contemporary" },
@@ -34,7 +34,7 @@ export default function Page() {
   return (
     <div className="rounded grid min-w-[550px] min-h-full bg-white p-5 mb-10 shadow-lg">
       <h1 className="text-2xl font-bold text-gray-800 ">Style</h1>
-      <p className="text-sm text-gray-400 mb-10">Most style user used.</p>
+      <p className="text-sm text-gray-400 mb-10">Most generated style</p>
       {styleReportData && (
         <PieChart
           colors={["#519DE9", "#7CC674", "#73C5C5", "#8481DD"]}
@@ -53,5 +53,5 @@ export default function Page() {
         />
       )}
     </div>
-  );
+  )
 }

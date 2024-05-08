@@ -46,7 +46,7 @@ export default function AdminProduct({
     setIsLoading(true)
     try {
       const result = await axios.post(
-        "http://localhost:5000/api/oldFurnitures/create",
+        process.env.backendUrl + "/api/oldFurnitures/create",
         {
           ...formData,
           price: Number(formData.price).valueOf(),
@@ -69,7 +69,7 @@ export default function AdminProduct({
     setIsLoading(true)
     try {
       const result = await axios.patch(
-        "http://localhost:5000/api/furnitures/update/" + data._id,
+        process.env.backendUrl + "/api/furnitures/update/" + data._id,
         {
           ...formData,
           _id: undefined,
@@ -95,7 +95,7 @@ export default function AdminProduct({
     setIsLoading(true)
     try {
       const result = await axios.delete(
-        "http://localhost:5000/api/furnitures/delete/" + data._id,
+        process.env.backendUrl + "/api/furnitures/delete/" + data._id,
         { withCredentials: true }
       )
       window.location.reload()

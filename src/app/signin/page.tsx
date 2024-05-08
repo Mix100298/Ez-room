@@ -1,12 +1,12 @@
-"use client";
-import React from "react";
-import Link from "next/link";
+"use client"
+import React from "react"
+import Link from "next/link"
 
-import Button from "@/components/button";
-import type { Metadata } from "next";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+import Button from "@/components/button"
+import type { Metadata } from "next"
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 
 // export const metadata: Metadata = {
 //   title: "Sign in",
@@ -14,8 +14,8 @@ import axios from "axios";
 // };
 
 interface InputForm {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export default function Page() {
@@ -29,13 +29,13 @@ export default function Page() {
       email: "",
       password: "",
     },
-  });
-  const router = useRouter();
+  })
+  const router = useRouter()
   const formHandle: SubmitHandler<InputForm> = (data) => {
-    const { email, password } = data;
+    const { email, password } = data
     axios
       .post(
-        "http://localhost:5000/api/users/login",
+        process.env.backendUrl + "/api/users/login",
         {
           email,
           password,
@@ -48,12 +48,12 @@ export default function Page() {
         }
       )
       .then((result) => {
-        router.push("/");
+        router.push("/")
       })
       .catch((err) => {
-        alert(JSON.stringify(err.message));
-      });
-  };
+        alert(JSON.stringify(err.message))
+      })
+  }
 
   return (
     <main className="min-h-screen">
@@ -142,7 +142,7 @@ export default function Page() {
         </div>
       </div>
     </main>
-  );
+  )
 }
 
 // const InpurFrom = [
