@@ -46,3 +46,10 @@ interface TypeReport {
   value: [number]
   label: [string]
 }
+
+interface IEngagementReport {
+  id: string
+  value: number
+  label: string
+  link: string
+}
