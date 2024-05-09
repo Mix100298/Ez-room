@@ -50,6 +50,28 @@ interface Post {
 }
 
 export default function Page({ params }: { params: { id: string } }) {
+  // Format date for post
+  function formatDate(date: string) {
+    const newDate = new Date(date)
+    const day = String(new Date(date).getDate()).padStart(2, "0")
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ]
+    const monthIndex = newDate.getMonth()
+
+    return `${monthNames[monthIndex].substring(0, 3)} ${day}`
+  }
   const router = useRouter()
   const id = params["id"]
   const {
@@ -303,7 +325,7 @@ export default function Page({ params }: { params: { id: string } }) {
                             {data.post.ownerid.lastname}
                           </p>
                           <p className="text-sm text-slate-500 font-medium">
-                            May 03
+                            {formatDate(data.post.updatedAt)}
                           </p>
                         </div>
                       </div>
