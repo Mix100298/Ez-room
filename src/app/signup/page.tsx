@@ -1,11 +1,11 @@
-"use client"
-import React from "react"
-import Link from "next/link"
-import Button from "@/components/button"
-import { useForm, SubmitHandler } from "react-hook-form"
-import { useRouter } from "next/navigation"
-import type { Metadata } from "next"
-import axios from "axios"
+"use client";
+import React from "react";
+import Link from "next/link";
+import Button from "@/components/button";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import type { Metadata } from "next";
+import axios from "axios";
 
 // export const metadata: Metadata = {
 //   title: "Sign up",
@@ -13,14 +13,14 @@ import axios from "axios"
 // };
 
 interface IFormInput {
-  email: string
-  password: string
-  confirmPassword: string
-  firstname: string
-  lastname: string
-  dateOfBirth: string
-  sex: "Male" | "Felame" | "Other" | null
-  file: File | null
+  email: string;
+  password: string;
+  confirmPassword: string;
+  firstname: string;
+  lastname: string;
+  dateOfBirth: string;
+  sex: "Male" | "Felame" | "Other" | null;
+  file: File | null;
 }
 
 export default function Page() {
@@ -39,8 +39,8 @@ export default function Page() {
       dateOfBirth: "",
       file: null,
     },
-  })
-  const router = useRouter()
+  });
+  const router = useRouter();
 
   const formHandle: SubmitHandler<IFormInput> = async (formdata) => {
     // const email = e.target[0].value;
@@ -59,12 +59,12 @@ export default function Page() {
       lastname: formdata.lastname,
       dateOfBirth: formdata.dateOfBirth,
       sex: formdata.sex,
-    }
-    const file = formdata.file
+    };
+    const file = formdata.file;
 
     if (formdata.password !== formdata.confirmPassword) {
-      alert("Password and Confirm Password must be the same")
-      return
+      alert("Password and Confirm Password must be the same");
+      return;
     }
 
     axios
@@ -83,33 +83,33 @@ export default function Page() {
       )
       .then((res) => {
         if (res.status === 201) {
-          alert("Sign up success")
-          router.push("/signin")
-          return
+          alert("Sign up success");
+          router.push("/signin");
+          return;
         }
-        alert("Sign up failed")
-      })
-  }
+        alert("Sign up failed");
+      });
+  };
 
   const RadioFrom = [
     { id: "term-male", name: "Male" },
     { id: "term-female", name: "Female" },
     { id: "term-other", name: "Other" },
-  ]
+  ];
 
   const passwordRegexHandler = (password: string, regex: RegExp) => {
-    return regex.test(password)
-  }
+    return regex.test(password);
+  };
 
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-  const password = watch("password")
-  const confirmPassword = watch("confirmPassword")
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
 
   return (
     <main className="min-h-screen">
       <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700 p-10">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0 min-w-[300px]">
           <div className="w-full bg-white rounded shadow md:mt-0 max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 xl:p-8">
               <h1 className="font-medium text-5xl text-center">Sign up</h1>
@@ -390,7 +390,7 @@ export default function Page() {
         </div>
       </div>
     </main>
-  )
+  );
 }
 
 // {InputFrom.map((input, idx) => (

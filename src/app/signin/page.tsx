@@ -1,12 +1,12 @@
-"use client"
-import React from "react"
-import Link from "next/link"
+"use client";
+import React from "react";
+import Link from "next/link";
 
-import Button from "@/components/button"
-import type { Metadata } from "next"
-import { useForm, SubmitHandler } from "react-hook-form"
-import { useRouter } from "next/navigation"
-import axios from "axios"
+import Button from "@/components/button";
+import type { Metadata } from "next";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 // export const metadata: Metadata = {
 //   title: "Sign in",
@@ -14,8 +14,8 @@ import axios from "axios"
 // };
 
 interface InputForm {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 export default function Page() {
@@ -29,10 +29,10 @@ export default function Page() {
       email: "",
       password: "",
     },
-  })
-  const router = useRouter()
+  });
+  const router = useRouter();
   const formHandle: SubmitHandler<InputForm> = (data) => {
-    const { email, password } = data
+    const { email, password } = data;
     axios
       .post(
         process.env.backendUrl + "/api/users/login",
@@ -48,18 +48,18 @@ export default function Page() {
         }
       )
       .then((result) => {
-        router.push("/")
+        router.push("/");
       })
       .catch((err) => {
-        alert(JSON.stringify(err.message))
-      })
-  }
+        alert(JSON.stringify(err.message));
+      });
+  };
 
   return (
     <main className="min-h-screen">
       <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700 p-10">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-          <div className="w-full bg-white rounded shadow md:mt-0 max-w-md xl:p-0">
+          <div className="w-full bg-white rounded shadow md:mt-0 max-w-md xl:p-0 min-w-[300px]">
             <div className="p-6 space-y-4 md:space-y-6 xl:p-8">
               <h1 className="font-medium text-5xl text-center">Sign in</h1>
               <form
@@ -142,7 +142,7 @@ export default function Page() {
         </div>
       </div>
     </main>
-  )
+  );
 }
 
 // const InpurFrom = [

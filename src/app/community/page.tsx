@@ -52,8 +52,8 @@ export default function Page() {
     error: postError,
   } = useFetch<Post[]>(
     isMypost
-      ? `http://localhost:5000/api/posts/get/mypost`
-      : `http://localhost:5000/api/posts/getall`
+      ? `${process.env.backendUrl}/api/posts/get/mypost`
+      : `${process.env.backendUrl}/api/posts/getall`
   );
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -172,11 +172,19 @@ export default function Page() {
               <h1 className="text-5xl font-bold mb-10">Posts Not Found</h1>
             </div>
           )}
+          {!isPostloading && postError && (
+            <>
+              <div className="animate-pulse grid items-center col-span-12 text-center text-gray-400">
+                <i className="fi fi-rr-blog-text text-[200px]"></i>
+                <h1 className="text-5xl font-bold mb-10">Failed to load</h1>
+              </div>
+            </>
+          )}
         </div>
         <div className="flex items-center justify-center col-span-12 row-auto ">
           <Button
             onClick={loadMoreCards}
-            isvisible={totalfilterPosts === 0}
+            isvisible={totalfilterPosts === 0 || posts === null}
             isdisabled={
               numCards >= (posts?.length ?? 0) ||
               (totalfilterPosts ?? 0) < numCards
