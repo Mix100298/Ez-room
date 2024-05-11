@@ -1,10 +1,10 @@
-import React from "react"
-import type { Metadata } from "next"
+import React from "react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us",
   description: "About Us page",
-}
+};
 
 export default function page() {
   return (
@@ -71,33 +71,25 @@ export default function page() {
           <div className="grid flex-2 gap-10">
             <img
               className="w-[200px] h-[200px] rounded-md"
-              src="https://scontent.fbkk7-2.fna.fbcdn.net/v/t1.6435-9/113936171_3162811593784795_4310133263396928170_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGtLuM7BQKI8eDHfF_6c3x7Y5EzUnFRxORjkTNScVHE5IQJS-Kfl2_F8mHKmgBL8WiBkR84DAIYD35YJ4MnTCVk&_nc_ohc=9kNzsI6dG_sAX9C6Q6s&_nc_ht=scontent.fbkk7-2.fna&oh=00_AfByUEwusO-DZlnDx_F7RA7ZOBjjAf9SQxqRLslMk_ErqA&oe=6615095E"
+              src="https://scontent-bkk1-2.xx.fbcdn.net/v/t1.6435-9/113936171_3162811593784795_4310133263396928170_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=fF6TvflPOfIQ7kNvgESvCMO&_nc_ht=scontent-bkk1-2.xx&oh=00_AfCNHDvENlx8oUnUw5fBpei2Pz8C9W8aqfOE9Y2FNklYdQ&oe=66645B9E"
             ></img>
             <img
               className="w-[200px] h-[200px] rounded-md"
-              src="https://scontent.fbkk7-2.fna.fbcdn.net/v/t1.6435-9/32087149_1292052287595109_8049658105941721088_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHWi0xJfxdpcdLBob3xWyvKqTPhNrMLhiCpM-E2swuGIItHwARkSHzqchZCyiEIC9bGrAd58XELXNajd6sAaQqn&_nc_ohc=TdCfazcmFkIAX-qruoi&_nc_ht=scontent.fbkk7-2.fna&oh=00_AfCEdr1Ruz0qlICe7o0w1_xmg5yV6YwBjvGXmL_jUiL8wg&oe=66150326"
+              src="https://scontent-bkk1-2.xx.fbcdn.net/v/t1.6435-9/32087149_1292052287595109_8049658105941721088_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=pidQkRrMDREQ7kNvgFAxTtg&_nc_ht=scontent-bkk1-2.xx&oh=00_AfDyX-W8VFIjMHO8jpP6PgxCtK7cq6qbEdEijg_eU2Y8gA&oe=66645566"
             ></img>
           </div>
           <div className="flex flex-2 items-center">
             <img
               className="w-[200px] h-[200px] rounded-md"
-              src="https://scontent.fbkk7-3.fna.fbcdn.net/v/t39.30808-6/329179432_941392657024434_9132707408366002938_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHQ_7PAvLjk31s2181QMtXBLFfZSyQiGDwsV9lLJCIYPHvqUk804osPTAGXeVxdHM0rqIpjYDywThGgrBXEsdmd&_nc_ohc=ZI0Sq1_Gr3QAX9wiA8q&_nc_ht=scontent.fbkk7-3.fna&oh=00_AfDYHW5nEDxWxMeGdf9rRDbZrAWw8ekm4pjX6h8D1nQ3yQ&oe=65F2DD55"
+              src="https://scontent-bkk1-2.xx.fbcdn.net/v/t39.30808-6/329179432_941392657024434_9132707408366002938_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=a_gRvJo7wZEQ7kNvgEP_AnA&_nc_ht=scontent-bkk1-2.xx&oh=00_AfD9dmfz9RYOL-robSG4wjjulL1WBfdmYxXacPAkkGCiKQ&oe=6642A015"
             ></img>
           </div>
           <div className="grid flex-1 gap-5 min-w-[500px]">
             <h1 className="font-bold text-4xl">THE TEAM.</h1>
-            {/* <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id ex ea commod ex ea commod ex ea
-              commod est laborum."
-            </p> */}
-            {/* <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id ex ea commod ex ea commod ex ea
-              commod est laborum."
-            </p> */}
+            <p>
+              We are students in department of computer engineering at King
+              Mongkut's University of Technology Thonburi.
+            </p>
             <div className="flex justify-between">
               <h2 className="font-bold text-3xl">1046</h2>
               <h2 className="font-bold text-3xl">1057</h2>
@@ -112,5 +104,5 @@ export default function page() {
         </div>
       </div>
     </main>
-  )
+  );
 }

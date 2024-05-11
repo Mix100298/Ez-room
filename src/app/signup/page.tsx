@@ -109,7 +109,7 @@ export default function Page() {
   return (
     <main className="min-h-screen">
       <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700 p-10">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0 min-w-[300px]">
           <div className="w-full bg-white rounded shadow md:mt-0 max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 xl:p-8">
               <h1 className="font-medium text-5xl text-center">Sign up</h1>
