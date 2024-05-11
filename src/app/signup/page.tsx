@@ -28,7 +28,7 @@ export default function Page() {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, touchedFields },
   } = useForm<IFormInput>({
     defaultValues: {
       email: "",
@@ -36,7 +36,7 @@ export default function Page() {
       confirmPassword: "",
       firstname: "",
       lastname: "",
-      dateOfBirth: "9999-12-31",
+      dateOfBirth: "2006-12-31",
       file: null,
     },
   });
@@ -44,15 +44,6 @@ export default function Page() {
 
   const formHandle: SubmitHandler<IFormInput> = async (formdata) => {
     console.log("Form Data:", formdata); // Add this line to log the formData
-    // const email = e.target[0].value;
-    // const password = e.target[1].value;
-    // const confirmPassword = e.target[2].value;
-    // const firstname = e.target[3].value;
-    // const lastname = e.target[4].value;
-    // const dateOfBirth = e.target[5].value;
-    // const sex = e.target[6].value;
-    // const avatar = e.target[7].files[0];
-
     let data = {
       email: formdata.email,
       password: formdata.password,
@@ -88,7 +79,13 @@ export default function Page() {
           router.push("/signin");
           return;
         }
-        alert("Sign up failed");
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          alert("This email has been used, Try the different one");
+        } else {
+          alert("An error occurred while logging in., Please try again");
+        }
       });
   };
   const RadioFrom = [
@@ -100,9 +97,13 @@ export default function Page() {
   const passwordRegexHandler = (password: string, regex: RegExp) => {
     return regex.test(password);
   };
-
+  const IsSpacebar = (fieldname: string) => {
+    if (fieldname.trim() == "") return false;
+    return true;
+  };
   const passwordRegex = /^.{8,}$/;
-
+  const firstname = watch("firstname");
+  const lastname = watch("lastname");
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
@@ -123,7 +124,7 @@ export default function Page() {
                     htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Email
+                    Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("email", {
@@ -142,7 +143,7 @@ export default function Page() {
                     aria-invalid={errors.email ? "true" : "false"}
                   ></input>
                   {errors.email && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.email.message}
                     </p>
                   )}
@@ -152,7 +153,7 @@ export default function Page() {
                     htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Password
+                    Password <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("password", {
@@ -167,20 +168,21 @@ export default function Page() {
                     className={`bg-white border ${
                       errors.password ? "border-red-500" : "border-gray-300"
                     }  text-gray-700 sm:text-sm rounded w-full p-2.5`}
-                    placeholder="••••••••••••••••"
+                    placeholder="minimum 8 characters"
                     autoComplete="off"
                     aria-invalid={errors.password ? "true" : "false"}
                   ></input>
-                  {!passwordRegexHandler(password, passwordRegex) && (
-                    <p className="text-sm text-red-500 w-full p-2.5">
-                      Passward must be more than 8 characters
-                    </p>
-                  )}
                   {errors.password && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.password.message}
                     </p>
                   )}
+                  {!passwordRegexHandler(password, passwordRegex) &&
+                    touchedFields.password && (
+                      <p className="text-sm text-red-500 w-full p-0.75">
+                        Passward must be more than 8 characters
+                      </p>
+                    )}
                 </div>
 
                 <div>
@@ -188,7 +190,7 @@ export default function Page() {
                     htmlFor="confirmPassword"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Confirm Password
+                    Confirm Password <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("confirmPassword", {
@@ -205,20 +207,21 @@ export default function Page() {
                         ? "border-red-500"
                         : "border-gray-300"
                     }  text-gray-700 sm:text-sm rounded w-full p-2.5`}
-                    placeholder="••••••••••••••••"
+                    placeholder="the same as password"
                     autoComplete="off"
                     aria-invalid={errors.confirmPassword ? "true" : "false"}
                   ></input>
-                  {!(password == confirmPassword) && confirmPassword != "" && (
-                    <p className="text-sm text-red-500 w-full p-2.5">
-                      Password not matched.
-                    </p>
-                  )}
                   {errors.confirmPassword && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.confirmPassword.message}
                     </p>
                   )}
+                  {!(password == confirmPassword) &&
+                    touchedFields.confirmPassword && (
+                      <p className="text-sm text-red-500 w-full p-0.75">
+                        Password not matched.
+                      </p>
+                    )}
                 </div>
 
                 <div>
@@ -226,7 +229,7 @@ export default function Page() {
                     htmlFor="firstname"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    First Name
+                    Firstname <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("firstname", {
@@ -242,12 +245,17 @@ export default function Page() {
                     className={`bg-white border ${
                       errors.firstname ? "border-red-500" : "border-gray-300"
                     }  text-gray-700 sm:text-sm rounded w-full p-2.5`}
-                    placeholder="First Name"
+                    placeholder="your account firstname"
                     autoComplete="off"
                     aria-invalid={errors.firstname ? "true" : "false"}
                   ></input>
+                  {!IsSpacebar(firstname) && touchedFields.firstname && (
+                    <p className="text-sm text-red-500 w-full p-0.75">
+                      firstname cannot be empty
+                    </p>
+                  )}
                   {errors.firstname && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.firstname.message}
                     </p>
                   )}
@@ -258,7 +266,7 @@ export default function Page() {
                     htmlFor="lastname"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Last Name
+                    Lastname <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("lastname", {
@@ -274,12 +282,17 @@ export default function Page() {
                     className={`bg-white border ${
                       errors.lastname ? "border-red-500" : "border-gray-300"
                     }  text-gray-700 sm:text-sm rounded w-full p-2.5`}
-                    placeholder="Last Name"
+                    placeholder="your account lastname"
                     autoComplete="off"
                     aria-invalid={errors.lastname ? "true" : "false"}
                   ></input>
+                  {!IsSpacebar(lastname) && touchedFields.lastname && (
+                    <p className="text-sm text-red-500 w-full p-0.75">
+                      lastname cannot be empty
+                    </p>
+                  )}
                   {errors.lastname && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.lastname.message}
                     </p>
                   )}
@@ -310,7 +323,7 @@ export default function Page() {
                     aria-invalid={errors.lastname ? "true" : "false"}
                   ></input>
                   {errors.dateOfBirth && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.dateOfBirth.message}
                     </p>
                   )}
@@ -340,7 +353,7 @@ export default function Page() {
                   </select>
 
                   {errors.sex && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.sex.message}
                     </p>
                   )}
@@ -365,7 +378,7 @@ export default function Page() {
                     aria-invalid={errors.file ? "true" : "false"}
                   ></input>
                   {errors.file && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.file.message}
                     </p>
                   )}
