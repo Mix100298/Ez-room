@@ -1,6 +1,6 @@
-import React from "react"
-import Link from "next/link"
-import Button from "../../components/button"
+import React from "react";
+import Link from "next/link";
+import Button from "../../components/button";
 
 const features = [
   {
@@ -18,7 +18,7 @@ const features = [
     text: "Discover thousands of ideas from the community where users can share ideas from the images they create.",
     icon: "fi fi-sr-users-medical",
   },
-]
+];
 
 const styles = [
   { name: "Modern", image: "https://i.ibb.co/DCqvFSX/modern.png" },
@@ -30,7 +30,7 @@ const styles = [
     name: "Contemporary",
     image: "https://i.ibb.co/hM2ygcq/civit-ai-contemporary-bedroom.png",
   },
-]
+];
 
 export default function Home() {
   return (
@@ -44,9 +44,9 @@ export default function Home() {
             <div className="mt-5">
               <p>Design your room with Artificial Intelligence</p>
             </div>
-            <div className="bg-gray-300 h-1 mt-5"></div>
+            <div className="bg-gray-300 h-0.5 opacity-20 mt-5"></div>
             <Link href="/generate">
-              <div className="mt-5 w-1/3">
+              <div className="mt-8 w-1/3">
                 <Button>Generate Room</Button>
               </div>
             </Link>
@@ -183,5 +183,5 @@ export default function Home() {
         </div>
       </div>
     </main>
-  )
+  );
 }

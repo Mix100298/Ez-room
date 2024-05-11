@@ -91,7 +91,7 @@ const Communitycard: React.FC<CommunitycardProps> = ({
               <div className="text-left space-y-2">
                 <div className="space-y-0.5">
                   <p className="text-sm text-black font-semibold">
-                    {firstname + lastname}
+                    {firstname + " " + lastname}
                   </p>
                   <p className="text-sm text-slate-500 font-medium">
                     {formatDate(date as string)}

@@ -66,10 +66,10 @@ export default function Page() {
     posts
       .filter(
         (post) =>
-          post.title.toLowerCase().includes(search.toLowerCase()) ||
+          post.title.toLowerCase().includes(search.toLowerCase().trim()) ||
           (
-            post.ownerid.firstname.toLowerCase() +
-            post.ownerid.lastname.toLowerCase()
+            post.ownerid.firstname.toLowerCase().trim() +
+            post.ownerid.lastname.toLowerCase().trim()
           ).includes(search.toLowerCase())
       )
       .slice(0, numCards);
