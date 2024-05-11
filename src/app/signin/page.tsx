@@ -50,8 +50,12 @@ export default function Page() {
       .then((result) => {
         router.push("/");
       })
-      .catch((err) => {
-        alert(JSON.stringify(err.message));
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          alert("Login failed. Invalid email or password.");
+        } else {
+          alert("An error occurred while logging in.");
+        }
       });
   };
 
@@ -71,7 +75,7 @@ export default function Page() {
                     htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Email
+                    Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("email", {
@@ -90,7 +94,7 @@ export default function Page() {
                     aria-invalid={errors.email ? "true" : "false"}
                   ></input>
                   {errors.email && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.email.message}
                     </p>
                   )}
@@ -100,7 +104,7 @@ export default function Page() {
                     htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Password
+                    Password <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register("password", {
@@ -119,7 +123,7 @@ export default function Page() {
                     aria-invalid={errors.password ? "true" : "false"}
                   ></input>
                   {errors.password && (
-                    <p className="text-sm text-red-500 rounded w-full p-2.5">
+                    <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.password.message}
                     </p>
                   )}
