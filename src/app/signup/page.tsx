@@ -19,7 +19,7 @@ interface IFormInput {
   firstname: string
   lastname: string
   dateOfBirth: string
-  sex: "Male" | "Felame" | "Other" | null
+  sex: "Male" | "Felame" | "Other" | ""
   file: File | null
 }
 
@@ -36,13 +36,14 @@ export default function Page() {
       confirmPassword: "",
       firstname: "",
       lastname: "",
-      dateOfBirth: "",
+      dateOfBirth: "9999-12-31",
       file: null,
     },
   })
   const router = useRouter()
 
   const formHandle: SubmitHandler<IFormInput> = async (formdata) => {
+    console.log("Form Data:", formdata) // Add this line to log the formData
     // const email = e.target[0].value;
     // const password = e.target[1].value;
     // const confirmPassword = e.target[2].value;
@@ -90,7 +91,6 @@ export default function Page() {
         alert("Sign up failed")
       })
   }
-
   const RadioFrom = [
     { id: "term-male", name: "Male" },
     { id: "term-female", name: "Female" },
@@ -101,8 +101,8 @@ export default function Page() {
     return regex.test(password)
   }
 
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+  const passwordRegex = /^.{8,}$/
+
   const password = watch("password")
   const confirmPassword = watch("confirmPassword")
 
@@ -173,8 +173,7 @@ export default function Page() {
                   ></input>
                   {!passwordRegexHandler(password, passwordRegex) && (
                     <p className="text-sm text-red-500 w-full p-2.5">
-                      Password must be 8+ characters with uppercase, lowercase,
-                      number, and special symbol @!$%*&?
+                      Passward must be more than 8 characters
                     </p>
                   )}
                   {errors.password && (
@@ -235,7 +234,7 @@ export default function Page() {
                         value: true,
                         message: "This field is required.",
                       },
-                      minLength: 2,
+                      minLength: 1,
                       maxLength: 40,
                     })}
                     type="text"
@@ -267,7 +266,7 @@ export default function Page() {
                         value: true,
                         message: "This field is required.",
                       },
-                      minLength: 2,
+                      minLength: 1,
                       maxLength: 40,
                     })}
                     type="text"
@@ -291,12 +290,12 @@ export default function Page() {
                     htmlFor="dateOfBirth"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Date of Birth
+                    Date of Birth (Optional)
                   </label>
                   <input
                     {...register("dateOfBirth", {
                       required: {
-                        value: true,
+                        value: false,
                         message: "This field is required.",
                       },
                       valueAsDate: true,
@@ -322,15 +321,15 @@ export default function Page() {
                     htmlFor="sex"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Sex
+                    Sex (Optional)
                   </label>
                   <select
                     className="bg-white border border-gray-300 text-gray-700 sm:text-sm rounded w-full p-2.5 "
                     id="sex"
-                    defaultValue={"Default"}
-                    {...register("sex", { required: true })}
+                    defaultValue={""}
+                    {...register("sex")}
                   >
-                    <option value="Default" disabled hidden>
+                    <option value="" disabled hidden>
                       Please Choose...
                     </option>
                     {RadioFrom.map((radio, idx) => (
@@ -352,7 +351,7 @@ export default function Page() {
                     htmlFor="avtar"
                     className="block mb-2 text-sm font-medium text-gray-700"
                   >
-                    Upload Avatar
+                    Upload Avatar (Optional)
                   </label>
                   <input
                     {...register("file")}
