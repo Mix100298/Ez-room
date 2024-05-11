@@ -74,7 +74,7 @@ export default function Page() {
     defaultValues: {
       type: "Random",
       style: "Random",
-      budget: 500,
+      budget: 3000,
       furnitures: [],
     },
   });
@@ -215,16 +215,16 @@ export default function Page() {
                   id={register("budget").name}
                   name={"Set your furnitures budget"}
                   type={"number"}
-                  placeholder={"minimum 500 - maximum 1,000,000"}
+                  placeholder={"minimum 3000 - maximum 60000"}
                   form={register(`budget`, {
                     valueAsNumber: true,
                     min: {
-                      value: 500,
-                      message: "Minimum budget is 500 baht",
+                      value: 3000,
+                      message: "Minimum budget is 3000 baht",
                     },
                     max: {
-                      value: 1000000,
-                      message: "Maximum budget is 1,000,000 baht",
+                      value: 60000,
+                      message: "Maximum budget is 60000 baht",
                     },
                   })}
                 />
