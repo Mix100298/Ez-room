@@ -252,7 +252,7 @@ export default function Page() {
                 )}
               </div>
             </div>
-            <div className="grid space-y-10 col-span-7 col-start-2 row-span-2 row-start-1">
+            <div className="grid space-y-10 col-span-6 col-start-2 row-span-2 row-start-1">
               <div className="bg-white aspect-square rounded flex justify-center items-center text-center shadow-lg">
                 {!isLoading && !result && (
                   <p>Click the button to generate room design</p>
@@ -276,7 +276,7 @@ export default function Page() {
               </div>
               <div className="row-span-1">
                 {result && (
-                  <div className="flex flex-wrap gap-5 justify-center xl:justify-between mb-10">
+                  <div className="flex gap-5 justify-center xl:justify-between mb-10">
                     {result.images.map((image, index) => {
                       return (
                         <div
@@ -314,10 +314,14 @@ export default function Page() {
                 </Button>
               </div>
             </div>
-            <div className="grid bg-white rounded shadow-md space-y-5 p-4 col-span-1 row-start-2 row-span-2 w-[428px]">
+            <div
+              className={`grid bg-white rounded shadow-md p-4 col-span-1 row-start-2 ${
+                result ? "xl:row-span-2 row-span-3" : "row-span-3"
+              }  w-[428px]`}
+            >
               <h1
                 className={`text-xl font-bold ${
-                  watchFurniture.length >= 3 ? "text-red-500" : "text-blue-500"
+                  watchFurniture.length >= 3 ? "text-red-500" : "text-gray-700"
                 }`}
               >
                 Choose furniture(s) {watchFurniture.length} / 2
@@ -325,25 +329,21 @@ export default function Page() {
               {errors.furnitures && (
                 <p className="text-red-500">{errors.furnitures.message}</p>
               )}
-              <div
-                className="flex flex-
-              wrap items-center justify-start gap-5"
-              >
-                {!isFurnitureLoading ? (
-                  furniture &&
-                  watchFurniture.map((furniture, index) => (
-                    <div key={index}>
-                      <BadgeFurniture
-                        index={index}
-                        id={furniture}
-                        handleRemove={handleRemoveFurniture}
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <p>Loading...</p>
-                )}
+              <div className="flex flex-wrap items-center justify-start gap-5 py-2">
+                {!isFurnitureLoading
+                  ? furniture &&
+                    watchFurniture.map((furniture, index) => (
+                      <div key={index}>
+                        <BadgeFurniture
+                          index={index}
+                          id={furniture}
+                          handleRemove={handleRemoveFurniture}
+                        />
+                      </div>
+                    ))
+                  : null}
               </div>
+
               <div className="overflow-hidden">
                 <div
                   className="grid grid-rows-2 grid-flow-col gap-10 p-1 duration-500"
@@ -400,7 +400,7 @@ export default function Page() {
             </div>
             {/* Result Generate room*/}
             {result && (
-              <div className="grid bg-white rounded p-4 shadow-md col-span-7 row-span-3">
+              <div className="grid bg-white rounded p-4 shadow-md col-span-6 row-span-3">
                 <h1 className="text-xl font-bold text-blue-500">
                   Result Generate Room
                 </h1>
@@ -457,7 +457,7 @@ export default function Page() {
           </>
         </form>
         {result && (
-          <div className="grid min-w-[428px] col-start-1 row-span-5 mt-[-200px]">
+          <div className="grid min-w-[428px] col-start-1 row-span-5 xl:mt-[-340px] mt-[-220px]">
             <Share
               mode="create"
               data={result}
