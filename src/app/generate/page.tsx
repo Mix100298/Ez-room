@@ -145,7 +145,7 @@ export default function Page() {
     if (furniture) {
       setValue("furnitures", []);
     }
-  },[watch("type")])
+  }, [watch("type")]);
   //   console.log(roomType, roomStyle, budget)
   //   setisLoading(true)
   //   const res = await setPrompt(roomType + roomStyle + budget)
@@ -252,7 +252,7 @@ export default function Page() {
                 )}
               </div>
             </div>
-            <div className="grid space-y-10 col-span-6 col-start-2 row-span-2 row-start-1">
+            <div className="grid space-y-10 col-span-7 col-start-2 row-span-2 row-start-1">
               <div className="bg-white aspect-square rounded flex justify-center items-center text-center shadow-lg">
                 {!isLoading && !result && (
                   <p>Click the button to generate room design</p>
@@ -276,7 +276,7 @@ export default function Page() {
               </div>
               <div className="row-span-1">
                 {result && (
-                  <div className="flex gap-5 justify-center xl:justify-between mb-10">
+                  <div className="flex flex-wrap gap-5 justify-center xl:justify-between mb-10">
                     {result.images.map((image, index) => {
                       return (
                         <div
@@ -314,11 +314,21 @@ export default function Page() {
                 </Button>
               </div>
             </div>
-            <div className="grid bg-white rounded shadow-md p-4 col-span-1 row-start-2 row-span-3 w-[428px]">
-              <h1 className="text-xl font-bold">
-                Choose furniture(s) (Up to 2)
+            <div className="grid bg-white rounded shadow-md space-y-5 p-4 col-span-1 row-start-2 row-span-2 w-[428px]">
+              <h1
+                className={`text-xl font-bold ${
+                  watchFurniture.length >= 3 ? "text-red-500" : "text-blue-500"
+                }`}
+              >
+                Choose furniture(s) {watchFurniture.length} / 2
               </h1>
-              <div className="flex flex-wrap justify-between py-5 gap-5">
+              {errors.furnitures && (
+                <p className="text-red-500">{errors.furnitures.message}</p>
+              )}
+              <div
+                className="flex flex-
+              wrap items-center justify-start gap-5"
+              >
                 {!isFurnitureLoading ? (
                   furniture &&
                   watchFurniture.map((furniture, index) => (
@@ -328,16 +338,10 @@ export default function Page() {
                         id={furniture}
                         handleRemove={handleRemoveFurniture}
                       />
-                      
                     </div>
                   ))
                 ) : (
                   <p>Loading...</p>
-                )}
-              </div>
-              <div className="mb-5">
-                {errors.furnitures && (
-                  <p className="text-red-500">{errors.furnitures.message}</p>
                 )}
               </div>
               <div className="overflow-hidden">
@@ -357,7 +361,9 @@ export default function Page() {
                           name={furniture.english_name}
                           url={furniture.url}
                           price={furniture.price}
-                          isCheck={watchFurniture.includes(furniture._id)}
+                          isCheck={watchFurniture.includes(
+                            furniture._id as never
+                          )}
                           form={register(`furnitures`, {
                             validate: {
                               limit: (value) =>
@@ -394,7 +400,7 @@ export default function Page() {
             </div>
             {/* Result Generate room*/}
             {result && (
-              <div className="grid bg-white rounded p-4 shadow-md col-span-6 row-span-3">
+              <div className="grid bg-white rounded p-4 shadow-md col-span-7 row-span-3">
                 <h1 className="text-xl font-bold text-blue-500">
                   Result Generate Room
                 </h1>
