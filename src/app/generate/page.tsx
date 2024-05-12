@@ -15,6 +15,7 @@ import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
 import FurnitureList from "@/components/furniturelist";
 import Alertbox from "@/components/alertbox";
+import BadgeFurniture from "@/components/badgefurniture";
 // export const metadata: Metadata = {
 //   title: "Generate",
 //   description: "Generate page",
@@ -138,6 +139,13 @@ export default function Page() {
     }
     return;
   };
+
+  // strong handle form
+  useEffect(() => {
+    if (furniture) {
+      setValue("furnitures", []);
+    }
+  },[watch("type")])
   //   console.log(roomType, roomStyle, budget)
   //   setisLoading(true)
   //   const res = await setPrompt(roomType + roomStyle + budget)
@@ -178,6 +186,17 @@ export default function Page() {
     ));
 
     return <>{SkeletonCards}</>;
+  };
+
+  // watch furnitures
+  const watchFurniture = watch("furnitures", []);
+  console.log("hook", watchFurniture);
+
+  const handleRemoveFurniture = (idToRemove: string) => {
+    const newFurnitures = watchFurniture.filter(
+      (id) => id !== idToRemove
+    ) as [];
+    setValue("furnitures", newFurnitures);
   };
 
   return (
@@ -299,8 +318,24 @@ export default function Page() {
               <h1 className="text-xl font-bold">
                 Choose furniture(s) (Up to 2)
               </h1>
-              <div className="py-5">
-                {/* <Searchfilter /> */}
+              <div className="flex flex-wrap justify-between py-5 gap-5">
+                {!isFurnitureLoading ? (
+                  furniture &&
+                  watchFurniture.map((furniture, index) => (
+                    <div key={index}>
+                      <BadgeFurniture
+                        index={index}
+                        id={furniture}
+                        handleRemove={handleRemoveFurniture}
+                      />
+                      
+                    </div>
+                  ))
+                ) : (
+                  <p>Loading...</p>
+                )}
+              </div>
+              <div className="mb-5">
                 {errors.furnitures && (
                   <p className="text-red-500">{errors.furnitures.message}</p>
                 )}
@@ -322,6 +357,7 @@ export default function Page() {
                           name={furniture.english_name}
                           url={furniture.url}
                           price={furniture.price}
+                          isCheck={watchFurniture.includes(furniture._id)}
                           form={register(`furnitures`, {
                             validate: {
                               limit: (value) =>
