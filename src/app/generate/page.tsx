@@ -71,7 +71,6 @@ export default function Page() {
     watch,
     setValue,
     formState: { errors },
-    setValue,
   } = useForm<generateProps>({
     defaultValues: {
       type: "Random",
