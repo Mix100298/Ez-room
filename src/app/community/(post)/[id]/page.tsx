@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Avatar from "@/components/avatar";
 import Like from "@/components/like";
+import Alertbox, { AlertType } from "@/components/alertbox";
 interface Owner {
   _id: string;
   firstname: string;
@@ -50,6 +51,13 @@ interface Post {
 }
 
 export default function Page({ params }: { params: { id: string } }) {
+  const [timeoutId, setTimeoutId] = useState<ReturnType<
+    typeof setTimeout
+  > | null>(null);
+  const [alertMessage, setAlertMessage] = useState<{
+    message: string;
+    type: AlertType;
+  } | null>(null);
   // Format date for post
   function formatDate(date: string) {
     const newDate = new Date(date);
@@ -273,17 +281,28 @@ export default function Page({ params }: { params: { id: string } }) {
                       <Button
                         isLogin={true}
                         onClick={async () => {
-                          try {
-                            const response = await axios.delete(
+                          axios
+                            .delete(
                               process.env.backendUrl +
                                 "/api/posts/delete/" +
                                 id,
                               { withCredentials: true }
-                            );
-                            router.push("/community");
-                          } catch (error) {
-                            console.log(error);
-                          }
+                            )
+                            .then((result) => {
+                              setAlertMessage({
+                                message: "Delete Success",
+                                type: AlertType.Success,
+                              });
+                              setTimeout(() => {
+                                router.push("/community");
+                              }, 2000);
+                            })
+                            .catch((error) => {
+                              setAlertMessage({
+                                message: "Delete Failed",
+                                type: AlertType.Error,
+                              });
+                            });
                         }}
                       >
                         Delete
@@ -380,6 +399,9 @@ export default function Page({ params }: { params: { id: string } }) {
             <Card isDisabled={true} />
           </div> */}
         </div>
+        {alertMessage && (
+          <Alertbox message={alertMessage.message} type={alertMessage.type} />
+        )}{" "}
       </main>
     )
   );

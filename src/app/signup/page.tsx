@@ -37,7 +37,7 @@ export default function Page() {
       confirmPassword: "",
       firstname: "",
       lastname: "",
-      dateOfBirth: "2006-12-31",
+      dateOfBirth: "",
       file: null,
     },
   });
@@ -62,7 +62,17 @@ export default function Page() {
     const file = formdata.file;
 
     if (formdata.password !== formdata.confirmPassword) {
-      alert("Password and Confirm Password must be the same");
+      setAlertMessage({
+        message: "Password and Confirm Password must be the same",
+        type: AlertType.Error,
+      });
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      const newTimeoutId = setTimeout(() => {
+        setAlertMessage(null);
+      }, 2000);
+      setTimeoutId(newTimeoutId);
       return;
     }
 
@@ -337,7 +347,7 @@ export default function Page() {
                         message: "This field is required.",
                       },
                       setValueAs: (value) =>
-                        value ? new Date(value) : new Date("2002-02-01"),
+                        value ? new Date(value) : new Date("2024-05-13"),
                       // valueAsDate: true,
                     })}
                     type="date"
