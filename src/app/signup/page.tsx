@@ -180,7 +180,7 @@ export default function Page() {
                   {!passwordRegexHandler(password, passwordRegex) &&
                     touchedFields.password && (
                       <p className="text-sm text-red-500 w-full p-0.75">
-                        Passward must be more than 8 characters
+                        Passward minimum 8 characters
                       </p>
                     )}
                 </div>
@@ -343,7 +343,7 @@ export default function Page() {
                     {...register("sex")}
                   >
                     <option value="" disabled hidden>
-                      Please Choose...
+                      Select Sex
                     </option>
                     {RadioFrom.map((radio, idx) => (
                       <option key={idx} value={radio.name} id={radio.id}>

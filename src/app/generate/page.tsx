@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Input from "@/components/input";
 import Button from "@/components/button";
@@ -7,7 +7,7 @@ import Select from "@/components/select";
 import Card from "@/components/card";
 import Searchfilter from "@/components/searchfilter";
 import Share from "@/components/share";
-import { useForm, SubmitHandler, set } from "react-hook-form";
+import { useForm, SubmitHandler, set, useFormState } from "react-hook-form";
 //import { setPrompt } from "@/app/generate/api/generate"
 import type { Metadata } from "next";
 import axios from "axios";
@@ -69,16 +69,26 @@ export default function Page() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
     setValue,
   } = useForm<generateProps>({
     defaultValues: {
       type: "Random",
       style: "Random",
-      budget: 500,
+      budget: 3000,
       furnitures: [],
     },
   });
+  const [typeValue, setTypeValue] = useState<"Random" | "Bedroom" | "Bathroom">(
+    "Random"
+  );
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue = e.target.value as "Random" | "Bedroom" | "Bathroom";
+    setValue("type", newValue);
+    setTypeValue(newValue);
+    // console.log("New type value:", newValue);
+  };
   const [alertMessage, setAlertMessage] = useState("");
   const [isLoading, setisLoading] = useState<boolean>(false);
   const [result, setResult] = useState<IResult>();
@@ -86,7 +96,9 @@ export default function Page() {
     data: furniture,
     isLoading: isFurnitureLoading,
     error: furnitureError,
-  } = useFetch<IFurniture>(process.env.backendUrl + "/api/furnitures/getall");
+  } = useFetch<IFurniture>(
+    `${process.env.backendUrl}/api/furnitures/getgen?roomtype=${typeValue}`
+  );
 
   const fakePost = (status: boolean, data: any) => {
     return new Promise((resolve, reject) => {
@@ -134,7 +146,6 @@ export default function Page() {
   //   setisLoading(false)
   //   // alert(res.data)
   // }
-
   const mockFetch = (data: string[]) =>
     new Promise((resolve) => setTimeout(() => resolve(data), 2000));
 
@@ -153,7 +164,6 @@ export default function Page() {
     const prevIndex = currentIndex === 0 ? totalSlides - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
   };
-
   const SkeletonCards = ({}) => {
     const cardCount = 4;
     const SkeletonCards = Array.from({ length: cardCount }, (_, index) => (
@@ -206,6 +216,7 @@ export default function Page() {
                   name={"Choose room type"}
                   options={["Random", "Bedroom", "Bathroom"]}
                   form={register(`type`, { required: true })}
+                  onChange={handleTypeChange}
                 />
                 <Select
                   id={register("style").name}
@@ -217,16 +228,16 @@ export default function Page() {
                   id={register("budget").name}
                   name={"Set your furnitures budget"}
                   type={"number"}
-                  placeholder={"minimum 500 - maximum 1,000,000"}
+                  placeholder={"minimum 3000 - maximum 60000"}
                   form={register(`budget`, {
                     valueAsNumber: true,
                     min: {
-                      value: 500,
-                      message: "Minimum budget is 500 baht",
+                      value: 3000,
+                      message: "Minimum budget is 3000 baht",
                     },
                     max: {
-                      value: 1000000,
-                      message: "Maximum budget is 1,000,000 baht",
+                      value: 60000,
+                      message: "Maximum budget is 60000 baht",
                     },
                   })}
                 />
