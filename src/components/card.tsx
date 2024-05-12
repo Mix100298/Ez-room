@@ -9,6 +9,7 @@ interface CardProps {
   url?: string;
   form?: any;
   isDisabled?: boolean;
+  isCheck?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -19,14 +20,16 @@ const Card: React.FC<CardProps> = ({
   url,
   form,
   isDisabled,
+  isCheck,
 }: CardProps) => {
   const [checked, setChecked] = useState<boolean>(false);
 
+  
   return (
     <>
       <div
         className={`relative h-full w-full shadow-md rounded-md ${
-          checked ? "border-4 border-blue-500" : ""
+          isCheck ? "border-4 border-blue-500" : ""
         }`}
       >
         <input
@@ -34,8 +37,8 @@ const Card: React.FC<CardProps> = ({
           className="absolute w-full h-4/5 -top-1.5 opacity-0"
           type="checkbox"
           value={id}
-          checked={checked}
-          onChange={() => setChecked(!checked)}
+          checked={isCheck}
+          // onClick={() => setChecked(!checked)}
           disabled={isDisabled}
         />
         <div className="grid">
