@@ -145,7 +145,7 @@ export default function Page() {
     if (furniture) {
       setValue("furnitures", []);
     }
-  },[watch("type")])
+  }, [watch("type")]);
   //   console.log(roomType, roomStyle, budget)
   //   setisLoading(true)
   //   const res = await setPrompt(roomType + roomStyle + budget)
@@ -314,32 +314,36 @@ export default function Page() {
                 </Button>
               </div>
             </div>
-            <div className="grid bg-white rounded shadow-md p-4 col-span-1 row-start-2 row-span-3 w-[428px]">
-              <h1 className="text-xl font-bold">
-                Choose furniture(s) (Up to 2)
+            <div
+              className={`grid bg-white rounded shadow-md p-4 col-span-1 row-start-2 ${
+                result ? "xl:row-span-2 row-span-3" : "row-span-3"
+              }  w-[428px]`}
+            >
+              <h1
+                className={`text-xl font-bold ${
+                  watchFurniture.length >= 3 ? "text-red-500" : "text-gray-700"
+                }`}
+              >
+                Choose furniture(s) {watchFurniture.length} / 2
               </h1>
-              <div className="flex flex-wrap justify-between py-5 gap-5">
-                {!isFurnitureLoading ? (
-                  furniture &&
-                  watchFurniture.map((furniture, index) => (
-                    <div key={index}>
-                      <BadgeFurniture
-                        index={index}
-                        id={furniture}
-                        handleRemove={handleRemoveFurniture}
-                      />
-                      
-                    </div>
-                  ))
-                ) : (
-                  <p>Loading...</p>
-                )}
+              {errors.furnitures && (
+                <p className="text-red-500">{errors.furnitures.message}</p>
+              )}
+              <div className="flex flex-wrap items-center justify-start gap-5 py-2">
+                {!isFurnitureLoading
+                  ? furniture &&
+                    watchFurniture.map((furniture, index) => (
+                      <div key={index}>
+                        <BadgeFurniture
+                          index={index}
+                          id={furniture}
+                          handleRemove={handleRemoveFurniture}
+                        />
+                      </div>
+                    ))
+                  : null}
               </div>
-              <div className="mb-5">
-                {errors.furnitures && (
-                  <p className="text-red-500">{errors.furnitures.message}</p>
-                )}
-              </div>
+
               <div className="overflow-hidden">
                 <div
                   className="grid grid-rows-2 grid-flow-col gap-10 p-1 duration-500"
@@ -357,7 +361,9 @@ export default function Page() {
                           name={furniture.english_name}
                           url={furniture.url}
                           price={furniture.price}
-                          isCheck={watchFurniture.includes(furniture._id)}
+                          isCheck={watchFurniture.includes(
+                            furniture._id as never
+                          )}
                           form={register(`furnitures`, {
                             validate: {
                               limit: (value) =>
@@ -451,7 +457,7 @@ export default function Page() {
           </>
         </form>
         {result && (
-          <div className="grid min-w-[428px] col-start-1 row-span-5 mt-[-200px]">
+          <div className="grid min-w-[428px] col-start-1 row-span-5 xl:mt-[-340px] mt-[-220px]">
             <Share
               mode="create"
               data={result}

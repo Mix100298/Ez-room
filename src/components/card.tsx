@@ -22,9 +22,8 @@ const Card: React.FC<CardProps> = ({
   isDisabled,
   isCheck,
 }: CardProps) => {
-  const [checked, setChecked] = useState<boolean>(false);
+  // const [checked, setChecked] = useState<boolean>(false);
 
-  
   return (
     <>
       <div

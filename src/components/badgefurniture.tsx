@@ -9,11 +9,10 @@ interface Furniture {
 interface PropsType {
   index: number;
   id: string;
-  setFurniture: (id: string) => void;
   handleRemove: (idToRemove: string) => void;
 }
 
-export default function BadgeFurniture({ index, id, setFurniture ,handleRemove }: PropsType) {
+export default function BadgeFurniture({ index, id, handleRemove }: PropsType) {
   const { data, isLoading } = useFetch<Furniture>(
     process.env.backendUrl + "/api/furnitures/get/" + id
   );
@@ -22,21 +21,17 @@ export default function BadgeFurniture({ index, id, setFurniture ,handleRemove }
     return;
   }
 
-  const handleRemovePrevent = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-  };
-
   return (
     <div
       key={index}
-      className="inline-flex items-center max-w-[175px] p-2 text-sm font-medium text-white bg-[#60A5FA] rounded dark:bg-gray-700 dark:text-white"
+      className="inline-flex items-center max-w-[116px] p-2 text-xs font-medium text-white bg-[#60A5FA] rounded dark:bg-gray-700 dark:text-white"
     >
       <p className="line-clamp-2 ">{data?.english_name}</p>
       <button
         className="inline-flex items-center mt-1 ms-3 text-xl text-white bg-transparent rounded-sm hover:bg-gray-600 hover:text-white"
-        onClick={() => {
+        onClick={(e) => {
           handleRemove(id);
-          handleRemovePrevent(event as Event);
+          e.preventDefault();
         }}
       >
         <i className="fi fi-sr-cross-small"></i>
