@@ -15,6 +15,7 @@ import Image from "next/image";
 import useFetch from "@/hooks/useFetch";
 import FurnitureList from "@/components/furniturelist";
 import Alertbox from "@/components/alertbox";
+import BadgeFurniture from "@/components/badgefurniture";
 // export const metadata: Metadata = {
 //   title: "Generate",
 //   description: "Generate page",
@@ -69,6 +70,7 @@ export default function Page() {
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
   } = useForm<generateProps>({
     defaultValues: {
       type: "Random",
@@ -168,6 +170,17 @@ export default function Page() {
     ));
 
     return <>{SkeletonCards}</>;
+  };
+
+  // watch furnitures
+  const watchFurniture = watch("furnitures", []);
+  console.log(watchFurniture);
+
+  const handleRemoveFurniture = (idToRemove: string) => {
+    const newFurnitures = watchFurniture.filter(
+      (id) => id !== idToRemove
+    ) as [];
+    setValue("furnitures", newFurnitures);
   };
 
   return (
@@ -288,8 +301,18 @@ export default function Page() {
               <h1 className="text-xl font-bold">
                 Choose furniture(s) (Up to 2)
               </h1>
-              <div className="py-5">
-                {/* <Searchfilter /> */}
+              <div className="flex flex-wrap justify-between py-5 gap-5">
+                {watchFurniture.map((furniture, index) => (
+                  <div key={index}>
+                    <BadgeFurniture
+                      index={index}
+                      id={furniture}
+                      handleRemove={handleRemoveFurniture}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="mb-5">
                 {errors.furnitures && (
                   <p className="text-red-500">{errors.furnitures.message}</p>
                 )}

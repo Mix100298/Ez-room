@@ -35,7 +35,7 @@ const Card: React.FC<CardProps> = ({
           type="checkbox"
           value={id}
           checked={checked}
-          onChange={() => setChecked(!checked)}
+          onClick={() => setChecked(!checked)}
           disabled={isDisabled}
         />
         <div className="grid">
