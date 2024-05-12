@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 import Button from "@/components/button";
@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-
+import Alertbox, { AlertType } from "@/components/alertbox";
 // export const metadata: Metadata = {
 //   title: "Sign in",
 //   description: "Sign in page",
@@ -19,6 +19,10 @@ interface InputForm {
 }
 
 export default function Page() {
+  const [alertMessage, setAlertMessage] = useState<{
+    message: string;
+    type: AlertType;
+  } | null>(null);
   const {
     register,
     handleSubmit,
@@ -30,6 +34,9 @@ export default function Page() {
       password: "",
     },
   });
+  const [timeoutId, setTimeoutId] = useState<ReturnType<
+    typeof setTimeout
+  > | null>(null);
   const router = useRouter();
   const formHandle: SubmitHandler<InputForm> = (data) => {
     const { email, password } = data;
@@ -48,14 +55,30 @@ export default function Page() {
         }
       )
       .then((result) => {
-        router.push("/");
+        setAlertMessage({ message: "Login Success", type: AlertType.Success });
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {
-          alert("Login failed. Invalid email or password.");
+          setAlertMessage({
+            message: "Login failed. Invalid email or password.",
+            type: AlertType.Error,
+          });
         } else {
-          alert("An error occurred while logging in.");
+          setAlertMessage({
+            message: "An error occurred while logging in.",
+            type: AlertType.Error,
+          });
         }
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        const newTimeoutId = setTimeout(() => {
+          setAlertMessage(null);
+        }, 2000);
+        setTimeoutId(newTimeoutId);
       });
   };
 
@@ -145,6 +168,9 @@ export default function Page() {
           </div>
         </div>
       </div>
+      {alertMessage && (
+        <Alertbox message={alertMessage.message} type={alertMessage.type} />
+      )}{" "}
     </main>
   );
 }
