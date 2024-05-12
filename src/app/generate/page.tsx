@@ -139,6 +139,13 @@ export default function Page() {
     }
     return;
   };
+
+  // strong handle form
+  useEffect(() => {
+    if (furniture) {
+      setValue("furnitures", []);
+    }
+  },[watch("type")])
   //   console.log(roomType, roomStyle, budget)
   //   setisLoading(true)
   //   const res = await setPrompt(roomType + roomStyle + budget)
@@ -183,7 +190,7 @@ export default function Page() {
 
   // watch furnitures
   const watchFurniture = watch("furnitures", []);
-  console.log(watchFurniture);
+  console.log("hook", watchFurniture);
 
   const handleRemoveFurniture = (idToRemove: string) => {
     const newFurnitures = watchFurniture.filter(
@@ -312,15 +319,21 @@ export default function Page() {
                 Choose furniture(s) (Up to 2)
               </h1>
               <div className="flex flex-wrap justify-between py-5 gap-5">
-                {watchFurniture.map((furniture, index) => (
-                  <div key={index}>
-                    <BadgeFurniture
-                      index={index}
-                      id={furniture}
-                      handleRemove={handleRemoveFurniture}
-                    />
-                  </div>
-                ))}
+                {!isFurnitureLoading ? (
+                  furniture &&
+                  watchFurniture.map((furniture, index) => (
+                    <div key={index}>
+                      <BadgeFurniture
+                        index={index}
+                        id={furniture}
+                        handleRemove={handleRemoveFurniture}
+                      />
+                      
+                    </div>
+                  ))
+                ) : (
+                  <p>Loading...</p>
+                )}
               </div>
               <div className="mb-5">
                 {errors.furnitures && (
@@ -344,6 +357,7 @@ export default function Page() {
                           name={furniture.english_name}
                           url={furniture.url}
                           price={furniture.price}
+                          isCheck={watchFurniture.includes(furniture._id)}
                           form={register(`furnitures`, {
                             validate: {
                               limit: (value) =>

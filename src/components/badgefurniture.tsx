@@ -9,10 +9,11 @@ interface Furniture {
 interface PropsType {
   index: number;
   id: string;
+  setFurniture: (id: string) => void;
   handleRemove: (idToRemove: string) => void;
 }
 
-export default function BadgeFurniture({ index, id, handleRemove }: PropsType) {
+export default function BadgeFurniture({ index, id, setFurniture ,handleRemove }: PropsType) {
   const { data, isLoading } = useFetch<Furniture>(
     process.env.backendUrl + "/api/furnitures/get/" + id
   );
@@ -28,7 +29,7 @@ export default function BadgeFurniture({ index, id, handleRemove }: PropsType) {
   return (
     <div
       key={index}
-      className="inline-flex items-center max-w-[175px] p-2 text-sm font-medium text-blue-700 bg-white rounded dark:bg-gray-700 dark:text-white"
+      className="inline-flex items-center max-w-[175px] p-2 text-sm font-medium text-white bg-[#60A5FA] rounded dark:bg-gray-700 dark:text-white"
     >
       <p className="line-clamp-2 ">{data?.english_name}</p>
       <button
