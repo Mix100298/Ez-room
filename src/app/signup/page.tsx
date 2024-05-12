@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import type { Metadata } from "next";
 import axios from "axios";
+import Alertbox, { AlertType } from "@/components/alertbox";
 
 // export const metadata: Metadata = {
 //   title: "Sign up",
@@ -36,12 +37,18 @@ export default function Page() {
       confirmPassword: "",
       firstname: "",
       lastname: "",
-      dateOfBirth: "2006-12-31",
+      dateOfBirth: "",
       file: null,
     },
   });
+  const [timeoutId, setTimeoutId] = useState<ReturnType<
+    typeof setTimeout
+  > | null>(null);
   const router = useRouter();
-
+  const [alertMessage, setAlertMessage] = useState<{
+    message: string;
+    type: AlertType;
+  } | null>(null);
   const formHandle: SubmitHandler<IFormInput> = async (formdata) => {
     console.log("Form Data:", formdata); // Add this line to log the formData
     let data = {
@@ -55,7 +62,17 @@ export default function Page() {
     const file = formdata.file;
 
     if (formdata.password !== formdata.confirmPassword) {
-      alert("Password and Confirm Password must be the same");
+      setAlertMessage({
+        message: "Password and Confirm Password must be the same",
+        type: AlertType.Error,
+      });
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      const newTimeoutId = setTimeout(() => {
+        setAlertMessage(null);
+      }, 2000);
+      setTimeoutId(newTimeoutId);
       return;
     }
 
@@ -75,17 +92,35 @@ export default function Page() {
       )
       .then((res) => {
         if (res.status === 201) {
-          alert("Sign up success");
-          router.push("/signin");
+          setAlertMessage({
+            message: "Sign up success",
+            type: AlertType.Success,
+          });
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
           return;
         }
       })
       .catch((error) => {
         if (error.response && error.response.status === 409) {
-          alert("This email has been used, Try the different one");
+          setAlertMessage({
+            message: "This email has been used, Try the different one",
+            type: AlertType.Error,
+          });
         } else {
-          alert("An error occurred while logging in., Please try again");
+          setAlertMessage({
+            message: "An error occurred while logging in., Please try again",
+            type: AlertType.Error,
+          });
         }
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        const newTimeoutId = setTimeout(() => {
+          setAlertMessage(null);
+        }, 2000);
+        setTimeoutId(newTimeoutId);
       });
   };
   const RadioFrom = [
@@ -106,7 +141,7 @@ export default function Page() {
   const lastname = watch("lastname");
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
-
+  const date = watch("dateOfBirth");
   return (
     <main className="min-h-screen">
       <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700 p-10">
@@ -311,7 +346,9 @@ export default function Page() {
                         value: false,
                         message: "This field is required.",
                       },
-                      valueAsDate: true,
+                      setValueAs: (value) =>
+                        value ? new Date(value) : new Date("2024-05-13"),
+                      // valueAsDate: true,
                     })}
                     type="date"
                     id="dateOfBirth"
@@ -320,7 +357,7 @@ export default function Page() {
                     }  text-gray-700 sm:text-sm rounded w-full p-2.5`}
                     placeholder="Date of Birth"
                     autoComplete="off"
-                    aria-invalid={errors.lastname ? "true" : "false"}
+                    aria-invalid={errors.dateOfBirth ? "true" : "false"}
                   ></input>
                   {errors.dateOfBirth && (
                     <p className="text-sm text-red-500 w-full p-0.75">
@@ -401,6 +438,9 @@ export default function Page() {
           </div>
         </div>
       </div>
+      {alertMessage && (
+        <Alertbox message={alertMessage.message} type={alertMessage.type} />
+      )}{" "}
     </main>
   );
 }
