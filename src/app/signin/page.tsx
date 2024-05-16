@@ -6,7 +6,7 @@ import Button from "@/components/button";
 import type { Metadata } from "next";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Alertbox, { AlertType } from "@/components/alertbox";
 // export const metadata: Metadata = {
 //   title: "Sign in",
@@ -27,6 +27,7 @@ export default function Page() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<InputForm>({
     defaultValues: {
@@ -34,14 +35,13 @@ export default function Page() {
       password: "",
     },
   });
-  const [timeoutId, setTimeoutId] = useState<ReturnType<
-    typeof setTimeout
-  > | null>(null);
+
   const router = useRouter();
-  const formHandle: SubmitHandler<InputForm> = (data) => {
+  const formHandle: SubmitHandler<InputForm> = async (data) => {
     const { email, password } = data;
-    axios
-      .post(
+
+    try {
+      const response = await axios.post(
         process.env.backendUrl + "/api/users/login",
         {
           email,
@@ -53,33 +53,32 @@ export default function Page() {
           },
           withCredentials: true,
         }
-      )
-      .then((result) => {
-        setAlertMessage({ message: "Login Success", type: AlertType.Success });
+      );
+
+      if (response.status === 200) {
+          setAlertMessage({
+            message: "Login Success",
+            type: AlertType.Success,
+          });
+        
         setTimeout(() => {
+          setAlertMessage(null)
           router.push("/");
         }, 2000);
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          setAlertMessage({
-            message: "Login failed. Invalid email or password.",
-            type: AlertType.Error,
-          });
-        } else {
-          setAlertMessage({
-            message: "An error occurred while logging in.",
-            type: AlertType.Error,
-          });
-        }
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-        }
-        const newTimeoutId = setTimeout(() => {
-          setAlertMessage(null);
-        }, 2000);
-        setTimeoutId(newTimeoutId);
-      });
+      }
+    } catch (error) {
+      console.error(error);
+      if(error instanceof AxiosError && error.response){
+        setAlertMessage({
+          message: error.response.data.message,
+          type: AlertType.Error,
+        });
+      }
+      setTimeout(() => {
+        setAlertMessage(null);
+      }, 2000);
+    }
+
   };
 
   return (
@@ -152,6 +151,24 @@ export default function Page() {
                   )}
                 </div>
                 <div className="grid text-center gap-3">
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setValue("email", "JohnTornado@mai2l.com");
+                      setValue("password", "JohnTornado@mai2l@com");
+                    }}
+                  >
+                    User
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setValue("email", "NoUploadImgTest10@mail.com");
+                      setValue("password", "NoUploadImgTest10@mail@com");
+                    }}
+                  >
+                    Admin
+                  </Button>
                   <Button type="submit">Sign in</Button>
                   <p className="text-sm font-light text-blue-400">
                     Not Register?

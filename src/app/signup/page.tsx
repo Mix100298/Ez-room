@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/button";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, set } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import type { Metadata } from "next";
-import axios from "axios";
+import axios,{AxiosError} from "axios";
 import Alertbox, { AlertType } from "@/components/alertbox";
 
 // export const metadata: Metadata = {
@@ -41,14 +41,13 @@ export default function Page() {
       file: null,
     },
   });
-  const [timeoutId, setTimeoutId] = useState<ReturnType<
-    typeof setTimeout
-  > | null>(null);
+
   const router = useRouter();
   const [alertMessage, setAlertMessage] = useState<{
     message: string;
     type: AlertType;
   } | null>(null);
+
   const formHandle: SubmitHandler<IFormInput> = async (formdata) => {
     console.log("Form Data:", formdata); // Add this line to log the formData
     let data = {
@@ -63,22 +62,19 @@ export default function Page() {
 
     if (formdata.password !== formdata.confirmPassword) {
       setAlertMessage({
-        message: "Password and Confirm Password must be the same",
+        message: "Password not matched",
         type: AlertType.Error,
-      });
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-      const newTimeoutId = setTimeout(() => {
-        setAlertMessage(null);
+      })
+      setTimeout(() => {
+        setAlertMessage(null)
       }, 2000);
-      setTimeoutId(newTimeoutId);
       return;
     }
 
-    axios
+    try {
+      const response  = await axios
       .post(
-        process.env.backendUrl + "/api/users/register",
+        "http://localhost:5000/api/users/register",
         {
           data: data,
           file: file,
@@ -90,39 +86,32 @@ export default function Page() {
           },
         }
       )
-      .then((res) => {
-        if (res.status === 201) {
-          setAlertMessage({
-            message: "Sign up success",
-            type: AlertType.Success,
-          });
-          setTimeout(() => {
-            router.push("/");
-          }, 2000);
-          return;
-        }
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 409) {
-          setAlertMessage({
-            message: "This email has been used, Try the different one",
-            type: AlertType.Error,
-          });
-        } else {
-          setAlertMessage({
-            message: "An error occurred while logging in., Please try again",
-            type: AlertType.Error,
-          });
-        }
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-        }
-        const newTimeoutId = setTimeout(() => {
+      if (response.status === 201) {
+        setAlertMessage({
+          message: "Register Success",
+          type: AlertType.Success,
+        });
+        setTimeout(() => {
+          setAlertMessage(null);
+          router.push("/signin");
+        }, 2000);
+        
+      }
+
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        setAlertMessage({
+          message: error.response.data.message,
+          type: AlertType.Error,
+        });
+        setTimeout(() => {
           setAlertMessage(null);
         }, 2000);
-        setTimeoutId(newTimeoutId);
-      });
+      }
+    }
+    
   };
+
   const RadioFrom = [
     { id: "term-male", name: "Male" },
     { id: "term-female", name: "Female" },
@@ -132,16 +121,14 @@ export default function Page() {
   const passwordRegexHandler = (password: string, regex: RegExp) => {
     return regex.test(password);
   };
-  const IsSpacebar = (fieldname: string) => {
-    if (fieldname.trim() == "") return false;
-    return true;
-  };
+ 
+
   const passwordRegex = /^.{8,}$/;
   const firstname = watch("firstname");
   const lastname = watch("lastname");
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
-  const date = watch("dateOfBirth");
+
   return (
     <main className="min-h-screen">
       <div className="flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700 p-10">
@@ -167,6 +154,7 @@ export default function Page() {
                         value: true,
                         message: "This field is required.",
                       },
+                      setValueAs: (value) => value.trim(),
                     })}
                     type="email"
                     id="email"
@@ -274,6 +262,7 @@ export default function Page() {
                       },
                       minLength: 1,
                       maxLength: 40,
+                      setValueAs: (value) => value.trim(),
                     })}
                     type="text"
                     id="firstname"
@@ -284,11 +273,6 @@ export default function Page() {
                     autoComplete="off"
                     aria-invalid={errors.firstname ? "true" : "false"}
                   ></input>
-                  {!IsSpacebar(firstname) && touchedFields.firstname && (
-                    <p className="text-sm text-red-500 w-full p-0.75">
-                      firstname cannot be empty
-                    </p>
-                  )}
                   {errors.firstname && (
                     <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.firstname.message}
@@ -311,6 +295,7 @@ export default function Page() {
                       },
                       minLength: 1,
                       maxLength: 40,
+                      setValueAs: (value) => value.trim(),
                     })}
                     type="text"
                     id="lastname"
@@ -321,11 +306,6 @@ export default function Page() {
                     autoComplete="off"
                     aria-invalid={errors.lastname ? "true" : "false"}
                   ></input>
-                  {!IsSpacebar(lastname) && touchedFields.lastname && (
-                    <p className="text-sm text-red-500 w-full p-0.75">
-                      lastname cannot be empty
-                    </p>
-                  )}
                   {errors.lastname && (
                     <p className="text-sm text-red-500 w-full p-0.75">
                       {errors.lastname.message}

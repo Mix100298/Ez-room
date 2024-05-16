@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Button from "./button";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import Alertbox, { AlertType } from "./alertbox";
 interface PostForm {
@@ -34,9 +34,6 @@ const Share: React.FC<PostForm> = ({
   postid = "",
   selectedimage = 0,
 }: PostForm) => {
-  const [timeoutId, setTimeoutId] = useState<ReturnType<
-    typeof setTimeout
-  > | null>(null);
   const [alertMessage, setAlertMessage] = useState<{
     message: string;
     type: AlertType;
@@ -123,11 +120,13 @@ const Share: React.FC<PostForm> = ({
           }, 2000);
         })
         .catch((error) => {
-          setAlertMessage({
-            message: "Failed to create post, Please try again",
-            type: AlertType.Error,
-          });
-          setisLoading(false);
+          if(error instanceof AxiosError && error.response){
+            setAlertMessage({
+              message: error.response.data.message,
+              type: AlertType.Error,
+            });
+            setisLoading(false);
+          }
         });
     } catch (error) {
       console.log(error);
