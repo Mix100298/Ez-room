@@ -7,10 +7,11 @@ import Share from "@/components/share";
 import useFetch from "@/hooks/useFetch";
 import Button from "@/components/button";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import axios,{AxiosError} from "axios";
 import Avatar from "@/components/avatar";
 import Like from "@/components/like";
 import Alertbox, { AlertType } from "@/components/alertbox";
+import { set } from "react-hook-form";
 interface Owner {
   _id: string;
   firstname: string;
@@ -51,9 +52,6 @@ interface Post {
 }
 
 export default function Page({ params }: { params: { id: string } }) {
-  const [timeoutId, setTimeoutId] = useState<ReturnType<
-    typeof setTimeout
-  > | null>(null);
   const [alertMessage, setAlertMessage] = useState<{
     message: string;
     type: AlertType;
@@ -108,7 +106,36 @@ export default function Page({ params }: { params: { id: string } }) {
     setData(postResult);
   }, [postResult]);
 
+  const deletePostHandler = async () => {
+    axios
+      .delete(process.env.backendUrl + "/api/posts/delete/" + id, {
+        withCredentials: true,
+      })
+      .then((result) => {
+        setAlertMessage({
+          message: "Delete Success",
+          type: AlertType.Success,
+        });
+        setTimeout(() => {
+          router.push("/community");
+        }, 2000);
+      })
+      .catch((error) => {
+        if(error instanceof AxiosError && error.response){
+          setAlertMessage({
+            message: "Delete Failed",
+            type: AlertType.Error,
+          })
+          setTimeout(() => {
+            setAlertMessage(null);
+          }, 2000);
+        }
+        ;
+      });
+  };
+
   // Data from the post
+
   if (isPostLoading) {
     return (
       <div className="animate-pulse min-h-screen flex-col mx-auto max-w-screen-xl px-[150px] text-gray-700">
@@ -278,33 +305,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <Button onClick={() => setDeletePost(false)}>
                         Cancel
                       </Button>
-                      <Button
-                        isLogin={true}
-                        onClick={async () => {
-                          axios
-                            .delete(
-                              process.env.backendUrl +
-                                "/api/posts/delete/" +
-                                id,
-                              { withCredentials: true }
-                            )
-                            .then((result) => {
-                              setAlertMessage({
-                                message: "Delete Success",
-                                type: AlertType.Success,
-                              });
-                              setTimeout(() => {
-                                router.push("/community");
-                              }, 2000);
-                            })
-                            .catch((error) => {
-                              setAlertMessage({
-                                message: "Delete Failed",
-                                type: AlertType.Error,
-                              });
-                            });
-                        }}
-                      >
+                      <Button isLogin={true} onClick={deletePostHandler}>
                         Delete
                       </Button>
                     </div>
