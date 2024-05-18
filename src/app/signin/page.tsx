@@ -56,19 +56,19 @@ export default function Page() {
       );
 
       if (response.status === 200) {
-          setAlertMessage({
-            message: "Login Success",
-            type: AlertType.Success,
-          });
-        
+        setAlertMessage({
+          message: "Login Success",
+          type: AlertType.Success,
+        });
+
         setTimeout(() => {
-          setAlertMessage(null)
+          setAlertMessage(null);
           router.push("/");
         }, 2000);
       }
     } catch (error) {
       console.error(error);
-      if(error instanceof AxiosError && error.response){
+      if (error instanceof AxiosError && error.response) {
         setAlertMessage({
           message: error.response.data.message,
           type: AlertType.Error,
@@ -78,7 +78,6 @@ export default function Page() {
         setAlertMessage(null);
       }, 2000);
     }
-
   };
 
   return (
@@ -151,24 +150,6 @@ export default function Page() {
                   )}
                 </div>
                 <div className="grid text-center gap-3">
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setValue("email", "JohnTornado@mai2l.com");
-                      setValue("password", "JohnTornado@mai2l@com");
-                    }}
-                  >
-                    User
-                  </Button>
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      setValue("email", "NoUploadImgTest10@mail.com");
-                      setValue("password", "NoUploadImgTest10@mail@com");
-                    }}
-                  >
-                    Admin
-                  </Button>
                   <Button type="submit">Sign in</Button>
                   <p className="text-sm font-light text-blue-400">
                     Not Register?
