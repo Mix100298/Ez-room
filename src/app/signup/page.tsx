@@ -5,7 +5,7 @@ import Button from "@/components/button";
 import { useForm, SubmitHandler, set } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import type { Metadata } from "next";
-import axios,{AxiosError} from "axios";
+import axios, { AxiosError } from "axios";
 import Alertbox, { AlertType } from "@/components/alertbox";
 
 // export const metadata: Metadata = {
@@ -21,7 +21,7 @@ interface IFormInput {
   lastname: string;
   dateOfBirth: string;
   sex: "Male" | "Felame" | "Other" | "";
-  file: File | null;
+  file: FileList | null;
 }
 
 export default function Page() {
@@ -29,7 +29,7 @@ export default function Page() {
     register,
     handleSubmit,
     watch,
-    formState: { errors, touchedFields },
+    formState: { errors, dirtyFields },
   } = useForm<IFormInput>({
     defaultValues: {
       email: "",
@@ -64,16 +64,15 @@ export default function Page() {
       setAlertMessage({
         message: "Password not matched",
         type: AlertType.Error,
-      })
+      });
       setTimeout(() => {
-        setAlertMessage(null)
+        setAlertMessage(null);
       }, 2000);
       return;
     }
 
     try {
-      const response  = await axios
-      .post(
+      const response = await axios.post(
         "http://localhost:5000/api/users/register",
         {
           data: data,
@@ -85,7 +84,7 @@ export default function Page() {
               "multipart/form-data; boundary=<calculated when request is sent>",
           },
         }
-      )
+      );
       if (response.status === 201) {
         setAlertMessage({
           message: "Register Success",
@@ -95,9 +94,7 @@ export default function Page() {
           setAlertMessage(null);
           router.push("/signin");
         }, 2000);
-        
       }
-
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         setAlertMessage({
@@ -109,7 +106,6 @@ export default function Page() {
         }, 2000);
       }
     }
-    
   };
 
   const RadioFrom = [
@@ -118,12 +114,12 @@ export default function Page() {
     { id: "term-other", name: "Other" },
   ];
 
-  const passwordRegexHandler = (password: string, regex: RegExp) => {
-    return regex.test(password);
+  const RegexHandler = (test: string, regex: RegExp) => {
+    return regex.test(test);
   };
- 
 
   const passwordRegex = /^.{8,}$/;
+  const nameRegex = /^(?!\s+$).{1,40}$/;
   const firstname = watch("firstname");
   const lastname = watch("lastname");
   const password = watch("password");
@@ -200,10 +196,10 @@ export default function Page() {
                       {errors.password.message}
                     </p>
                   )}
-                  {!passwordRegexHandler(password, passwordRegex) &&
-                    touchedFields.password && (
+                  {!RegexHandler(password, passwordRegex) &&
+                    dirtyFields.password && (
                       <p className="text-sm text-red-500 w-full p-0.75">
-                        Passward minimum 8 characters
+                        Password minimum 8 characters
                       </p>
                     )}
                 </div>
@@ -240,7 +236,7 @@ export default function Page() {
                     </p>
                   )}
                   {!(password == confirmPassword) &&
-                    touchedFields.confirmPassword && (
+                    dirtyFields.confirmPassword && (
                       <p className="text-sm text-red-500 w-full p-0.75">
                         Password not matched.
                       </p>
@@ -260,9 +256,8 @@ export default function Page() {
                         value: true,
                         message: "This field is required.",
                       },
-                      minLength: 1,
-                      maxLength: 40,
-                      setValueAs: (value) => value.trim(),
+                      pattern: nameRegex,
+                      // setValueAs: (value) => value.trim(),
                     })}
                     type="text"
                     id="firstname"
@@ -278,6 +273,13 @@ export default function Page() {
                       {errors.firstname.message}
                     </p>
                   )}
+                  {!RegexHandler(firstname, nameRegex) &&
+                    dirtyFields.firstname && (
+                      <p className="text-sm text-red-500 w-full p-0.75">
+                        Firstname must not contains only whitespaces. Minimum 1
+                        to 40 characters.
+                      </p>
+                    )}
                 </div>
 
                 <div>
@@ -293,9 +295,8 @@ export default function Page() {
                         value: true,
                         message: "This field is required.",
                       },
-                      minLength: 1,
-                      maxLength: 40,
-                      setValueAs: (value) => value.trim(),
+                      pattern: nameRegex,
+                      // setValueAs: (value) => value.trim(),
                     })}
                     type="text"
                     id="lastname"
@@ -311,6 +312,13 @@ export default function Page() {
                       {errors.lastname.message}
                     </p>
                   )}
+                  {!RegexHandler(lastname, nameRegex) &&
+                    dirtyFields.lastname && (
+                      <p className="text-sm text-red-500 w-full p-0.75">
+                        Lastname must not contains only whitespaces. Minimum 1
+                        to 40 characters.
+                      </p>
+                    )}
                 </div>
 
                 <div>
@@ -384,9 +392,37 @@ export default function Page() {
                     Upload Avatar (Optional)
                   </label>
                   <input
-                    {...register("file")}
+                    {...register("file", {
+                      validate: (value) => {
+                        const acceptedFormats = [
+                          "png",
+                          "jpeg",
+                          "jpg",
+                          "webp",
+                          "svg",
+                          "gif",
+                        ];
+                        console.log(value);
+                        if (!value || !value[0].name) return true;
+                        const file = value.item(0);
+                        if (!file) {
+                          return true;
+                        }
+                        const fileExtension = file.name.split(".").pop();
+                        if (fileExtension == undefined) {
+                          return true;
+                        }
+                        const fileExtensionLowerCase =
+                          fileExtension.toLowerCase();
+                        if (!acceptedFormats.includes(fileExtensionLowerCase)) {
+                          return "Invalid file format. Only image files are allowed.";
+                        }
+                        return true;
+                      },
+                    })}
                     type="file"
                     id="avatar"
+                    accept="image/*"
                     className={`bg-white border ${
                       errors.file ? "border-red-500" : "border-gray-300"
                     }  text-gray-700 sm:text-sm rounded w-full p-2.5`}
