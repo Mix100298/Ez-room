@@ -457,7 +457,13 @@ export default function Page() {
           </>
         </form>
         {result && (
-          <div className="grid min-w-[428px] col-start-1 row-span-5 xl:mt-[-340px] mt-[-220px]">
+          <div
+            className={`grid min-w-[428px] col-start-1 row-span-5 ${
+              result.furnitures.length === 1
+                ? "mt-[-220px] xl:mt-[-220px] lg:mt-[-200px]"
+                : "mt-[-220px] xl:mt-[-340px] lg:mt-[-230px]"
+            }`}
+          >
             <Share
               mode="create"
               data={result}
